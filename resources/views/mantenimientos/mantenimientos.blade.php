@@ -76,7 +76,7 @@
                                     @forelse ($vctMantenimientos as $item)
                                         <tr>
                                             <td class="text-center">
-                                                <a href="{{  ($blnEsMtq == true ? url('/mantenimientos/editar/mtq/'. $item->id) : url('/mantenimientos/editar/'. $item->id)) }}"
+                                                <a href="{{ $blnEsMtq == true ? url('/mantenimientos/editar/mtq/' . $item->id) : url('/mantenimientos/editar/' . $item->id) }}"
                                                     title="Editar el mantenimiento" class=""
                                                     style="color: blue">{{ str_pad($item->id, 4, '0', STR_PAD_LEFT) }}
                                                 </a>
@@ -122,7 +122,7 @@
                                                 @endif --}}
 
                                                 @can('mantenimiento_show')
-                                                    <a href="{{ ($blnEsMtq == true ? url('/mantenimientos/detalle/mtq/'. $item->id) : url('/mantenimientos/detalle/'. $item->id)) }}"
+                                                    <a href="{{ $blnEsMtq == true ? url('/mantenimientos/detalle/mtq/' . $item->id) : url('/mantenimientos/detalle/' . $item->id) }}"
                                                         title="Ver el detalle del Mantenimiento" class="">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                                                             fill="currentColor" class="bi bi-card-text accionesIconos mb-2"
@@ -147,10 +147,12 @@
                                                         <input type="hidden" name="responsableEquipo"
                                                             value={{ $item->id }}>
 
-                                                        <button class="btnSinFondo" type="submit">
-                                                            <i class="fas fa-print"
-                                                                style="color: #8caf48; font-size: x-large;"></i>
-                                                        </button>
+                                                        @if ($item->estadoId == 3)
+                                                            <button class="btnSinFondo" type="submit">
+                                                                <i class="fas fa-print"
+                                                                    style="color: #8caf48; font-size: x-large;"></i>
+                                                            </button>
+                                                        @endif
                                                     @endcan
                                                 </form>
 
@@ -168,10 +170,12 @@
                                                         <input type="hidden" name="responsableEquipo"
                                                             value={{ $item->id }}>
 
-                                                        <button class="btnSinFondo" type="submit">
-                                                            <i class="fas fa-print"
-                                                                style="color: black; font-size: x-large;"></i>
-                                                        </button>
+                                                        @if ($item->estadoId == 3)
+                                                            <button class="btnSinFondo" type="submit">
+                                                                <i class="fas fa-print"
+                                                                    style="color: black; font-size: x-large;"></i>
+                                                            </button>
+                                                        @endif
                                                     @endcan
                                                 </form>
 
@@ -182,8 +186,8 @@
                                                         <input type="hidden" name="mecanico" value="false">
                                                         <input type="hidden" name="id" value={{ $item->id }}>
 
-                                                        @if ($item->estadoId == 3)
-                                                            <button class="btnSinFondo" type="submit">
+                                                        @if ($item->estadoId >= 3)
+                                                            <button class="btnSinFondo" type="submit" title="Vista previa del mantenimiento">
                                                                 <i class="fas fa-solid fa-file-signature"
                                                                     style="{{ $item->documentoSellado == 1 ? 'color: green; font-size: x-large;' : 'color: red; font-size: x-large;' }}"></i>
                                                             </button>
@@ -192,7 +196,7 @@
                                                 </form>
 
                                                 @can('mantenimiento_edit')
-                                                    <a href="{{  ($blnEsMtq == true ? url('/mantenimientos/editar/mtq/'. $item->id) : url('/mantenimientos/editar/'. $item->id)) }}"
+                                                    <a href="{{ $blnEsMtq == true ? url('/mantenimientos/editar/mtq/' . $item->id) : url('/mantenimientos/editar/' . $item->id) }}"
                                                         title="Editar el mantenimiento" class="">
                                                         <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                             height="28" fill="currentColor" title="Editar"
@@ -202,25 +206,27 @@
                                                         </svg>
                                                     </a>
                                                 @endcan
-                                                {{-- Solo si no esta terminado se puede eliminar --}}
-                                                @can('mantenimientos_destroy')
-                                                    <form action="{{ route('mantenimientos.destroy', $item->id) }}"
-                                                        method="POST" style="display: inline-block;"
-                                                        onsubmit="return confirm('¿Estas Seguro que Deseas Eliminar Este Mantenimiento y Toda la Información Relacionada?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                height="28" fill="currentColor" title="Eliminar"
-                                                                class="bi bi-x-circle mb-2" viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                <path
-                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                            </svg>
-                                                        </button>
-                                                    </form>
-                                                @endcan
+                                                {{-- Solo si no esta eliminado se puede eliminar --}}
+                                                @if ($item->estadoId < 4)
+                                                    @can('mantenimientos_destroy')
+                                                        <form action="{{ route('mantenimientos.destroy', $item->id) }}"
+                                                            method="POST" style="display: inline-block;"
+                                                            onsubmit="return confirm('¿Estas Seguro que Deseas Eliminar Este Mantenimiento y Toda la Información Relacionada?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btnSinFondo" type="submit" rel="tooltip" title="Eliminar el registro">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                    height="28" fill="currentColor" title="Eliminar"
+                                                                    class="bi bi-x-circle mb-2" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                    <path
+                                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                </svg>
+                                                            </button>
+                                                        </form>
+                                                    @endcan
+                                                @endif
 
                                             </td>
                                         </tr>

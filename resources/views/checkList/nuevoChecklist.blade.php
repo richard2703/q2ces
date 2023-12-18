@@ -103,93 +103,222 @@
                                         </div>
                                     </div>
                                 </div>
+                                @php
+                                    $strNombreGrupo = '';
+                                    $intCont = 1;
+                                    $intGroup = 1;
+                                    $blnNuevaSeccion = false;
+                                    $objPresentacion = new checkListPresentacion();
+                                @endphp
+                                <div class="card col-12">
+                                    <div class="card-body contCart">
+                                        <div class="accordion my-3" id="accordionExample">
 
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead class="labelTitulo">
-                                            <input type="hidden" name="programacionId" id="programacionId"
-                                                value="{{ $programacionId }}">
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $strNombreGrupo = '';
-                                            $intCont = 0;
-                                            $blnNuevaSeccion = false;
-                                            $objPresentacion = new checkListPresentacion();
-                                            ?>
-                                            @forelse ($vctTareas as $item)
-                                                <?php
-                                                if ($strNombreGrupo == '') {
-                                                    //*** es la primera vez
-                                                    $strNombreGrupo = $item->grupo;
-                                                    $blnNuevaSeccion = true;
-                                                } elseif ($strNombreGrupo != $item->grupo) {
-                                                    $strNombreGrupo = $item->grupo;
-                                                    $blnNuevaSeccion = true;
-                                                } else {
-                                                    $blnNuevaSeccion = false;
-                                                }
+                                            @forelse ($grupos as $item)
+                                                @if ($intGroup == 1)
+                                                    <div class="accordion-item" style="margin-top: -20px;"
+                                                        id="AccordionPrincipal">
+                                                        <h2 class="accordion-header " id="headingOne">
 
-                                                ?>
-                                                @if ($blnNuevaSeccion == true)
-                                                    <tr>
-                                                        <th class="labelTitulo" colspan="3">Sección
-                                                            {{ $strNombreGrupo }}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th><strong>Tarea</strong></th>
-                                                        <th><strong>Resultado</strong></th>
-                                                        <th class="labelTitulo"></th>
-                                                    </tr>
+                                                            <button class="accordion-button bacTituloPrincipal"
+                                                                type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#{{ str_replace(' ', '_', $item->grupo) }}"
+                                                                aria-expanded="true" aria-controls="collapseOne">
+                                                                @php echo $objPresentacion->getImagenGrupoTareasControl($item->grupoId, 32); @endphp
+
+                                                                Sección de {{ $item->grupo }}
+                                                            </button>
+                                                        </h2>
+
+                                                        <div id="{{ str_replace(' ', '_', $item->grupo) }}"
+                                                            class="accordion-collapse collapse show"
+                                                            aria-labelledby="headingOne"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body">
+
+                                                                <div class="row mt-3 d-flex">
+                                                                    <div class="col-12">
+                                                                        <div class="row d-flex p-1 divBorder">
+                                                                            <div class="col-6 ">
+                                                                                <label class="labelTitulo">Tarea</label>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label
+                                                                                    class="labelTitulo">Resultado</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        @forelse ($vctTareas as $tarea)
+                                                                            @if ($item->grupoId == $tarea->grupoId)
+                                                                                <div class="row">
+                                                                                    <div class="col-4">
+                                                                                        {{ $tarea->tarea }}
+                                                                                        <input type="hidden"
+                                                                                            name="tarea[]" id="tarea"
+                                                                                            value="{{ $tarea->tarea }}">
+                                                                                        <input type="hidden"
+                                                                                            name="recordId[]"
+                                                                                            id="recordId"
+                                                                                            value="{{ $tarea->id }}">
+
+                                                                                        <input type="hidden"
+                                                                                            name="tareaId[]"
+                                                                                            id="tareaId"
+                                                                                            value="{{ $tarea->tareaId }}">
+
+                                                                                        <input type="hidden"
+                                                                                            name="grupo[]" id="grupo"
+                                                                                            value="{{ $tarea->grupo }}">
+
+                                                                                        <input type="hidden"
+                                                                                            name="grupoId[]"
+                                                                                            id="grupoId"
+                                                                                            value="{{ $tarea->grupoId }}">
+
+                                                                                        <input type="hidden"
+                                                                                            name="controlHtml[]"
+                                                                                            id="controlHtml"
+                                                                                            value="{{ $tarea->controlHtml }}">
+                                                                                    </div>
+                                                                                    <div class="col-2 text-center" >
+                                                                                        @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 48);  @endphp
+                                                                                        @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tipoId, 48);  @endphp
+                                                                                    </div>
+                                                                                    <div class="col-6">
+                                                                                        @php echo $objPresentacion->getControlByTarea($tarea->tareaId, $tarea->resultado, $tarea->valor, $intCont); @endphp
+                                                                                    </div>
+                                                                                </div>
+                                                                                @php
+                                                                                    $intCont += 1;
+                                                                                @endphp
+                                                                            @endif
+
+                                                                        @empty
+                                                                            <div class="row">
+                                                                                <div class="col-12 text-center">
+                                                                                  <label  class="labelTitulo">Sin
+                                                                                    registros</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endforelse
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <div class="accordion-item" id="AccordionSecondary">
+                                                        <h2 class="accordion-header" id="headingThree">
+                                                            <button class="accordion-button bacTituloPrincipal"
+                                                                type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#{{ str_replace(' ', '_', $item->grupo) }}"
+                                                                aria-expanded="true" aria-controls="collapseOne">
+                                                                Sección de {{ $item->grupo }}
+                                                            </button>
+                                                        </h2>
+                                                        <div id="{{ str_replace(' ', '_', $item->grupo) }}"
+                                                            class="accordion-collapse collapse"
+                                                            aria-labelledby="headingThree"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="accordion-body">
+
+                                                                <div class="row mt-3 d-flex">
+                                                                    <div class="col-12">
+
+                                                                        <div class="row mt-3 d-flex">
+                                                                            <div class="col-12">
+                                                                                <div class="row d-flex p-1 divBorder">
+                                                                                    <div class="col-6">
+                                                                                        <label
+                                                                                            class="labelTitulo">Tarea</label>
+                                                                                    </div>
+                                                                                    <div class="col-6 text-center">
+                                                                                        <label
+                                                                                            class="labelTitulo">Resultado</label>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                @forelse ($vctTareas as $tarea)
+                                                                                    @if ($item->grupoId == $tarea->grupoId)
+                                                                                        <div class="row">
+                                                                                            <div class="col-5">
+                                                                                                {{ $tarea->tarea }}
+                                                                                                <input type="hidden"
+                                                                                                    name="tarea[]"
+                                                                                                    id="tarea"
+                                                                                                    value="{{ $tarea->tarea }}">
+                                                                                                <input type="hidden"
+                                                                                                    name="recordId[]"
+                                                                                                    id="recordId"
+                                                                                                    value="{{ $tarea->id }}">
+
+                                                                                                <input type="hidden"
+                                                                                                    name="tareaId[]"
+                                                                                                    id="tareaId"
+                                                                                                    value="{{ $tarea->tareaId }}">
+
+                                                                                                <input type="hidden"
+                                                                                                    name="grupo[]"
+                                                                                                    id="grupo"
+                                                                                                    value="{{ $tarea->grupo }}">
+
+                                                                                                <input type="hidden"
+                                                                                                    name="grupoId[]"
+                                                                                                    id="grupoId"
+                                                                                                    value="{{ $tarea->grupoId }}">
+
+                                                                                                <input type="hidden"
+                                                                                                    name="controlHtml[]"
+                                                                                                    id="controlHtml"
+                                                                                                    value="{{ $tarea->controlHtml }}">
+                                                                                            </div>
+                                                                                            <div class="col-1">
+                                                                                                @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 48);  @endphp
+                                                                                                @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tipoId, 48);  @endphp
+                                                                                            </div>
+
+                                                                                            <div class="col-6">
+                                                                                                @php echo $objPresentacion->getControlByTarea($tarea->tareaId, $tarea->resultado, $tarea->valor, $intCont); @endphp
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        @php
+                                                                                            $intCont += 1;
+                                                                                        @endphp
+                                                                                    @endif
+                                                                                @empty
+                                                                                    <div class="row">
+                                                                                        <div class="col-12">
+                                                                                            <div class="col-12 text-center">
+                                                                                                <label  class="labelTitulo">Sin
+                                                                                                  registros</label>
+                                                                                              </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endforelse
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 @endif
+                                                @php
+                                                    $intGroup += 1;
+                                                @endphp
 
-                                                <tr>
-                                                    <td>
-                                                        {{ $item->tareaId }} .- {{ $item->tarea }}
-                                                        <input type="hidden" name="tarea[]" id="tarea"
-                                                            value="{{ $item->tarea }}">
-
-                                                        <input type="hidden" name="tareaId[]" id="tareaId"
-                                                            value="{{ $item->tareaId }}">
-
-                                                        <input type="hidden" name="grupo[]" id="grupo"
-                                                            value="{{ $item->grupo }}">
-
-                                                        <input type="hidden" name="grupoId[]" id="grupoId"
-                                                            value="{{ $item->grupoId }}">
-
-                                                        <input type="hidden" name="controlHtml[]" id="controlHtml"
-                                                            value="{{ $item->controlHtml }}">
-                                                    </td>
-                                                    <td>
-                                                        <!-- Mostramos el control de captura de datos -->
-                                                        <?php echo $objPresentacion->getControlByTarea($item->tareaId, $item->resultado, $item->valor, $intCont); ?>
-                                                    </td>
-                                                    <td>
-                                                        <!-- Mostramos el control de captura de datos -->
-                                                        <?php echo $objPresentacion->getImagenTareaControl($item->tareaId, 64); ?>
-
-                                                        <?php echo $objPresentacion->getImagenGrupoTareasControl($item->grupoId, 64); ?>
-
-                                                        <?php echo $objPresentacion->getImagenTipoTareaControl($item->tipoId, 64); ?>
-
-                                                    </td>
-
-
-
-                                                </tr>
-
-                                                <?php
-                                                $intCont += 1;
-                                                ?>
                                             @empty
-                                                <tr>
-                                                    <td colspan="4">Sin registros.</td>
-                                                </tr>
                                             @endforelse
-                                        </tbody>
-                                    </table>
+
+                                        </div>
+                                    </div>
                                 </div>
+
 
                                 @if ($vctTareas->isEmpty() === false)
                                     <div class="col-12 text-center m-3 pt-2">

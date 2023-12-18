@@ -84,7 +84,7 @@ class checkListPresentacion {
         if ( $objTarea ) {
             $strLeyenda = ' title="' . $objTarea->leyenda . '"';
             $strUnidadMedida =  ( $objTarea->requiereUnidadMedida == 1 ? "<label class='labelUnidadMedida'>". $objTarea->unidadMedida .'</label><br>'  : '' ) ;
-            $strImagen =  ( $objTarea->requiereImagen == 1 ?   '<div><span class="mi-archivo">'.
+            $strImagen =  ( $objTarea->requiereImagen == 1 ?   '<div class="row"><span class="mi-archivo">'.
             '<input class="mb-4 ver" type="file" name="foto'. $intTareaId . '" id="control'. $intConsecutivo . 'Img" accept="image/*">'.
             '</span>'.
             '<label for="control'. $intConsecutivo . 'Img" style="font-size: 24px;
@@ -102,7 +102,7 @@ class checkListPresentacion {
             switch ( strtolower( $objTarea->controlHtml ) ) {
                 case 'text':
                 $strCodigoControl =  '<input type="text" class="inputCaja" minlength="8" maxlength="200" '.
-                ' id="control'. $intConsecutivo . '"' .
+                ' id="control'. $intConsecutivo . '" ' .
                 ' name="resultado'. $intTareaId . '" ' .
                 $strLeyenda .
                 ' required value="'. $strResultadoControl . '" '.
@@ -146,10 +146,10 @@ class checkListPresentacion {
                     foreach ( $vctItems as $item ) {
                         $aValue = explode( '=>', $item ) ;
                         $strCodigoControl .=  '<div>' .
-                        '<input type="radio"'.
-                        'id="control'. $intConsecutivo . $intOpcion .'"'.
-                        'name="resultado'. $intTareaId . '[]"'.
-                        'value="'. $intOpcion .'"' .
+                        '<input type="radio" '.
+                        ' id="control'. $intConsecutivo . $intOpcion .'" '.
+                        ' name="resultado'. $intTareaId . '[]" '.
+                        ' value="'. $intOpcion .'" ' .
                         ( $strValorControl == $intOpcion   ? ' checked' : '' ) . '>' .
                         '<label for="control'. $intConsecutivo . $intOpcion .'" '. $strLeyenda .'>' .  $aValue[ 1 ] . '</label>' .
                         '</div>';
@@ -170,10 +170,10 @@ class checkListPresentacion {
                 foreach ( $vctItems as $item ) {
                     $aValue = explode( '=>', $item ) ;
 
-                    $strItems .= '<option value="'.$aValue[ 0 ] . '"'. ( $item[ 0 ] == $strValorControl ? ' selected' : '' ).'>'.$aValue[ 1 ].'</option>' ;
+                    $strItems .= '<option value="'.$aValue[ 0 ] . '"'. ( $item[ 0 ] == $strValorControl ? ' selected' : '' ).'> '.$aValue[ 1 ].'</option>' ;
                 }
 
-                $strCodigoControl = '<select class="form-select"  aria-label="Default select example" id="control'. $intConsecutivo . '"' . $strLeyenda .
+                $strCodigoControl = '<select class="form-select" aria-label="Default select example" id="control'. $intConsecutivo . '" ' . $strLeyenda .
                 ' name="resultado'. $intTareaId . '" required>' .
                 '<option value="">Seleccione</option>' .
                 $strItems .
@@ -195,7 +195,7 @@ class checkListPresentacion {
         }
 
         // dd( $vctDebug, $objTarea, $strCodigoControl );
-        return $strCodigoControl;
+        return   $strCodigoControl  ;
 
     }
 

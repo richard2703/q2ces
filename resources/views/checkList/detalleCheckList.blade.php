@@ -88,8 +88,8 @@
 
                                                 <div class=" col-12">
                                                     <label class="labelTitulo">Comentarios:</label></br>
-                                                    <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario" readonly disabled="true"
-                                                        name="comentario" spellcheck="true">{{ $checkList->comentario }}</textarea>
+                                                    <textarea class="form-control" placeholder="Escribe tu comentario aquí sobre la revisión del CheckList" id="comentario"
+                                                        readonly disabled="true" name="comentario" spellcheck="true">{{ $checkList->comentario }}</textarea>
                                                 </div>
 
                                             </div>
@@ -106,6 +106,186 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    @php
+                                        $strNombreGrupo = '';
+                                        $intCont = 1;
+                                        $intGroup = 1;
+                                        $blnNuevaSeccion = false;
+                                        $objPresentacion = new checkListPresentacion();
+                                        /*** directorio contenedor de su información */
+                                        $strMaquinaria = str_pad($checkList->identificador, 4, '0', STR_PAD_LEFT);
+                                        //*** folio consecutivo del checklist */
+                                        $intFolioCheckList = str_pad($checkList->id, 4, '0', STR_PAD_LEFT);
+                                        //*** codigo y version de bitacora */
+                                        $strBitacora = str_replace(' ', '_', trim($checkList->codigo) . '_v' . trim($checkList->version));
+
+                                        $pathImagen = '/storage/maquinaria/' . $strMaquinaria . '/checkList/' . $strBitacora;
+                                        // dd($pathImagen);
+                                    @endphp
+
+                                    <div class="card col-12">
+                                        <div class="card-body contCart">
+                                            <div class="accordion my-3" id="accordionExample">
+
+                                                @forelse ($grupos as $item)
+                                                    @if ($intGroup == 1)
+                                                        <div class="accordion-item" style="margin-top: -20px;"
+                                                            id="AccordionPrincipal">
+                                                            <h2 class="accordion-header " id="headingOne">
+
+                                                                @php echo $objPresentacion->getImagenGrupoTareasControl($item->grupoId, 32); @endphp
+                                                                <button class="accordion-button bacTituloPrincipal"
+                                                                    type="button" data-bs-toggle="collapse"
+                                                                    data-bs-target="#{{ str_replace(' ', '_', $item->grupo) }}"
+                                                                    aria-expanded="true" aria-controls="collapseOne">
+
+                                                                    Sección de {{ $item->grupo }}
+                                                                </button>
+                                                            </h2>
+
+                                                            <div id="{{ str_replace(' ', '_', $item->grupo) }}"
+                                                                class="accordion-collapse collapse show"
+                                                                aria-labelledby="headingOne"
+                                                                data-bs-parent="#accordionExample">
+                                                                <div class="accordion-body">
+
+                                                                    <div class="row mt-1 d-flex">
+                                                                        <div class="col-12">
+                                                                            <div class="row d-flex p-1 divBorder">
+                                                                                <div class="col-6 ">
+                                                                                    <label
+                                                                                        class="labelTitulo">Tarea</label>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    <label
+                                                                                        class="labelTitulo">Resultado</label>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            @forelse ($records as $tarea)
+                                                                                @if ($item->grupoId == $tarea->grupoId)
+                                                                                    <div class="row">
+                                                                                        <div class="col-5">
+                                                                                            {{ $tarea->tarea }}
+                                                                                        </div>
+                                                                                        <div class="col-1">
+                                                                                            @php
+                                                                                                if (is_null($tarea->ruta) == false) {
+                                                                                                    echo "<a class='img-mouse'><i class='fas fa-camera'> </i></a>";
+                                                                                                    echo '<input class="img-a-mostrar" type="image" width="300" id="image' . $tarea->tareaId . '" alt="Imagen" src="' . asset($pathImagen . '/' . $tarea->ruta) . '" />';
+                                                                                                }
+                                                                                            @endphp
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            {{ $tarea->resultado }}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endif
+                                                                                <?php
+                                                                                $intCont += 1;
+                                                                                ?>
+                                                                            @empty
+                                                                                <div class="row">
+                                                                                    <div class="col-12">
+                                                                                        class="labelTitulo">Sin
+                                                                                        registros</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endforelse
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="accordion-item" id="AccordionSecondary">
+                                                            <h2 class="accordion-header" id="headingThree">
+                                                                <button class="accordion-button bacTituloPrincipal"
+                                                                    type="button" data-bs-toggle="collapse"
+                                                                    data-bs-target="#{{ str_replace(' ', '_', $item->grupo) }}"
+                                                                    aria-expanded="true" aria-controls="collapseOne">
+                                                                    Sección de {{ $item->grupo }}
+                                                                </button>
+                                                            </h2>
+                                                            <div id="{{ str_replace(' ', '_', $item->grupo) }}"
+                                                                class="accordion-collapse collapse"
+                                                                aria-labelledby="headingThree"
+                                                                data-bs-parent="#accordionExample">
+                                                                <div class="accordion-body">
+
+                                                                    <div class="row mt-3 d-flex">
+                                                                        <div class="col-12">
+
+                                                                            <div class="row mt-1 d-flex">
+                                                                                <div class="col-12">
+                                                                                    <div class="row d-flex p-1 divBorder">
+                                                                                        <div class="col-6">
+                                                                                            <label
+                                                                                                class="labelTitulo">Tarea</label>
+                                                                                        </div>
+                                                                                        <div class="col-6">
+                                                                                            <label
+                                                                                                class="labelTitulo">Resultado</label>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    @forelse ($records as $tarea)
+                                                                                        @if ($item->grupoId == $tarea->grupoId)
+                                                                                            <div class="row">
+                                                                                                <div class="col-5">
+                                                                                                    {{ $tarea->tarea }}
+                                                                                                </div>
+                                                                                                <div class="col-1">
+                                                                                                    @php
+                                                                                                        if (is_null($tarea->ruta) == false) {
+                                                                                                            echo "<a class='img-mouse'><i class='fas fa-camera'> </i></a>";
+                                                                                                            echo '<input class="img-a-mostrar" type="image" width="300" id="image' . $tarea->tareaId . '" alt="Imagen" src="' . asset($pathImagen . '/' . $tarea->ruta) . '" />';
+                                                                                                        }
+                                                                                                    @endphp
+                                                                                                </div>
+                                                                                                <div class="col-6">
+                                                                                                    {{ $tarea->resultado }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        @endif
+                                                                                        <?php
+                                                                                        $intCont += 1;
+                                                                                        ?>
+                                                                                    @empty
+                                                                                        <div class="row">
+                                                                                            <div class="col-12">
+                                                                                                <label
+                                                                                                    class="labelTitulo">Sin
+                                                                                                    registros</label>
+                                                                                                </p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    @endforelse
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                    @php
+                                                        $intGroup += 1;
+                                                    @endphp
+
+                                                @empty
+                                                @endforelse
+
+                                            </div>
+                                        </div>
+                                    </div>
+<!--
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
@@ -115,21 +295,7 @@
                                                 </tr> --}}
                                             </thead>
                                             <tbody>
-                                                <?php
-                                                $strNombreGrupo = '';
-                                                $intCont = 0;
-                                                $blnNuevaSeccion = false;
-                                                $objPresentacion = new checkListPresentacion();
-                                                /*** directorio contenedor de su información */
-                                                $strMaquinaria = str_pad($checkList->identificador, 4, '0', STR_PAD_LEFT);
-                                                //*** folio consecutivo del checklist */
-                                                $intFolioCheckList = str_pad($checkList->id, 4, '0', STR_PAD_LEFT);
-                                                //*** codigo y version de bitacora */
-                                                $strBitacora = str_replace(' ', '_', trim($checkList->codigo) . '_v' . trim($checkList->version));
 
-                                                $pathImagen = '/storage/maquinaria/' . $strMaquinaria . '/checkList/' . $strBitacora;
-                                                // dd($pathImagen);
-                                                ?>
                                                 @forelse ($records as $item)
                                                     <?php
                                                     if ($strNombreGrupo == '') {
@@ -182,6 +348,7 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                -->
                                 </div>
 
                                 <div class="col-12 text-center m-3 pt-2">
