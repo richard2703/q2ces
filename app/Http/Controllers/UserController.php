@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Exports\UserExport;
+use App\Models\residente;
+use App\Models\residenteAutos;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
@@ -83,7 +85,16 @@ class UserController extends Controller
         $user->update($data);
         $roles = $request->input('roles', []);
         $user->syncRoles($roles);
+        $residente = Residente::where('userId', $user['id'])->first();
+        if ($residente) {
+            $residente->nombre = $request->name;
+            $residente->email = $request->email;
+            $residente->save();
+        } else {
+        }
+
         Session::flash('message', 1);
+
         return redirect()->route('users.show', $user->id)->with('success', 'Usuario actualizado correctamente');
         // return redirect()->route('users.show');
     }
@@ -112,6 +123,16 @@ class UserController extends Controller
         $password = Str::random(50);
         $user->password = bcrypt($password);
         $user->update();
+        $residente = residente::where('userId', $user['id'])->first();
+        $residenteAutos = residenteAutos::select("*")->where('residenteId', '=', $residente['id'])->get();
+        if ($residenteAutos) {
+            foreach ($residenteAutos as $residenteAto) {
+                $residenteAto->delete();
+            }
+        }
+        if ($residente) {
+            $residente->delete();
+        }
         // $user->delete();
 
         return redirect()->back()->with('success', 'Usuario Eliminado correctamente');

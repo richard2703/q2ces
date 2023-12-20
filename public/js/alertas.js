@@ -24,11 +24,43 @@ function alertaGuardar()
 	})
 }
 
+function alertaBorrar()
+{
+	$('.alertaBorrar').submit(function(e) {
+		e.preventDefault();
+	
+		Swal.fire({
+			title: 'Estas seguro?',
+			text: "¡Se Borrara de forma permanente!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			cancelButtonText: 'Cancelar',
+			confirmButtonText: 'Si, Borrar!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				mostrarSpinner(true);
+				this.submit();
+			}
+		})
+	
+	})
+}
+
 function alertaNoPermission(){
 	Swal.fire({
 		icon: 'error',
 		title: 'Permisos',
 		text: '¡No Tienes Los Permisos Necesarios!'
+	})
+}
+
+function alertaDuplicado(){
+	Swal.fire({
+		icon: 'error',
+		title: 'Usuarios',
+		text: '¡El residente ya tiene un usuario creado!'
 	})
 }
 
@@ -118,6 +150,24 @@ function mostrarSpinner(estado) {
             title: 'Carga guardada exitosamente',
             showConfirmButton: false,
             timer: 1500 // La alerta se cierra automáticamente después de 1.5 segundos
+        });
+    }
+
+	function mostrarAlertaBorrarExito() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Borrado Exitosamente',
+            showConfirmButton: false,
+            timer: 1500 // La alerta se cierra automáticamente después de 1.5 segundos
+        });
+    }
+
+	function mostrarAlertaExitoCorta() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Creado Exitosamente',
+            showConfirmButton: false,
+            timer: 2000 // La alerta se cierra automáticamente después de 1.5 segundos
         });
     }
 

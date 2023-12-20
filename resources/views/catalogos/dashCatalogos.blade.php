@@ -80,6 +80,16 @@
                                                             <p class="mt-4 texticonos">Tipos de Equipo</p>
                                                         </a>
                                                     </div>
+
+                                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                                        <a href="{{ route('catalogoEventosCalendarioTipos.index') }}" class="">
+                                                            <img src="/img/catalogos/tiposDeEquipo.svg" alt="Tipos Eventos en el calendario"
+                                                                title="Tipos Eventos en el calendario" width="30%"
+                                                                class="botonIconoPrincipal">
+                                                            <p class="mt-4 texticonos">Tipos de Eventos en el Calendario</p>
+                                                        </a>
+                                                    </div>
+
                                                 @endcan
                                             </div>
                                         </div>

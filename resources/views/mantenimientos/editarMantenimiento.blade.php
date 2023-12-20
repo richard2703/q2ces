@@ -25,7 +25,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
-                                    <a href="{{ $mantenimiento->compania == 'mtq' ? route('mantenimientos.indexMtq'):  route('mantenimientos.index') }}">
+                                    <a
+                                        href="{{ $mantenimiento->compania == 'mtq' ? route('mantenimientos.indexMtq') : route('mantenimientos.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
@@ -679,7 +680,8 @@
                                                                                             data-max="{{ $numFotosPermitidas }}">
                                                                                     </span>
                                                                                     <label for="mi-archivo">
-                                                                                        <span class="">Sube Imagen
+                                                                                        <span class="">Sube 5
+                                                                                            Imagenes o 10
                                                                                             (Puedes subir hasta
                                                                                             {{ $numFotosPermitidas }}
                                                                                             más)</span>
@@ -780,7 +782,13 @@
                                                 class="form-select form-select-lg mb-3 inputCaja"
                                                 aria-label="Default select example">
                                                 <option value="">Seleccione</option>
-                                                @if ($mantenimiento->compania == 'mtq')
+                                                @foreach ($vctResponsables as $item)
+                                                    <option value="{{ $item->nombre . ' ' . $item->apellido }}"
+                                                        {{ $mantenimiento->responsable == $item->nombre . ' ' . $item->apellido ? ' selected' : '' }}>
+                                                        {{ $item->nombre . ' ' . $item->apellido }}
+                                                    </option>
+                                                @endforeach
+                                                {{--  @if ($mantenimiento->compania == 'mtq')
                                                     @foreach ($vctResidentes as $item)
                                                         <option value="{{ $item->nombre . ' ' . $item->apellido }}"
                                                             {{ $mantenimiento->responsable == $item->nombre . ' ' . $item->apellido ? ' selected' : '' }}>
@@ -794,7 +802,7 @@
                                                             {{ $item->personal }}
                                                         </option>
                                                     @endforeach
-                                                @endif
+                                                @endif  --}}
                                             </select>
                                         </div>
 
@@ -807,7 +815,8 @@
                                         </div>
 
                                         <div class="col-12 text-center mt-1 pt-1">
-                                            <a href="{{ $maquinaria->compania == 'mtq' ? route('mantenimientos.indexMtq'):  route('mantenimientos.index') }}">
+                                            <a
+                                                href="{{ $maquinaria->compania == 'mtq' ? route('mantenimientos.indexMtq') : route('mantenimientos.index') }}">
                                                 <button class="btn regresar" name="guardar" value="0">
                                                     <span class="material-icons">
                                                         reply
@@ -882,7 +891,7 @@
 
         }
 
-         $('#search').autocomplete({
+        $('#search').autocomplete({
 
             source: function(request, response) {
                 $.ajax({
@@ -1046,13 +1055,15 @@
             html += '      <input type="hidden" name="concepto[]" id="concepto" value="' + concepto + '">';
             html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
-            html += '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1" onchange="sumarItems()" onblur="sumarItems()" >';
+            html +=
+                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1" onchange="sumarItems()" onblur="sumarItems()" >';
             html += '      </div>';
             html += '      <div class="col-2 ">';
             // html +=
             //     '           <input type="text" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 1" name="precioUnitario[]" value="' +
             //     costo + '">';
-                html +='           <input type="number" maxlength="10" min="1" required max="999999999" step="0.01" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 123.55" name="precioUnitario[]" value="' +
+            html +=
+                '           <input type="number" maxlength="10" min="1" required max="999999999" step="0.01" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 123.55" name="precioUnitario[]" value="' +
                 costo + '" onchange="sumarItems()" onblur="sumarItems()">';
             html += '      </div>';
 

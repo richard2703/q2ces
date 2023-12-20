@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\maquinaria;
 use App\Helpers\Calculos;
 use App\Models\marca;
+use App\Models\residente;
+use App\Models\residenteAutos;
 use App\Models\serviciosMtq;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -36,10 +38,31 @@ class usoMaquinariasController extends Controller
         //     ->where('compania', 'mtq')->orderBy('usoMaquinarias.created_at', 'desc')
         //     ->paginate(15);
         // $servicios = serviciosMtq::all();
+        $userId = auth()->user()->id;
+        $residente = residente::where('userId', $userId)->first();
+        if ($residente) {
+            $residenteAutos = residenteAutos::where('residenteId', '=', $residente['id'])->get();
+        } else {
+            $residenteAutos = null;
+        }
 
-        // dd($maquinaria);
+        if ($residenteAutos !== null && !$residenteAutos->isEmpty()) {
+            $autoIds = $residenteAutos->pluck('autoId')->toArray();
+        }
 
-        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria', 'servicios', 'marca'));
+        if (!empty($autoIds)) {
+            $maquinariaAsignada = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
+                ->select('maquinaria.*', 'maquinaria.nombre as nombre_maquinaria', 'marca.nombre as nombre_marca', 'marca.id as id_marca')
+                ->where('maquinaria.compania', 'mtq')
+                ->whereIn('maquinaria.id', $autoIds)
+                ->orderBy('maquinaria.identificador', 'asc')
+                ->get();
+        } else {
+            $maquinariaAsignada = null;
+        }
+
+        // dd($residenteAutos);
+        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria', 'servicios', 'marca', 'maquinariaAsignada', 'residenteAutos'));
     }
 
     public function indexQ2ces()
@@ -190,11 +213,12 @@ class usoMaquinariasController extends Controller
 
     public function mantenimiento(Request $request)
     {
-        // dd( $usoMaquinaria, $request );
+        // dd($request);
         $uso  = maquinaria::find($request->mId);
 
         $uso->mantenimiento = $request->mantenimiento;
         $uso->save();
-        return redirect()->action([usoMaquinariasController::class, 'indexQ2ces']);
+        // return redirect()->action([usoMaquinariasController::class, 'indexQ2ces']);
+        return redirect()->back();
     }
 }
