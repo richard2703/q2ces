@@ -13,87 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-/* Mis rutas */
-// Route::get('/index', function () {
-//     return view('inventario.indexInventario');
-// });
-
-// Route::get('/nuevo', function () {
-//     return view('inventario.inventarioNuevo');
-// });
-// Route::get('/modifi', function () {
-//     return view('inventario.inventarioModifi');
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// });
-
-// Route::get('users/export/', [UserController::class, 'export']);
-Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'export'])->name('users.export');
-Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::class, 'export'])->name('asistencia.export');
-
-// //Mantenimiento
-// Route::get('/mantenimientos', function () {
-//     return view('mantenimientos.mantenimientos');
-// });
-
-// Route::get('/nuevoMantenimiento', function () {
-//     return view('mantenimientos.nuevoMantenimiento');
-// });
-// Route::get('/editarMantenimientos', function () {
-//     return view('mantenimientos.editarMantenimientos');
-// });
-
-// Route::get('/verEquipos', function () {
-//     return view('equipos.verEquipos');
-// });
-
-// Route::get('/altaDeAccesorios', function () { //Ruta navegador (nombre que yo le quiera poner y es la que se pega en el menu)
-//     return view('accesorios.altaDeAccesorios');//Ruta en donde se encuentra el archivo
+// Route::get('/', function () {
+//     return view('welcome');
 // });
 
 
-// // calendario
-// Route::get('/calendario', function () {
-//     return view('calendario.calendario');
-//  });
-
-
-//Inventario
-// Route::get('/dashInventario', function () {
-//     return view('inventario.dashInventario');
-// });
-// Route::get('/indexInventario', function () {
-//     return view('inventario.indexInventario');
-// });
-
-// Route::get('/detalleHerramienta', function () {
-//     return view('inventario.detalleHerramienta');
-// });
-
-
-
-
-// Route::get('/vistaObra', function () {
-//     return view('obra.vistaObra');
-// });
-
-// Route::get('/altaDePersonal', function () {
-//     return view('personal.altaDePersonal');
-// });
-
-// Route::get('/detalleDePersonal', function () {
-//     return view('personal.detalleDePersonal');
-// });
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/usuarios/export', [App\Http\Controllers\UserController::class, 'export'])->name('users.export');
+    Route::get('/asistencia/export', [App\Http\Controllers\asistenciaController::class, 'export'])->name('asistencia.export');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
     Route::get('/usuarios/nuevo', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
     Route::post('/usuarios', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
     Route::get('/usuarios', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');

@@ -1,0 +1,318 @@
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+:root {
+	scroll-behavior: smooth;
+--dash: #006270;
+--tarjeta: #fff;
+--text: #444444;
+--scroll: #aab7cf;
+--links: #009394;
+--select: #f6f9ff;
+--titulo: #08C6AB;
+--active: #f6f9ff;
+
+--fondo:#F8F9F7;
+--verde:#8EB322;
+--verdeF:#5C7C26 ;
+--amarillo:#F7C90D;
+--texto: #3C4858;
+--select: #727176;
+--iconos: #8caf48;
+
+/* Nuevos colores */
+--fondo:#ffffff;
+--verdeF:#5C7C26 ;
+--verdeB: #8eb322;
+--Tprincipal: #ffffff;
+--Tsecundario: #5f7e2a;
+--Topcional: #727176;
+
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+  body {
+	/* font-family: "Open Sans", sans-serif; */
+  font-family: 'Montserrat', sans-serif!important;
+  hyphens: auto;
+	background-color: var(--fondo);
+	color: var(--text);
+  }
+
+  ul{
+    list-style: none;
+  }
+  
+  /* a {
+	color: var(--texto);
+	text-decoration: none;
+  }
+  
+  a:hover {
+	color: var(--texto);
+	text-decoration: none;
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+	font-family: "Nunito", sans-serif;
+  } */
+
+
+/*--------------------------------------------------------------
+# Main
+--------------------------------------------------------------*/
+/* #main {
+	margin-top: 90px;
+	padding: 20px 30px;
+	transition: all 0.3s;
+  }
+  
+  @media (max-width: 1199px) {
+	#main {
+	  padding: 20px;
+	}
+  
+  } */
+
+/*--------------------------------------------------------------
+# header
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# header - Datos
+--------------------------------------------------------------*/
+.datos {
+  display: block; /* Por defecto visible */
+}
+@media (max-width: 992px) {
+  .datos {
+    display: none; /* Oculto cuando el ancho de la pantalla es 992px o menos */
+  }
+}
+
+  .lista-datos{
+    background-color: var(--verdeF);
+    display: flex;
+    padding: 0 20px;
+    position: relative;
+    font-size: 12px;
+    line-height: 1;
+    padding: 10px 0 10px 0;
+    align-items:center;
+    margin-bottom: 0px;
+  }
+ 
+  .lista-datos li{
+    padding: 0 10px;
+    position: relative;
+    font-size: 12px;
+    line-height: 1;
+    color: var(--Tprincipal);
+    border-right: 1px solid var(--Tprincipal);
+    align-items: center;
+    display: flex;
+    height: 35px;
+  }
+
+  .lista-datos li:nth-child(6) {
+    /* flex: 0 0 10%; La sexta posición toma el 10% del espacio */
+    margin-left: auto; /* Se pega a la derecha */
+    border-right: none;
+
+  }
+  .lista-datos li img{
+    padding-right: 5px;
+  }
+ 
+/*--------------------------------------------------------------
+# header - NavBar
+--------------------------------------------------------------*/
+.divnav{
+  align-self:center;
+}
+  .nav-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    position: relative;
+    background-color: var(--color2);
+    /* padding: 12px 20px; */
+    padding: 10px 20px 10px 20px;
+    margin-bottom: 0;
+    position: relative;
+}
+.logo img {
+  /* width: 40px; */
+  height: 85px;
+  padding: 10px 20px 10px 20px;
+
+}
+.menu {
+  display: flex;
+}
+.menu li {
+  padding-left: 10px;
+  font-size: 12px;
+}
+.menu li a {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--Topcional);
+    text-align: center;
+    transition: 0.15s ease-in-out;
+    position: relative;
+    text-transform: uppercase;
+}
+.menu li a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--Topcional);
+    transition: 0.15s ease-in-out;
+}
+.menu li a:hover:after {
+  width: 100%;
+}
+.open-menu , .close-menu {
+    position: absolute;
+    color: var(--Topcional);
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: none;
+}
+.open-menu {
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+.close-menu {
+    top: 20px;
+    right: 20px;
+}
+#check {
+  display: none;
+}
+@media(max-width: 992px){
+    .menu {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        z-index: 100;
+        background-color: var(--verdeF);
+        transition: all 0.2s ease-in-out;
+    }
+    .menu li {
+      margin-top: 40px;
+    }
+    .menu li a {
+      padding: 10px;
+      color: var(--Tprincipal);
+    }
+    .open-menu , .close-menu {
+      display: block;
+    }
+    #check:checked ~ .menu {right: 0;}
+  }
+
+/*--------------------------------------------------------------
+# Fooder
+--------------------------------------------------------------*/
+
+.footer{
+  /* background-color: var(--Topcional); */
+  background: linear-gradient(to top, var(--Topcional), 50%,var(--Tprincipal) );
+}
+
+.footer img{
+  /* font-size: 10px; */
+  margin-bottom: 10px;
+  max-height: 150px;
+}
+
+.contFooder{
+  margin: 30px 15px 15px 15px;
+}
+
+.seccionFooder{
+  padding: 00px 15px 0px 15px;
+}
+
+.seccionFooder a {
+  text-decoration: none;
+}
+
+.seccionFooder p {
+  color: var(--Tsecundario);
+  max-width: 230px;
+}
+
+.seccionFooder h2{
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--Tsecundario);
+  margin-bottom: 0;
+}
+
+.seccionFooder h3{
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--Tsecundario);
+  /* margin-bottom: 0; */
+}
+
+.seccionFooder h4{
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--Tsecundario);
+  /* margin-bottom: 0; */
+}
+.flechas img{
+  height: 20px;
+}
+
+.pats{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.pats img{
+  height: 30px;
+}
+.pats a{
+  padding-right: 15px;
+}
+
+.footer p{
+  font-size: 10px;
+}
+
+.copyright{
+  text-align: center;
+  padding: 30px 15px 30px 15px;
+  color: var(--Tprincipal);
+}
+
+.copyright a{
+  text-decoration: none;
+  color: var(--Tprincipal);
+}
+
+.copyright a:hover{
+  color: var(--verdeB);
+}
+
