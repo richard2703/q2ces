@@ -85,7 +85,7 @@
         <div class="d-flex encabezado">
             <div class='logo col-2 '>
                 {{--  <li >  --}}
-                <a href="{{ url('home', session('id')) }}" class="align-items-center">
+                <a href="{{ url('/') }}" class="align-items-center">
                     <img src="{{ asset('img/comercial/layout/Q2CES.svg') }}" alt="Q2Ces">
                 </a>
                 {{--  </li>  --}}
@@ -96,7 +96,9 @@
                     <ul class='nav-bar d-flex'>
                         <input type='checkbox' id='check' />
                         <span class="menu">
-                            <li><a href="">Inicio</a></li>
+                            <li class="{{ $activePage == 'inicio' ? 'activo' : '' }}">
+                                <a href="{{ url('/') }}">Inicio</a>
+                            </li>
                             <li><a href="">¿Quiénes Somos?</a></li>
                             <li>
                                 <a href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"

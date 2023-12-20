@@ -170,6 +170,7 @@
     position: relative;
     text-transform: uppercase;
 }
+
 .menu li a::after {
     content: "";
     position: absolute;
@@ -183,6 +184,17 @@
 .menu li a:hover:after {
   width: 100%;
 }
+
+/* .menu .activo{
+  font-weight: bold;
+  color: var(--Tsecundario);
+} */
+
+.menu .activo a{
+  font-weight: bold;
+  color: var(--verdeB);
+}
+
 .open-menu , .close-menu {
     position: absolute;
     color: var(--Topcional);
