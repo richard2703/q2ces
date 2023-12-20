@@ -55,7 +55,7 @@
                                     </form>
                                 </div>  --}}
                                 <div class="col-12 pb-3 text-end">
-                                    @can('maquinariaUso_mtq_create')
+                                    @can('mantenimiento_create')
                                         <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button"
                                             style="height: 40px" class="btn botonGral ">Agregar Mantenimiento</button>
                                     @endcan
@@ -113,7 +113,7 @@
                                                             </svg>
                                                         </a>
                                                     @endcan
-                                                    @can('maquinariaUso_mtq_edit_uso_bloque')
+                                                    @can('mantenimiento_create')
                                                         <a href="#" data-bs-toggle="modal"
                                                             data-bs-target="#editarMantenimiento"
                                                             onclick="cargaMantenimiento('{{ $maquina->id }}','{{ $maquina->mantenimiento }}')">
@@ -160,7 +160,7 @@
                                                             </svg>
                                                         </a>
                                                     @endcan
-                                                    @can('maquinariaUso_mtq_edit_uso_bloque')
+                                                    @can('mantenimiento_create')
                                                         <a href="#" data-bs-toggle="modal"
                                                             data-bs-target="#editarMantenimiento"
                                                             onclick="cargaMantenimiento('{{ $maquina->id }}','{{ $maquina->mantenimiento }}')">
@@ -243,15 +243,13 @@
                             <input type="text" class="inputCaja" name="km" value="" readonly
                                 id="km">
                         </div>
-
-                        @can('maquinariaUso_mtq_update_uso_bloque')
-                            <div class=" col-12 col-sm-6  mb-3 ">
-                                <label class="labelTitulo">Edicion de Uso:</label></br>
-                                <input type="hidden" name="id[]" id="id" value="" id="idmaq">
-                                <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor[]"
-                                    value="{{ old('numserie') }}" id="valor">
-                            </div>
-                        @endcan
+                    
+                        <div class=" col-12 col-sm-6  mb-3 ">
+                            <label class="labelTitulo">Edicion de Uso:</label></br>
+                            <input type="hidden" name="id[]" id="id" value="" id="idmaq">
+                            <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor[]"
+                                value="{{ old('numserie') }}" id="valor">
+                        </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
