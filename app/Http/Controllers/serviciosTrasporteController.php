@@ -316,25 +316,26 @@ class serviciosTrasporteController extends Controller
             ->join('maquinaria', 'maquinaria.id', 'serviciosTrasporte.equipoId')
             ->join('obras', 'obras.id', 'serviciosTrasporte.obraId')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
-            ->join('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
+            ->leftjoin('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
             ->join('conceptos', 'conceptos.id', 'serviciosTrasporte.conceptoId')
             ->select(
-                'serviciosTrasporte.id',
-                'personal.nombres',
-                'personal.apellidoP',
-                'maquinaria.nombre as equipo',
-                'clientes.nombre as cliente',
-                'obras.nombre as obra',
-                'serviciosTrasporte.recibe',
-                'almacenTiraderos.nombre as almacen',
-                'serviciosTrasporte.horaEntrega',
-                'serviciosTrasporte.comentario',
-                'conceptos.nombre as concepto'
+                '*'
+                // 'serviciosTrasporte.id',
+                // 'personal.nombres',
+                // 'personal.apellidoP',
+                // 'maquinaria.nombre as equipo',
+                // 'clientes.nombre as cliente',
+                // 'obras.nombre as obra',
+                // 'serviciosTrasporte.recibe',
+                // 'almacenTiraderos.nombre as almacen',
+                // 'serviciosTrasporte.horaEntrega',
+                // 'serviciosTrasporte.comentario',
+                // 'conceptos.nombre as concepto'
             )
             ->where('serviciosTrasporte.id', $id)
             ->first();
 
-        // dd('printTicketChofer', $servicio);
+        dd('printTicketChofer', $servicio);
 
         return view('serviciosTrasporte.ticketChofer', compact('servicio'));
     }
@@ -346,7 +347,7 @@ class serviciosTrasporteController extends Controller
             ->join('maquinaria', 'maquinaria.id', 'serviciosTrasporte.equipoId')
             ->join('obras', 'obras.id', 'serviciosTrasporte.obraId')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
-            ->join('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
+            ->leftjoin('almacenTiraderos', 'almacenTiraderos.id', 'serviciosTrasporte.almacenId')
             ->join('conceptos', 'conceptos.id', 'serviciosTrasporte.conceptoId')
             ->select(
                 'serviciosTrasporte.id',
