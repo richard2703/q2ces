@@ -21,7 +21,7 @@
                             @endif
                             <div class="row ">
                                 <div class="col-12 col-lg-6 text-start mb-3">
-                                    <a href="{{ route('catalogos.index') }}">
+                                    <a href="{{ route('catalogos.index', ['seccion' => 'clientes']) }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply

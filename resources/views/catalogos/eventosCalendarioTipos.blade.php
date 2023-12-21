@@ -37,7 +37,7 @@
                                         <div class="d-flex p-3">
                                             <div class="col-12 text-right">
 
-                                                <a href="{{ route('catalogos.index') }}">
+                                                <a href="{{ route('catalogos.index', ['seccion' => 'recursos_humanos']) }}">
                                                     <button class="btn regresar">
                                                         <span class="material-icons">
                                                             reply
@@ -220,7 +220,6 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn botonGral" id="btnTareaGuardar" onclick="alertaGuardar()">Guardar cambios</button>
                         </div>
-
                     </form>
                 </div>
             </div>

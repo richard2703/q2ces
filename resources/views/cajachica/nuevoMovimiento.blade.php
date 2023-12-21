@@ -82,7 +82,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Personal: <span>*</span></label></br>
                                                 <select id="personal" name="personal" class="form-select"
-                                                    aria-label="Default select example">
+                                                    aria-label="Default select example" required>
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($personal as $persona)
                                                         <option value="{{ $persona->id }}">{{ $persona->nombres }}
@@ -96,7 +96,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Comprobante: <span>*</span></label></br>
                                                 <select id="comprobanteId" name="comprobanteId" class="form-select"
-                                                    aria-label="Default select example">
+                                                    aria-label="Default select example" required>
                                                     <option selected value="">Seleccione</option>
                                                     @foreach ($vctComprobantes as $item)
                                                         <option value="{{ $item->id }}">
@@ -108,7 +108,7 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Número de Comprobante:
-                                                    <span>*</span></label></br>
+                                                    <span></span></label></br>
                                                 <input type="text" class="inputCaja text-right" id="ncomprobante"
                                                     name="ncomprobante" maxlength="100000" step="1" min="1"
                                                     pattern="^\d*(\.\d{0,2})?$" max="99999" placeholder="ej. 100"
@@ -143,7 +143,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Equipo: <span>*</span></label></br>
                                                 <select id="equipo" name="equipo" class="form-select"
-                                                    aria-label="Default select example">
+                                                    aria-label="Default select example" required>
                                                     <option selected value="">Seleccione</option>
                                                     @forelse ($maquinaria as $maquina)
                                                         <option value="{{ $maquina->id }}">{{ $maquina->identificador }}
@@ -162,8 +162,8 @@
                                             </div>
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Movimiento: <span>*</span></label></br>
-                                                <select id="tipo" name="tipo" class="form-select" required
-                                                    aria-label="Default select example">
+                                                <select id="tipo" name="tipo" class="form-select" 
+                                                    aria-label="Default select example" required>
                                                     <option selected value="">Seleccione</option>
                                                     <option value="1">
                                                         Ingreso </option>

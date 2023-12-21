@@ -26,7 +26,7 @@
                                     <div class="row">
                                         <div class="d-flex p-3 divBorder">
                                             <div class="col-6 text-left">
-                                                <a href="{{ route('catalogos.index') }}">
+                                                <a href="{{ route('catalogos.index', ['seccion' => 'mantenimiento']) }}">
                                                     <button class="btn regresar">
                                                         <span class="material-icons">
                                                             reply
