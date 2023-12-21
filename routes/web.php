@@ -362,7 +362,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/mantenimientos/nuevo/mtq', [App\Http\Controllers\mantenimientosController::class, 'createMtq'])->name('mantenimientos.createMtq');
     Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
     Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
-    Route::get('/mantenimientos/editar/mtq/{id}', [App\Http\Controllers\mantenimientosController::class, 'editMtq'])->name('mantenimientos.editMtq');
+    Route::get('/mantenimientos/editar/mtq/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.editMtq');
     Route::get('/mantenimientos/detalle/{id}', [App\Http\Controllers\mantenimientosController::class, 'show'])->name('mantenimientos.show');
     Route::get('/mantenimientos/detalle/mtq/{id}', [App\Http\Controllers\mantenimientosController::class, 'showMtq'])->name('mantenimientos.showMtq');
     Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');

@@ -59,7 +59,10 @@ class personal extends Model
 
             $vctPersonal = personal::select(
                 'personal.id',
-                DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as nombre"),
+                'personal.nombres',
+                'personal.apellidoP',
+                'personal.apellidoM',
+                DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as nombreCompleto"),
                 ($blnMostrarPuesto == false ? DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM)as personal") : DB::raw("CONCAT(personal.nombres,' ', personal.apellidoP,' ', personal.apellidoM,' [ ' , puesto.nombre , ' ]')as personal")),
                 'obras.nombre AS obra',
                 'maquinaria.identificador',

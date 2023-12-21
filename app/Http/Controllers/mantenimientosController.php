@@ -161,6 +161,9 @@ class mantenimientosController extends Controller
 
         $mantenimiento['comentario'] = (is_null($mantenimiento['comentario']) == false ? $mantenimiento['comentario'] : 'Sin indicaciones para el mantenimiento');
         $mantenimiento['codigo'] = $tipoManto->codigo;
+        $mantenimiento[ 'subtotal' ] = 0;
+        $mantenimiento[ 'iva' ] = 0;
+        $mantenimiento[ 'costo' ] = 0;
         $mantenimiento['start'] = strtoupper($mantenimiento['fechaInicio']);
 
         //*** creamos el mantenimiento */
@@ -306,56 +309,56 @@ class mantenimientosController extends Controller
         $vctCoordinadoresA = personal::getPersonalPorNivel(1);
         $vctMecanicos = personal::getPersonalPorNivel(4);
         $vctResponsables = personal::getPersonalPorNivel(5, true);
-        // $vctResidentes = residente::all()->sortBy('nombre');
+        $vctResidentes = residente::all()->sortBy('nombre');
 
         // dd( $gastos, $mantenimiento, $maquinaria, $vctMecanicos, $vctResidentes );
-        $blnEsMtq = false;
+        $blnEsMtq = ($maquinaria->compania == 'mtq'? true : false);
 
-        return view('mantenimientos.editarMantenimiento', compact('mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctCoordinadoresA', 'vctResponsables', 'blnEsMtq'));
+        return view('mantenimientos.editarMantenimiento', compact('mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctCoordinadoresA', 'vctResponsables','vctResidentes', 'blnEsMtq'));
     }
 
-    public function editMtq($id)
-    {
-        abort_if(Gate::denies('mantenimiento_edit'), '404');
+    // public function editMtq($id)
+    // {
+    //     abort_if(Gate::denies('mantenimiento_edit'), '404');
 
-        $mantenimiento = mantenimientos::select(
-            'mantenimientos.*',
-            'maquinaria.compania',
-            DB::raw("CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria"),
-        )
-            ->join('maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId')
-            ->where('mantenimientos.id', '=', $id)->first();
+    //     $mantenimiento = mantenimientos::select(
+    //         'mantenimientos.*',
+    //         'maquinaria.compania',
+    //         DB::raw("CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria"),
+    //     )
+    //         ->join('maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId')
+    //         ->where('mantenimientos.id', '=', $id)->first();
 
-        $gastos = gastosMantenimiento::select(
-            'gastosMantenimiento.*',
-            DB::raw('inventario.nombre as articulo'),
-            DB::raw('inventario.numparte as numparte'),
-            DB::raw('inventario.modelo as modelo'),
-            DB::raw('marca.nombre AS marca'),
-            DB::raw('inventario.valor as valor ')
-        )
-            ->leftjoin('inventario', 'inventario.id', '=', 'gastosMantenimiento.inventarioId')
-            ->leftjoin('manoDeObra', 'manoDeObra.id', '=', 'gastosMantenimiento.manoObraId')
-            ->leftjoin('marca', 'marca.id', '=', 'inventario.marcaId')
-            ->where('mantenimientoId', '=', $id)->get();
+    //     $gastos = gastosMantenimiento::select(
+    //         'gastosMantenimiento.*',
+    //         DB::raw('inventario.nombre as articulo'),
+    //         DB::raw('inventario.numparte as numparte'),
+    //         DB::raw('inventario.modelo as modelo'),
+    //         DB::raw('marca.nombre AS marca'),
+    //         DB::raw('inventario.valor as valor ')
+    //     )
+    //         ->leftjoin('inventario', 'inventario.id', '=', 'gastosMantenimiento.inventarioId')
+    //         ->leftjoin('manoDeObra', 'manoDeObra.id', '=', 'gastosMantenimiento.manoObraId')
+    //         ->leftjoin('marca', 'marca.id', '=', 'inventario.marcaId')
+    //         ->where('mantenimientoId', '=', $id)->get();
 
-        $fotos = mantenimientoImagen::where('mantenimientoId', $id)->get();
-        $maquinaria = maquinaria::where('id', '=', $mantenimiento->maquinariaId)->first();
+    //     $fotos = mantenimientoImagen::where('mantenimientoId', $id)->get();
+    //     $maquinaria = maquinaria::where('id', '=', $mantenimiento->maquinariaId)->first();
 
-        $vctTipos = tipoMantenimiento::select('tipoMantenimiento.*')->orderBy('tipoMantenimiento.nombre', 'asc')->get();
+    //     $vctTipos = tipoMantenimiento::select('tipoMantenimiento.*')->orderBy('tipoMantenimiento.nombre', 'asc')->get();
 
-        $vctCoordinadores = personal::getPersonalPorNivel(3);
-        $vctCoordinadoresA = personal::getPersonalPorNivel(1);
-        $vctMecanicos = personal::getPersonalPorNivel(4);
-        // $vctResponsables = personal::getPersonalPorNivel(5, true);
-        // $vctResidentes = residente::all()->sortBy('nombre');
-        $vctResponsables = residente::all()->sortBy('nombre');
+    //     $vctCoordinadores = personal::getPersonalPorNivel(3);
+    //     $vctCoordinadoresA = personal::getPersonalPorNivel(1);
+    //     $vctMecanicos = personal::getPersonalPorNivel(4);
+    //     // $vctResponsables = personal::getPersonalPorNivel(5, true);
+    //     // $vctResidentes = residente::all()->sortBy('nombre');
+    //     $vctResponsables = residente::all()->sortBy('nombre');
 
-        $blnEsMtq = true;
-        dd($vctResponsables);
+    //     $blnEsMtq = true;
+    //     dd($vctResponsables);
 
-        return view('mantenimientos.editarMantenimiento', compact('mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctCoordinadoresA', 'vctResponsables', 'blnEsMtq'));
-    }
+    //     return view('mantenimientos.editarMantenimiento', compact('mantenimiento', 'gastos', 'vctTipos', 'fotos', 'maquinaria', 'vctMecanicos', 'vctCoordinadores', 'vctCoordinadoresA', 'vctResponsables', 'blnEsMtq'));
+    // }
 
     /**
      *
@@ -402,28 +405,19 @@ class mantenimientosController extends Controller
             // dd( $mantto );
             if (is_null($mantto) == false) {
 
-                $data['costo'] =  $data['total'];
-                //*** manejo del estatus de la tarea cuando se cambia su estatus inicial*/
-                if ($mantto->estadoId <= 1 && $mantto->fechaReal == '0000-00-00') {
-                    if ($data['estadoId'] > 1) {
-                        $data['fechaReal'] =  date('Y-m-d');
+                if ( is_null( $data[ 'responsable' ] ) == false ) {
+                    if ( $data[ 'compania' ] == 'mtq' ) {
+                        $vctResponsable = explode( ',', $data[ 'responsable' ] ) ;
+                        $data[ 'residenteId' ] = $vctResponsable[ 0 ];
+                        $data[ 'responsable' ] = $vctResponsable[ 1 ];
+                    } else {
+                        $vctResponsable = explode( ',', $data[ 'responsable' ] ) ;
+                        $data[ 'personalId' ] = $vctResponsable[ 0 ];
+                        $data[ 'responsable' ] = $vctResponsable[ 1 ];
                     }
                 }
 
-                //*** manejo del estatus de la tarea cuando se cambia su estatus final*/
-                if ($data['estadoId'] == 3) {
-                    // dd('test');
-                    $objCalculos->updateKilometrajeMaquinaria($request['maquinariaId'], $request['usoKom'], $proviene = 'Mantenimiento', $request['tipoMantenimientoId']);
-                    $maquinaria = maquinaria::select(
-                        'maquinaria.*',
-                        'marca.nombre as marca'
-                    )->leftjoin('marca', 'marca.id', 'maquinaria.marcaId')->where('maquinaria.id', '=', $mantto->maquinariaId)->first();
-                    $data['fechaReal'] =  date('Y-m-d');
-                    $data['mantenimientoPrint'] =  $maquinaria->mantenimiento;
-                }
-
-                // $data['estadoId'] =  $data['estadoId'];
-                // $data[ 'mantenimientoPrint' ] =  $maquinaria->mantenimiento;
+                // dd( $mantto, $request, $data );
 
                 // dd( $data );
                 $mantto->update($data);

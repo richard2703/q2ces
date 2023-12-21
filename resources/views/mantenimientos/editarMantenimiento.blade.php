@@ -732,8 +732,8 @@
                                                 aria-label="Default select example">
                                                 {{-- <option value="">Seleccione</option> --}}
                                                 @foreach ($vctCoordinadores as $item)
-                                                    <option value="{{ $item->nombreCompleto }}"
-                                                        {{ $mantenimiento->coordTaller == $item->nombreCompleto ? ' selected' : '' }}>
+                                                    <option value="{{ $item->personal }}"
+                                                        {{ $mantenimiento->coordTaller == $item->personal ? ' selected' : '' }}>
                                                         {{ $item->personal }}
                                                     </option>
                                                 @endforeach
@@ -749,8 +749,8 @@
                                                 aria-label="Default select example">
                                                 {{-- <option value="">Seleccione</option> --}}
                                                 @foreach ($vctCoordinadoresA as $item)
-                                                    <option value="{{ $item->nombreCompleto }}"
-                                                        {{ $mantenimiento->coordOperaciones == $item->nombreCompleto ? ' selected' : '' }}>
+                                                    <option value="{{ $item->personal }}"
+                                                        {{ $mantenimiento->coordOperaciones == $item->personal ? ' selected' : '' }}>
                                                         {{ $item->personal }}
                                                     </option>
                                                 @endforeach
@@ -766,8 +766,8 @@
                                                 aria-label="Default select example">
                                                 <option value="">Seleccione</option>
                                                 @foreach ($vctMecanicos as $item)
-                                                    <option value="{{ $item->nombreCompleto }}"
-                                                        {{ $mantenimiento->mecanico == $item->nombreCompleto ? ' selected' : '' }}>
+                                                    <option value="{{ $item->personal }}"
+                                                        {{ $mantenimiento->mecanico == $item->personal ? ' selected' : '' }}>
                                                         {{ $item->personal }}
                                                     </option>
                                                 @endforeach
@@ -782,27 +782,24 @@
                                                 class="form-select form-select-lg mb-3 inputCaja"
                                                 aria-label="Default select example">
                                                 <option value="">Seleccione</option>
-                                                @foreach ($vctResponsables as $item)
-                                                    <option value="{{ $item->nombre . ' ' . $item->apellido }}"
-                                                        {{ $mantenimiento->responsable == $item->nombre . ' ' . $item->apellido ? ' selected' : '' }}>
-                                                        {{ $item->nombre . ' ' . $item->apellido }}
-                                                    </option>
-                                                @endforeach
-                                                {{--  @if ($mantenimiento->compania == 'mtq')
+
+                                                @if ($mantenimiento->compania == 'mtq')
                                                     @foreach ($vctResidentes as $item)
-                                                        <option value="{{ $item->nombre . ' ' . $item->apellido }}"
-                                                            {{ $mantenimiento->responsable == $item->nombre . ' ' . $item->apellido ? ' selected' : '' }}>
-                                                            {{ $item->nombre . ' ' . $item->apellido }}
+                                                        <option
+                                                            value="{{ $item->id . ',' . trim($item->nombre) . ' ' . trim($item->apellido) }}"
+                                                            {{ $mantenimiento->responsable == trim($item->nombre) . ' ' . trim($item->apellido) ? ' selected' : '' }}>
+                                                            {{ trim($item->nombre) . ' ' . trim($item->apellido) }}
                                                         </option>
                                                     @endforeach
                                                 @else
                                                     @foreach ($vctResponsables as $item)
-                                                        <option value="{{ $item->nombreCompleto }}"
-                                                            {{ $mantenimiento->responsable == $item->nombreCompleto ? ' selected' : '' }}>
+                                                        <option
+                                                            value="{{ $item->id . ',' . trim($item->nombreCompleto) }}"
+                                                            {{ $mantenimiento->responsable == trim($item->nombreCompleto) ? ' selected' : '' }}>
                                                             {{ $item->personal }}
                                                         </option>
                                                     @endforeach
-                                                @endif  --}}
+                                                @endif
                                             </select>
                                         </div>
 
@@ -815,7 +812,7 @@
                                         </div>
 
                                         <div class="col-12 text-center mt-1 pt-1">
-                                            <a
+                                            {{-- <a
                                                 href="{{ $maquinaria->compania == 'mtq' ? route('mantenimientos.indexMtq') : route('mantenimientos.index') }}">
                                                 <button class="btn regresar" name="guardar" value="0">
                                                     <span class="material-icons">
@@ -823,7 +820,7 @@
                                                     </span>
                                                     Regresar
                                                 </button>
-                                            </a>
+                                            </a> --}}
                                             @if ($mantenimiento->estadoId < 3)
                                                 <button type="submit" name="guardar" value="1"
                                                     class="btn botonGral">Guardar</button>
