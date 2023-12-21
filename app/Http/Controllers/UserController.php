@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\UserExport;
+use App\Models\personal;
 use App\Models\residente;
 use App\Models\residenteAutos;
 use Illuminate\Http\Request;
@@ -90,7 +91,12 @@ class UserController extends Controller
             $residente->nombre = $request->name;
             $residente->email = $request->email;
             $residente->save();
-        } else {
+        }
+        $personal = personal::where('userId', $user['id'])->first();
+        if ($personal) {
+            $personal->nombres = $request->name;
+            $personal->mailEmpresarial = $request->email;
+            $personal->save();
         }
 
         Session::flash('message', 1);

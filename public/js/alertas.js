@@ -36,7 +36,7 @@ function alertaDuplicado(){
 	Swal.fire({
 		icon: 'error',
 		title: 'Usuarios',
-		text: '¡El residente ya tiene un usuario creado!'
+		text: '¡El usuario ya tiene una cuenta creada!'
 	})
 }
 
