@@ -19,7 +19,7 @@ class personal extends Model
         'userId', 'nombres', 'apellidoP', 'apellidoM', 'fechaNacimiento', 'lugarNacimiento', 'curp', 'fine', 'rfc', 'licencia',
         'cpf', 'ine', 'cpe', 'sexo', 'civil', 'hijos', 'sangre', 'calle', 'numero', 'colonia', 'estado', 'ciudad', 'cp', 'particular',
         'celular', 'mailpersonal', 'mailEmpresarial', 'casa', 'foto', 'aler', 'profe', 'interior', 'estatusId', 'personalId',
-        'puestoNivelId', 'tipoLicencia', 'puestoId'
+        'puestoNivelId', 'tipoLicencia', 'puestoId', 'personalEspecial'
     ];
 
     /**

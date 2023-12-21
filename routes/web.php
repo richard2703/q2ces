@@ -558,7 +558,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Route::get('/comprobar-descarga/{id}', 'detalleDescargaController@comprobarDescarga');
     // Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
-    //
 
     Route::resource('combustibleTote', App\Http\Controllers\CombustibleToteController::class);
     Route::post('/combustibleToteDescarga/', [App\Http\Controllers\CombustibleToteController::class, 'storeDescarga'])->name('descarga.post');
@@ -568,6 +567,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Crud facturaProvedor
     Route::resource('facturaProvedor', App\Http\Controllers\facturaProvedorController::class);
+
+    // Crud personalEspecial
+    Route::resource('personalEspecial', App\Http\Controllers\personalEspecialController::class);
+    Route::post('/personalEspecial/update', [App\Http\Controllers\personalEspecialController::class, 'update'])->name('personalEspecial.update');
+    Route::post('/personalEspecial/generateUser', [App\Http\Controllers\personalEspecialController::class, 'generate'])->name('personalEspecial.generateUser');
 
     // Crud documentoSelladoMantenimiento
     Route::resource('documentoSelladoMantenimiento', App\Http\Controllers\documentoSelladoMantenimientoController::class);
