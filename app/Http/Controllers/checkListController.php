@@ -428,11 +428,20 @@ class checkListController extends Controller {
 
         $maquinaria = maquinaria::select( 'maquinaria.*' )->where( 'id', '=', $maquinariaId )->first();
         $bitacora = bitacoras::select( 'bitacoras.*' )->where( 'id', '=', $bitacoraId )->first();
+        // $vctGrupos = grupo::select(
+        //     DB::raw( 'grupo.id AS grupoId' ),
+        //     DB::raw( 'grupo.nombre AS grupo' ),
+        //     'grupoBitacoras.*',
+        // )
+        // ->join( 'grupoBitacoras', 'grupoBitacoras.grupoId', '=', 'grupo.id' )
+        // ->where( 'grupoBitacoras.bitacoraId', '=', $bitacora->id )->get();
+
         //*** obtenemos las tareas */
         $vctTareas = grupo::select(
             DB::raw( 'tarea.id AS tareaId' ),
             DB::raw( 'tarea.nombre AS tarea' ),
             DB::raw( 'tarea.tipoValorId' ),
+            DB::raw( 'tarea.tipoId' ),
             DB::raw( 'tipoValorTarea.nombre AS tipoValor' ),
             DB::raw( 'tipoValorTarea.controlHtml' ),
             DB::raw( 'grupo.nombre AS grupo' ),
@@ -445,9 +454,18 @@ class checkListController extends Controller {
         ->join( 'tipoValorTarea', 'tipoValorTarea.id', '=', 'tarea.tipoValorId' )
         ->where( 'grupoBitacoras.bitacoraId', '=', $bitacora->id )->get();
 
-        // dd( $bitacora, $maquinaria,  $vctTareas, $bitacoraId, $maquinariaId, $programacionId );
+        $grupos = grupo::select(
+            DB::raw( 'grupo.id AS grupoId' ),
+            DB::raw( 'grupo.nombre AS grupo' ),
+            DB::raw( 'grupo.imagen' ),
+            DB::raw( 'grupoBitacoras.id AS bitacoraId' ),
+        )
+        ->join( 'grupoBitacoras', 'grupoBitacoras.grupoId', '=', 'grupo.id' )
+        ->where( 'grupoBitacoras.bitacoraId', '=', $bitacora->id )->orderBy( 'grupo', 'asc' )->get();
 
-        return view( 'checkList.nuevoCheckList', compact( 'maquinaria', 'bitacora', 'vctTareas', 'programacionId' ) );
+        // dd( $bitacora, $maquinaria, $vctGrupos, $vctTareas, $bitacoraId, $maquinariaId, $programacionId );
+
+        return view( 'checkList.nuevoCheckList', compact( 'maquinaria', 'bitacora', 'vctTareas', 'programacionId', 'grupos' ) );
     }
 
     /**
@@ -536,8 +554,17 @@ class checkListController extends Controller {
         $maquinaria = maquinaria::select( 'maquinaria.*' )->where( 'id', '=', $checkList->maquinariaId )->first();
         $bitacora = bitacoras::select( 'bitacoras.*' )->where( 'id', '=', $checkList->bitacoraId )->first();
 
-        // dd( $records );
-        return view( 'checkList.detalleCheckList', compact( 'maquinaria', 'checkList', 'records', 'bitacora' ) );
+        $grupos = grupo::select(
+            DB::raw( 'grupo.id AS grupoId' ),
+            DB::raw( 'grupo.nombre AS grupo' ),
+            DB::raw( 'grupo.imagen' ),
+            DB::raw( 'grupoBitacoras.id AS bitacoraId' ),
+        )
+        ->join( 'grupoBitacoras', 'grupoBitacoras.grupoId', '=', 'grupo.id' )
+        ->where( 'grupoBitacoras.bitacoraId', '=', $checkList->bitacoraId )->orderBy( 'grupo', 'asc' )->get();
+
+        // dd( $grupos );
+        return view( 'checkList.detalleCheckList', compact( 'maquinaria', 'checkList', 'records', 'bitacora', 'grupos' ) );
     }
 
     /**
@@ -736,7 +763,7 @@ class checkListController extends Controller {
                 } else {
                     $debug[] = 'Sin checklist' ;
                 }
-            }else {
+            } else {
                 $debug[] = 'Sin checklist asignado' ;
             }
 

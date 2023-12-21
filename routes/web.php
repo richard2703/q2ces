@@ -358,12 +358,13 @@ Route::group(['middleware' => 'auth'], function () {
     //Mantenimiento
     Route::get('/mantenimientos', [App\Http\Controllers\mantenimientosController::class, 'index'])->name('mantenimientos.index');
     Route::get('/mantenimientos/mtq', [App\Http\Controllers\mantenimientosController::class, 'indexMtq'])->name('mantenimientos.indexMtq');
-    Route::get('/mantenimientos/mtq', [App\Http\Controllers\mantenimientosController::class, 'indexMtq'])->name('mantenimientos.indexMtq');
     Route::get('/mantenimientos/nuevo/', [App\Http\Controllers\mantenimientosController::class, 'create'])->name('mantenimientos.create');
     Route::get('/mantenimientos/nuevo/mtq', [App\Http\Controllers\mantenimientosController::class, 'createMtq'])->name('mantenimientos.createMtq');
     Route::post('/mantenimientos/nuevo/add', [App\Http\Controllers\mantenimientosController::class, 'store'])->name('mantenimientos.store');
     Route::get('/mantenimientos/editar/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.edit');
+    Route::get('/mantenimientos/editar/mtq/{id}', [App\Http\Controllers\mantenimientosController::class, 'edit'])->name('mantenimientos.editMtq');
     Route::get('/mantenimientos/detalle/{id}', [App\Http\Controllers\mantenimientosController::class, 'show'])->name('mantenimientos.show');
+    Route::get('/mantenimientos/detalle/mtq/{id}', [App\Http\Controllers\mantenimientosController::class, 'showMtq'])->name('mantenimientos.showMtq');
     Route::put('/mantenimiento/editar/{id}/update', [App\Http\Controllers\mantenimientosController::class, 'update'])->name('mantenimientos.update');
     Route::delete('/mantenimiento/{mantenimiento}', [App\Http\Controllers\mantenimientosController::class, 'destroy'])->name('mantenimientos.destroy');
 

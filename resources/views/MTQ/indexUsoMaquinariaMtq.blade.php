@@ -55,11 +55,11 @@
                                     </form>
                                 </div>  --}}
                                 <div class="col-12 pb-3 text-end">
-                                    @can('calendario_mtq_create_mantenimiento')
+                                    @can('mantenimiento_create')
                                         <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button"
                                             style="height: 40px" class="btn botonGral ">Agregar Mantenimiento</button>
                                     @endcan
-                                    @can('maquinaria_mtq_update_uso_bloque')
+                                    @can('maquinariaUso_mtq_update_uso_bloque')
                                         <a href="{{ route('uso.create') }}">
                                             <button type="button" class="btn botonGral">Registrar Uso</button>
                                         </a>
@@ -102,7 +102,7 @@
                                                 <td class="text-center">{{ number_format($maquina->mantenimiento) }}</td>
 
                                                 <td class="td-actions text-center">
-                                                    @can('maquinaria_mtq_edit')
+                                                    @can('maquinariaUso_mtq_edit')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                             onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre_maquinaria }}','{{ $maquina->id_marca }}','{{ $maquina->modelo }}','{{ $maquina->kilometraje }}','{{ false }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
@@ -111,6 +111,14 @@
                                                                 <path
                                                                     d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                             </svg>
+                                                        </a>
+                                                    @endcan
+                                                    @can('mantenimiento_create')
+                                                        <a href="#" data-bs-toggle="modal"
+                                                            data-bs-target="#editarMantenimiento"
+                                                            onclick="cargaMantenimiento('{{ $maquina->id }}','{{ $maquina->mantenimiento }}')">
+                                                            <i class="fas fa-wrench"
+                                                                style="color: #8caf48;font-size: x-large;"></i>
                                                         </a>
                                                     @endcan
                                                 </td>
@@ -131,7 +139,7 @@
                                                 <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
 
                                                 <td class="text-center">
-                                                    @if($maquina->mantenimiento != 0)
+                                                    @if ($maquina->mantenimiento != 0)
                                                         {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
                                                     @else
                                                         0
@@ -141,7 +149,7 @@
                                                 <td class="text-center">{{ number_format($maquina->mantenimiento) }}</td>
 
                                                 <td class="td-actions text-center">
-                                                    @can('maquinaria_mtq_edit')
+                                                    @can('maquinariaUso_mtq_edit')
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                             onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre_maquinaria }}','{{ $maquina->id_marca }}','{{ $maquina->modelo }}','{{ $maquina->kilometraje }}','{{ false }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg " width="28"
@@ -150,6 +158,14 @@
                                                                 <path
                                                                     d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                             </svg>
+                                                        </a>
+                                                    @endcan
+                                                    @can('mantenimiento_create')
+                                                        <a href="#" data-bs-toggle="modal"
+                                                            data-bs-target="#editarMantenimiento"
+                                                            onclick="cargaMantenimiento('{{ $maquina->id }}','{{ $maquina->mantenimiento }}')">
+                                                            <i class="fas fa-wrench"
+                                                                style="color: #8caf48;font-size: x-large;"></i>
                                                         </a>
                                                     @endcan
                                                 </td>
@@ -205,8 +221,8 @@
 
                         <div class="col-12 col-sm-6 mb-3" style="display: none">
                             <label for="title" class="labelTitulo">Marca:</label>
-                            <select name='marca'
-                                class="form-select" id="marca" placeholder="Marca Equipo..." readonly>
+                            <select name='marca' class="form-select" id="marca" placeholder="Marca Equipo..."
+                                readonly>
                                 <option value="">Seleccione</option>
                                 @foreach ($marca as $item)
                                     <option value="{{ $item->id }}">
@@ -227,15 +243,13 @@
                             <input type="text" class="inputCaja" name="km" value="" readonly
                                 id="km">
                         </div>
-
-                        @can('maquinaria_mtq_update_uso')
-                            <div class=" col-12 col-sm-6  mb-3 ">
-                                <label class="labelTitulo">Edicion de Uso:</label></br>
-                                <input type="hidden" name="id[]" id="id" value="" id="idmaq">
-                                <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor[]"
-                                    value="{{ old('numserie') }}" id="valor">
-                            </div>
-                        @endcan
+                    
+                        <div class=" col-12 col-sm-6  mb-3 ">
+                            <label class="labelTitulo">Edicion de Uso:</label></br>
+                            <input type="hidden" name="id[]" id="id" value="" id="idmaq">
+                            <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor[]"
+                                value="{{ old('numserie') }}" id="valor">
+                        </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -291,8 +305,8 @@
 
                                 <div class="mb-3 col-6">
                                     <label for="title" class="labelTitulo">Marca:</label>
-                                    <select name='marca'
-                                        class="form-select" name="marca" id="Mmarca" placeholder="Marca Equipo..." readonly>
+                                    <select name='marca' class="form-select" name="marca" id="Mmarca"
+                                        placeholder="Marca Equipo..." readonly>
                                         <option value="">Seleccione</option>
                                         @foreach ($marca as $item)
                                             <option value="{{ $item->id }}">
@@ -351,6 +365,44 @@
         </div>
     </div>
 
+    <!-- Modal Mantenimiento MTQ-->
+    <div class="modal fade" id="editarMantenimiento" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h1 class="modal-title fs-5" id="tituloModal">&nbsp Editar Mantenimiento MTQ</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row d-flex" action="{{ route('uso.mantenimiento') }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
+
+                        <input type="hidden" name="mId" id="mId" value="">
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Proximo Mantenimiento:</label></br>
+                            <input type="text" class="inputCaja" name="Rmantenimiento" value="" readonly
+                                id="Rmantenimiento">
+                        </div>
+
+                        <div class=" col-12 col-sm-6  mb-3 ">
+                            <label class="labelTitulo">Edicion de Proximo Mantenimiento:</label></br>
+                            <input type="number" class="inputCaja" id="mantenimiento" name="mantenimiento"
+                                value="">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn botonGral">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -377,7 +429,7 @@
             autoFill: true,
             minLength: 1,
             select: function(event, ui) {
-                console.log('ui',ui.item);
+                console.log('ui', ui.item);
                 // Rellenar los campos con los datos de la persona seleccionada
                 $('#MmaquinariaId').val(ui.item.id);
                 // $('#descripcion').val(ui.item.value);
@@ -522,6 +574,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
     <script>
         var curso = ['html', 'hola', 'hi'];
 
@@ -591,5 +644,17 @@
             }
 
         });
+    </script>
+
+    <script>
+        function cargaMantenimiento(id, mantenimiento) {
+
+            const txtId = document.getElementById('mId');
+            txtId.value = id;
+
+            const txtMantenimiento = document.getElementById('Rmantenimiento');
+            txtMantenimiento.value = mantenimiento;
+
+        }
     </script>
 @endsection

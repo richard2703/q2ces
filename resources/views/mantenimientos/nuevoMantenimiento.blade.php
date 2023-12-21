@@ -38,7 +38,7 @@
                             <input type="hidden" name="maquinariaId" id="maquinariaId" value="">
                             <input type="hidden" name="titulo" id="titulo" value="">
                             <input type="hidden" name="estadoId" id="estadoId" value="1">
-                            <input type="hidden" name="personalId" id="personalId" value="{{ auth()->user()->id }}">
+                            {{--  <input type="hidden" name="personalId" id="personalId" value="{{ auth()->user()->id }}">  --}}
 
                             <div class="card-body ">
 
@@ -48,10 +48,10 @@
                                         <div class="mb-4 mt-0" role="search" class="">
                                             <input value="" class="search-submit ">
                                             @if ($blnEsMtq == 'true')
-                                                <input autofocus type="text" class="text" id="searchMtq" name="searchMtq"
-                                                    placeholder="Buscar..."
+                                                <input autofocus type="text" class="text" id="searchMtq"
+                                                    name="searchMtq" placeholder="Buscar..."
                                                     title="Escriba la(s) palabra(s) a buscar."><input type="button"
-                                                    onclick="clearInput('search')" class="btn botonGral" value="Borrar">
+                                                    onclick="clearInput('searchMtq')" class="btn botonGral" value="Borrar">
                                             @else
                                                 <input autofocus type="text" class="text" id="search" name="search"
                                                     placeholder="Buscar..."
@@ -97,7 +97,7 @@
                                             <label class="labelTitulo">Uso de la Maquinaría: </label></br>
                                             <input type="number" class="inputCaja text-end"
                                                 value="{{ old('kilometraje') }}" placeholder="Ej. 1000" step="1"
-                                                min="0" id="usoKom" name="usoKom">
+                                                min="0" id="usoKom" name="usoKom" required>
                                         </div>
                                     </div>
 
@@ -130,6 +130,7 @@
 
     <script>
         function clearInput(controlId) {
+            console.log(controlId);
             var getValue = document.getElementById(controlId);
             if (getValue.value != "") {
                 getValue.value = "";
@@ -137,7 +138,7 @@
             }
         }
 
-        var curso = ['html', 'hola', 'hi'];
+        // var curso = ['html', 'hola', 'hi'];
 
         $('#search').autocomplete({
 

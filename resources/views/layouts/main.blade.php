@@ -495,7 +495,7 @@
                         @can('mantenimiento_index')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
-                                <a href="{{ url('/mantenimientos/mtq') }}" class="">
+                                <a href="{{ route('mantenimientos.indexMtq') }}" class="">
                                     <i class="bi bi-circle"></i><span>Mantenimientos</span>
                                 </a>
                             </li>

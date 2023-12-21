@@ -25,7 +25,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
-                                    <a href="{{ route('mantenimientos.index') }}">
+                                    <a
+                                        href="{{ $mantenimiento->compania == 'mtq' ? route('mantenimientos.indexMtq') : route('mantenimientos.index') }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
@@ -679,7 +680,8 @@
                                                                                             data-max="{{ $numFotosPermitidas }}">
                                                                                     </span>
                                                                                     <label for="mi-archivo">
-                                                                                        <span class="">Sube 5 Imagenes o 10
+                                                                                        <span class="">Sube 5
+                                                                                            Imagenes o 10
                                                                                             (Puedes subir hasta
                                                                                             {{ $numFotosPermitidas }}
                                                                                             más)</span>
@@ -730,8 +732,8 @@
                                                 aria-label="Default select example">
                                                 {{-- <option value="">Seleccione</option> --}}
                                                 @foreach ($vctCoordinadores as $item)
-                                                    <option value="{{ $item->nombreCompleto }}"
-                                                        {{ $mantenimiento->coordTaller == $item->nombreCompleto ? ' selected' : '' }}>
+                                                    <option value="{{ $item->personal }}"
+                                                        {{ $mantenimiento->coordTaller == $item->personal ? ' selected' : '' }}>
                                                         {{ $item->personal }}
                                                     </option>
                                                 @endforeach
@@ -747,8 +749,8 @@
                                                 aria-label="Default select example">
                                                 {{-- <option value="">Seleccione</option> --}}
                                                 @foreach ($vctCoordinadoresA as $item)
-                                                    <option value="{{ $item->nombreCompleto }}"
-                                                        {{ $mantenimiento->coordOperaciones == $item->nombreCompleto ? ' selected' : '' }}>
+                                                    <option value="{{ $item->personal }}"
+                                                        {{ $mantenimiento->coordOperaciones == $item->personal ? ' selected' : '' }}>
                                                         {{ $item->personal }}
                                                     </option>
                                                 @endforeach
@@ -764,8 +766,8 @@
                                                 aria-label="Default select example">
                                                 <option value="">Seleccione</option>
                                                 @foreach ($vctMecanicos as $item)
-                                                    <option value="{{ $item->nombreCompleto }}"
-                                                        {{ $mantenimiento->mecanico == $item->nombreCompleto ? ' selected' : '' }}>
+                                                    <option value="{{ $item->personal }}"
+                                                        {{ $mantenimiento->mecanico == $item->personal ? ' selected' : '' }}>
                                                         {{ $item->personal }}
                                                     </option>
                                                 @endforeach
@@ -780,17 +782,20 @@
                                                 class="form-select form-select-lg mb-3 inputCaja"
                                                 aria-label="Default select example">
                                                 <option value="">Seleccione</option>
+
                                                 @if ($mantenimiento->compania == 'mtq')
                                                     @foreach ($vctResidentes as $item)
-                                                        <option value="{{ $item->nombre . ' ' . $item->apellido }}"
-                                                            {{ $mantenimiento->responsable == $item->nombre . ' ' . $item->apellido ? ' selected' : '' }}>
-                                                            {{ $item->nombre . ' ' . $item->apellido }}
+                                                        <option
+                                                            value="{{ trim($item->id . ',' .  $item->nombre  . ' ' . $item->apellido)  }}"
+                                                            {{ $mantenimiento->responsable == trim( $item->nombre  . ' ' .  $item->apellido) ? ' selected' : '' }}>
+                                                            {{ trim($item->nombre  . ' ' . $item->apellido) }}
                                                         </option>
                                                     @endforeach
                                                 @else
                                                     @foreach ($vctResponsables as $item)
-                                                        <option value="{{ $item->nombreCompleto }}"
-                                                            {{ $mantenimiento->responsable == $item->nombreCompleto ? ' selected' : '' }}>
+                                                        <option
+                                                            value="{{ trim($item->id . ',' . $item->nombreCompleto) }}"
+                                                            {{ $mantenimiento->responsable == trim($item->nombreCompleto) ? ' selected' : '' }}>
                                                             {{ $item->personal }}
                                                         </option>
                                                     @endforeach
@@ -807,14 +812,15 @@
                                         </div>
 
                                         <div class="col-12 text-center mt-1 pt-1">
-                                            <a href="{{ route('mantenimientos.index') }}">
+                                            {{-- <a
+                                                href="{{ $maquinaria->compania == 'mtq' ? route('mantenimientos.indexMtq') : route('mantenimientos.index') }}">
                                                 <button class="btn regresar" name="guardar" value="0">
                                                     <span class="material-icons">
                                                         reply
                                                     </span>
                                                     Regresar
                                                 </button>
-                                            </a>
+                                            </a> --}}
                                             @if ($mantenimiento->estadoId < 3)
                                                 <button type="submit" name="guardar" value="1"
                                                     class="btn botonGral">Guardar</button>
@@ -881,9 +887,6 @@
             txtTotal.value = parseFloat(decTotal).toFixed(2);
 
         }
-
-
-        var curso = ['html', 'hola', 'hi'];
 
         $('#search').autocomplete({
 
@@ -1005,7 +1008,7 @@
             html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
             html +=
-                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="" onchange="sumarItems()" onblur="sumarItems()">';
+                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1" onchange="sumarItems()" onblur="sumarItems()">';
             html += '      </div>';
             html += '      <div class="col-2 ">';
             html +=
@@ -1024,6 +1027,8 @@
             html += '</li>';
 
             $('#newRow').append(html);
+
+            sumarItems();
         }
 
 
@@ -1047,13 +1052,15 @@
             html += '      <input type="hidden" name="concepto[]" id="concepto" value="' + concepto + '">';
             html += '      <input type="hidden" name="numeroParte[]" id="numeroParte" value="' + numparte + '">';
             html += '      <div class="col-2 ">';
-            html += '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="" onchange="sumarItems()" onblur="sumarItems()" >';
+            html +=
+                '           <input type="number" maxlength="2" min="1" required max="99" step="1" class="inputCaja text-end" id="cantidad" placeholder="Ej. 1" name="cantidad[]" value="1" onchange="sumarItems()" onblur="sumarItems()" >';
             html += '      </div>';
             html += '      <div class="col-2 ">';
             // html +=
             //     '           <input type="text" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 1" name="precioUnitario[]" value="' +
             //     costo + '">';
-                html +='           <input type="number" maxlength="10" min="1" required max="999999999" step="0.01" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 123.55" name="precioUnitario[]" value="' +
+            html +=
+                '           <input type="number" maxlength="10" min="1" required max="999999999" step="0.01" class="inputCaja text-end" id="precioUnitario" placeholder="Ej. 123.55" name="precioUnitario[]" value="' +
                 costo + '" onchange="sumarItems()" onblur="sumarItems()">';
             html += '      </div>';
 
@@ -1069,6 +1076,8 @@
             html += '</li>';
 
             $('#newRowMano').append(html);
+
+            sumarItems();
         }
 
 

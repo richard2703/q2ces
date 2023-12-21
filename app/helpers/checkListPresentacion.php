@@ -8,7 +8,8 @@ use App\Models\grupo;
 use App\Models\grupoBitacoras;
 use App\Models\grupoTareas;
 use App\Models\tarea;
-
+use App\Models\tareaTipo;
+use Hamcrest\Type\IsNumeric;
 use Illuminate\Support\Facades\DB;
 
 class checkListPresentacion {
@@ -82,26 +83,26 @@ class checkListPresentacion {
         // dd( $intTareaId, $strValorControl, $intConsecutivo, $objTarea );
         if ( $objTarea ) {
             $strLeyenda = ' title="' . $objTarea->leyenda . '"';
-            $strUnidadMedida =  ( $objTarea->requiereUnidadMedida == 1 ?   "<label class='labelUnidadMedida'>". $objTarea->unidadMedida .'</label><br>'  : '' ) ;
-            $strImagen =  ( $objTarea->requiereImagen == 1 ?   '<span class="mi-archivo">'.
-                                                                '<input class="mb-4 ver" type="file" name="foto'. $intTareaId . '" id="control'. $intConsecutivo . 'Img" accept="image/*">'.
-                                                                '</span>'.
-                                                                '<label for="control'. $intConsecutivo . 'Img" style="font-size: 14px;
+            $strUnidadMedida =  ( $objTarea->requiereUnidadMedida == 1 ? "<label class='labelUnidadMedida'>". $objTarea->unidadMedida .'</label><br>'  : '' ) ;
+            $strImagen =  ( $objTarea->requiereImagen == 1 ?   '<div class="row"><span class="mi-archivo">'.
+            '<input class="mb-4 ver" type="file" name="foto'. $intTareaId . '" id="control'. $intConsecutivo . 'Img" accept="image/*">'.
+            '</span>'.
+            '<label for="control'. $intConsecutivo . 'Img" style="font-size: 24px;
                                                                 font-weight: 600;
                                                                 color: #fff;
                                                                 background-color: #A6CE34;
                                                                 display: inline-block;
                                                                 transition: all .5s;
                                                                 cursor: pointer;
-                                                                padding: 15px 40px !important;
+                                                                padding: 10px 10px !important;
                                                                 text-transform: uppercase;
-                                                                width: 50%;
-                                                                text-align: center;"><span>Sube Imagen</span></label>' : '' ) ;
+                                                                width: 10%;
+                                                                text-align: center;"><i class="fas fa-camera"></i></label></div>' : '' ) ;
 
             switch ( strtolower( $objTarea->controlHtml ) ) {
                 case 'text':
                 $strCodigoControl =  '<input type="text" class="inputCaja" minlength="8" maxlength="200" '.
-                ' id="control'. $intConsecutivo . '"' .
+                ' id="control'. $intConsecutivo . '" ' .
                 ' name="resultado'. $intTareaId . '" ' .
                 $strLeyenda .
                 ' required value="'. $strResultadoControl . '" '.
@@ -145,10 +146,10 @@ class checkListPresentacion {
                     foreach ( $vctItems as $item ) {
                         $aValue = explode( '=>', $item ) ;
                         $strCodigoControl .=  '<div>' .
-                        '<input type="radio"'.
-                        'id="control'. $intConsecutivo . $intOpcion .'"'.
-                        'name="resultado'. $intTareaId . '[]"'.
-                        'value="'. $intOpcion .'"' .
+                        '<input type="radio" '.
+                        ' id="control'. $intConsecutivo . $intOpcion .'" '.
+                        ' name="resultado'. $intTareaId . '[]" '.
+                        ' value="'. $intOpcion .'" ' .
                         ( $strValorControl == $intOpcion   ? ' checked' : '' ) . '>' .
                         '<label for="control'. $intConsecutivo . $intOpcion .'" '. $strLeyenda .'>' .  $aValue[ 1 ] . '</label>' .
                         '</div>';
@@ -169,10 +170,10 @@ class checkListPresentacion {
                 foreach ( $vctItems as $item ) {
                     $aValue = explode( '=>', $item ) ;
 
-                    $strItems .= '<option value="'.$aValue[ 0 ] . '"'. ( $item[ 0 ] == $strValorControl ? ' selected' : '' ).'>'.$aValue[ 1 ].'</option>' ;
+                    $strItems .= '<option value="'.$aValue[ 0 ] . '"'. ( $item[ 0 ] == $strValorControl ? ' selected' : '' ).'> '.$aValue[ 1 ].'</option>' ;
                 }
 
-                $strCodigoControl = '<select class="form-select"  aria-label="Default select example" id="control'. $intConsecutivo . '"' . $strLeyenda .
+                $strCodigoControl = '<select class="form-select" aria-label="Default select example" id="control'. $intConsecutivo . '" ' . $strLeyenda .
                 ' name="resultado'. $intTareaId . '" required>' .
                 '<option value="">Seleccione</option>' .
                 $strItems .
@@ -193,9 +194,96 @@ class checkListPresentacion {
             $strCodigoControl = "<label class = 'labelTitulo'>Algo salio MAL!!!</label>";
         }
 
-        // dd( $vctDebug, $objTarea );
-        return $strCodigoControl;
+        // dd( $vctDebug, $objTarea, $strCodigoControl );
+        return   $strCodigoControl  ;
 
+    }
+
+    /**
+     * Obtiene la imagen asociada de una tarea
+     *
+     * @param int $intTareaId El Identificador de la tarea
+     * @param int $intAncho El ancho de la imagen (128px por default)
+     * @return void
+     */
+    public function getImagenTareaControl( $intTareaId, $intAncho = '128' ) {
+        $strControl = null;
+
+        if( is_numeric ($intAncho) == false){
+            $intAncho=64;
+        }
+
+        if ( $intTareaId>0 ) {
+
+            $objRecord =   tarea::where( 'tarea.id', '=', $intTareaId )->first();
+            if($objRecord){
+                $strControl =  ($objRecord->imagen !='' ?
+                '<input class="img-a-mostrar" type="image" width="'. $intAncho . '" id="imagenTarea' . $objRecord->id . '" alt="Imagen" src="'. asset('/storage/interfaz/tareas/' . $objRecord->imagen). '" />'
+                :
+                ""
+            );
+            }
+        }
+
+        return $strControl;
+    }
+
+    /**
+     * Obtiene la imagen asociada de un Grupo de Tareas
+     *
+     * @param int $intTareaId El Identificador del Grupo de Tareas
+     * @param int $intAncho El ancho de la imagen (128px por default)
+     * @return void
+     */
+    public function getImagenGrupoTareasControl( $intGrupoId, $intAncho = '128' ) {
+        $strControl = null;
+
+        if( is_numeric ($intAncho) == false){
+            $intAncho=64;
+        }
+
+        if ( $intGrupoId > 0 ) {
+
+            $objRecord =   grupo::where( 'grupo.id', '=', $intGrupoId )->first();
+            if($objRecord){
+                $strControl =  ($objRecord->imagen !='' ?
+                '<input class="img-a-mostrar" type="image" width="'. $intAncho . '" id="imagenGrupo' . $objRecord->id . '" alt="Imagen" src="'. asset('/storage/interfaz/grupos/' . $objRecord->imagen). '" />'
+                :
+                ""
+            );
+            }
+        }
+
+        return $strControl;
+    }
+
+    /**
+     * Obtiene la imagen asociada de un Tipo de Tareas
+     *
+     * @param int $intTipoTareaId El Identificador del Tipo de Tarea
+     * @param int $intAncho El ancho de la imagen (128px por default)
+     * @return void
+     */
+    public function getImagenTipoTareaControl( $intTipoTareaId, $intAncho = '128' ) {
+        $strControl = null;
+
+        if( is_numeric ($intAncho) == false){
+            $intAncho=64;
+        }
+
+        if ( $intTipoTareaId > 0 ) {
+
+            $objRecord =   tareaTipo::where( 'tareaTipo.id', '=', $intTipoTareaId )->first();
+            if($objRecord){
+                $strControl =  ($objRecord->imagen !='' ?
+                '<input class="img-a-mostrar" type="image" width="'. $intAncho . '" id="imagenTipoTarea' . $objRecord->id . '" alt="Imagen" src="'. asset('/storage/interfaz/tareas/' . $objRecord->imagen). '" />'
+                :
+                ""
+            );
+            }
+        }
+
+        return $strControl;
     }
 
     public function etiquetaValor( $intValor, $intTareaId ) {

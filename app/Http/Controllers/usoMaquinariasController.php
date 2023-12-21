@@ -213,11 +213,12 @@ class usoMaquinariasController extends Controller
 
     public function mantenimiento(Request $request)
     {
-        // dd( $usoMaquinaria, $request );
+        // dd($request);
         $uso  = maquinaria::find($request->mId);
 
         $uso->mantenimiento = $request->mantenimiento;
         $uso->save();
-        return redirect()->action([usoMaquinariasController::class, 'indexQ2ces']);
+        // return redirect()->action([usoMaquinariasController::class, 'indexQ2ces']);
+        return redirect()->back();
     }
 }

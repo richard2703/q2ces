@@ -263,14 +263,13 @@
                                                             @endcan
 
                                                             @can('serviciosTrasporte_destroy')
-                                                                <form
+                                                                <form class="alertaBorrar"
                                                                     action="{{ route('serviciosTrasporte.destroy', $registro->id) }}"
-                                                                    method="POST" style="display: inline-block;"
-                                                                    onsubmit="return confirm('Seguro?')">
+                                                                    method="POST" style="display: inline-block;">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button class="btnSinFondo" type="submit"
-                                                                        rel="tooltip">
+                                                                    <button class="btnSinFondo" type="submit" rel="tooltip"
+                                                                        onclick="alertaBorrar()">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                             height="28" fill="currentColor"
                                                                             class="bi bi-x-circle" viewBox="0 0 16 16">
