@@ -786,15 +786,15 @@
                                                 @if ($mantenimiento->compania == 'mtq')
                                                     @foreach ($vctResidentes as $item)
                                                         <option
-                                                            value="{{ $item->id . ',' . trim($item->nombre) . ' ' . trim($item->apellido) }}"
-                                                            {{ $mantenimiento->responsable == trim($item->nombre) . ' ' . trim($item->apellido) ? ' selected' : '' }}>
-                                                            {{ trim($item->nombre) . ' ' . trim($item->apellido) }}
+                                                            value="{{ trim($item->id . ',' .  $item->nombre  . ' ' . $item->apellido)  }}"
+                                                            {{ $mantenimiento->responsable == trim( $item->nombre  . ' ' .  $item->apellido) ? ' selected' : '' }}>
+                                                            {{ trim($item->nombre  . ' ' . $item->apellido) }}
                                                         </option>
                                                     @endforeach
                                                 @else
                                                     @foreach ($vctResponsables as $item)
                                                         <option
-                                                            value="{{ $item->id . ',' . trim($item->nombreCompleto) }}"
+                                                            value="{{ trim($item->id . ',' . $item->nombreCompleto) }}"
                                                             {{ $mantenimiento->responsable == trim($item->nombreCompleto) ? ' selected' : '' }}>
                                                             {{ $item->personal }}
                                                         </option>
