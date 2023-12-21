@@ -1,0 +1,120 @@
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+:root {
+/* Nuevos colores */
+--fondo:#ffffff;
+--verdeF:#5C7C26 ;
+--verdeB: #8eb322;
+--Tprincipal: #ffffff;
+--Tsecundario: #5f7e2a;
+--Topcional: #727176;
+
+  }
+
+/*--------------------------------------------------------------
+# Textos
+--------------------------------------------------------------*/
+.contenido h2{
+  font-weight: bold;
+  color: var(--Tsecundario);
+}
+.contenido h3{
+  font-weight: bold;
+  color: var(--Tsecundario);
+}
+
+.contenido p{
+  font-weight: bold;
+  color: var(--Tsecundario);
+  font-size: 12px;
+}
+
+/*--------------------------------------------------------------
+# Botones
+--------------------------------------------------------------*/
+
+.contenido button{
+  display: inline-block;
+  padding: 1em 2em;
+  background: var(--Tsecundario);
+  color: var(--Tprincipal);
+  border: 2px solid var(--Tsecundario);
+  border-radius: 2em; 
+  transition-duration: 0.4s;
+
+}
+
+.contenido button:hover{
+  background: var(--verdeB);
+  color: var(--Tprincipal);
+  /* border-color: var(--verdeB); */
+}
+
+/*--------------------------------------------------------------
+# Elementos Unicos
+--------------------------------------------------------------*/
+/* Cinta de Marcas - HOME */
+@-webkit-keyframes scroll {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(calc(-250px * 7));
+            transform: translateX(calc(-250px * 7));
+  }
+}
+
+@keyframes scroll {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(calc(-250px * 7));
+            transform: translateX(calc(-250px * 7));
+  }
+}
+.slider {
+  background: var(--verdeB);
+  /*box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .125);*/
+  height: 100px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  width: 95%;
+}
+
+.slider::before, .slider::after {
+  background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
+  content: "";
+  height: 100px;
+  position: absolute;
+  width: 200px;
+  z-index: 2;
+}
+.slider::after {
+  right: 0;
+  top: 0;
+  -webkit-transform: rotateZ(180deg);
+          transform: rotateZ(180deg);
+}
+.slider::before {
+  left: 0;
+  top: 0;
+}
+.slider .slide-track {
+  -webkit-animation: scroll 40s linear infinite;
+          animation: scroll 40s linear infinite;
+  display: flex;
+  width: calc(250px * 14);
+}
+.slider .slide {
+  height: 50px;
+  width: 250px;
+}
+
+/* .slide img{
+  
+} */

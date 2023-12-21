@@ -23,6 +23,7 @@
     {{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/sider.css') }}">  --}}
     {{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/layout.css') }}">  --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/comercial/layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/comercial/general.css') }}">
 
     <!-- CSS only -->
 
@@ -142,13 +143,13 @@
         <div class="separadorFooter">
             <img src="{{ asset('img/comercial/layout/separadorFooter.svg') }}">
         </div>
-        <div class="contFooder d-flex">
-            <div class="col-3 seccionFooder ">
+        <div class="contFooder">
+            <div class="col-12 col-md-6 col-lg-3 seccionFooder ">
                 <img src="{{ asset('img/comercial/layout/Q2CES.svg') }}" alt="Q2Ces">
                 <p>ESPECIALIZADO EN LA RENTA DE MAQUINARIA PESADA PARA PROYECTOS DE CONSTRUCCIÓN Y MOVIMIENTO DE
                     TIERRAS.</p>
             </div>
-            <div class="col-3 seccionFooder flechas">
+            <div class="col-12 col-md-6 col-lg-3 seccionFooder flechas">
                 <h2>ENLACES ÚTILES</h2>
                 <img src="{{ asset('img/comercial/layout/flechasDerecha.svg') }}">
                 <a href="#">
@@ -164,7 +165,7 @@
                     <h3>Trabaja con nosotros</h3>
                 </a>
             </div>
-            <div class="col-3 seccionFooder flechas">
+            <div class="col-12 col-md-6 col-lg-3 seccionFooder flechas">
                 <h2>EXPLORAR Q2CES</h2>
                 <img src="{{ asset('img/comercial/layout/flechasDerecha.svg') }}">
                 <a href="#">
@@ -180,7 +181,7 @@
                     <h3>Protecciones y coberturas</h3>
                 </a>
             </div>
-            <div class="col-3 seccionFooder flechas">
+            <div class="col-12 col-md-6 col-lg-3 seccionFooder flechas">
                 <h2>CONTACTO</h2>
                 <img src="{{ asset('img/comercial/layout/flechasDerecha.svg') }}">
                 <div class="pats">

@@ -248,6 +248,8 @@
 .footer{
   /* background-color: var(--Topcional); */
   background: linear-gradient(to top, var(--Topcional), 50%,var(--Tprincipal) );
+  white-space: inherit;
+
 }
 
 .footer img{
@@ -258,10 +260,14 @@
 
 .contFooder{
   margin: 30px 15px 15px 15px;
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en una nueva línea si no hay suficiente espacio */
+  justify-content: space-between; /* Distribuye los elementos uniformemente en el contenedor */
 }
 
 .seccionFooder{
   padding: 00px 15px 0px 15px;
+  margin-bottom: 15px;
 }
 
 .seccionFooder a {
@@ -328,3 +334,7 @@
   color: var(--verdeB);
 }
 
+.marcos{
+  border: 1px solid var(--titulo);
+
+}
