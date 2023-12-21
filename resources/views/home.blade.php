@@ -55,7 +55,7 @@
                                 @can('mantenimiento_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ url('/mantenimientos') }}" class="">
-                                            <img src="/img/equipos/inventario.svg" alt="Mantenimientos" title="Mantenimientos"
+                                            <img src="/img/equipos/mantenimientos.svg" alt="Mantenimientos" title="Mantenimientos"
                                                 width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Mantenimientos</p>
                                         </a>
