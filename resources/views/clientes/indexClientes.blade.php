@@ -33,7 +33,7 @@
                                     </a>  --}}
                                     <div class="row divBorder">
                                         <div class="col-4 pb-3 text-start">
-                                            <a href="{{ route('catalogos.index') }}">
+                                            <a href="{{ route('catalogos.index', ['seccion' => 'clientes']) }}">
                                                 <button class="btn regresar">
                                                     <span class="material-icons">
                                                         reply
