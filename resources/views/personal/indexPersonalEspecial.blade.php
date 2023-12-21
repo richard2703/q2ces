@@ -257,7 +257,7 @@
                                 value="{{ old('fechaNacimiento') }}">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 " style="display: none;">
+                        <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Correo Electrónico
                                 Personal:</label></br>
                             <input type="email" class="inputCaja"
@@ -265,7 +265,7 @@
                                 value="{{ old('mailpersonal') }}">
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        <div class=" col-12 col-sm-6 mb-3 " style="display: none;">
                             <label class="labelTitulo">Correo Electrónico
                                 Empresarial:</label></br>
                             <input type="email" class="inputCaja"
