@@ -57,9 +57,9 @@ class personalEspecialController extends Controller
     {
         abort_if(Gate::denies('personal_create'), 403);
         $personal = $request->all();
-        $puestoNivel = puesto::where('id', $personal['puestoId'])->first();
+        // $puestoNivel = puesto::where('id', $personal['puestoId'])->first();
 
-        $personal['nivelPuestoId'] = $puestoNivel->puestoNivelId;
+        // $personal['nivelPuestoId'] = $puestoNivel->puestoNivelId;
         //dd($personal);
         // conversion a mayuscula de algunos campos
         $personal['mailpersonal'] = strtolower($personal['mailpersonal']);
@@ -282,9 +282,9 @@ class personalEspecialController extends Controller
         /*** directorio contenedor de su información */
         $pathPesonal = str_pad($personal->id, 4, '0', STR_PAD_LEFT);
         // dd($request);
-        $puestoNivel = puesto::where('id', $personal['puestoId'])->first();
+        // $puestoNivel = puesto::where('id', $personal['puestoId'])->first();
 
-        $personal['nivelPuestoId'] = $puestoNivel->puestoNivelId;
+        // $personal['nivelPuestoId'] = $puestoNivel->puestoNivelId;
         // dd($personal);
         // if ($request->hasFile('foto')) {
         //     $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();

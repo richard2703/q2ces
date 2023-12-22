@@ -1,7 +1,7 @@
 @extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Lista de Personal')])
 @section('content')
     <?php
-        $objValida = new Validaciones();
+    $objValida = new Validaciones();
     ?>
     <div class="content">
         <div class="container-fluid">
@@ -28,32 +28,45 @@
                                     @endif
                                     <div class="row divBorder">
                                         <div class="col-12 col-sm-6 col-lg-3 pb-3 text-center">
-                                            <form action="{{ route('personalEspecial.index') }}" method="GET" id="filterForm">
+                                            <form action="{{ route('personalEspecial.index') }}" method="GET"
+                                                id="filterForm">
                                                 <div class="input-group">
                                                     <label class="labelTitulo p-2">Estatus: </label>
-                                                    <select name="estatus" id="estatus" style="background: #727176; color: white; font-weight: bold;" class="form-control" onchange="document.getElementById('filterForm').submit();">
-                                                        <option value="1" style="font-weight: bold;" {{ request('estatus') == '1' ? 'selected' : '' }}>Activos</option>
-                                                        <option value="3" style="font-weight: bold;" {{ request('estatus') == '3' ? 'selected' : '' }}>Baja</option>
-                                                        <option value="2" style="font-weight: bold;" {{ request('estatus') == '2' ? 'selected' : '' }}>Inactivos</option>
-                                                        <option value="4" style="font-weight: bold;" {{ request('estatus') == '4' ? 'selected' : '' }}>Borrado</option>
-                                                        <option value="0" style="font-weight: bold;" {{ request('estatus') == '0' ? 'selected' : '' }}>Todos</option>
+                                                    <select name="estatus" id="estatus"
+                                                        style="background: #727176; color: white; font-weight: bold;"
+                                                        class="form-control"
+                                                        onchange="document.getElementById('filterForm').submit();">
+                                                        <option value="1" style="font-weight: bold;"
+                                                            {{ request('estatus') == '1' ? 'selected' : '' }}>Activos
+                                                        </option>
+                                                        <option value="3" style="font-weight: bold;"
+                                                            {{ request('estatus') == '3' ? 'selected' : '' }}>Baja</option>
+                                                        <option value="2" style="font-weight: bold;"
+                                                            {{ request('estatus') == '2' ? 'selected' : '' }}>Inactivos
+                                                        </option>
+                                                        <option value="4" style="font-weight: bold;"
+                                                            {{ request('estatus') == '4' ? 'selected' : '' }}>Borrado
+                                                        </option>
+                                                        <option value="0" style="font-weight: bold;"
+                                                            {{ request('estatus') == '0' ? 'selected' : '' }}>Todos</option>
                                                     </select>
                                                 </div>
                                             </form>
                                         </div>
-                                        
+
                                         <div class="col-12 col-sm-6 col-lg-9 pb-3 text-end">
                                             @can('personal_create')
                                                 <button class="btn botonGral float-end" data-bs-toggle="modal"
-                                                    data-bs-target="#nuevoItem" onclick="cargaItem('','','','','','','',
+                                                    data-bs-target="#nuevoItem"
+                                                    onclick="cargaItem('','','','','','','',
                                                     '','','','','', '{{ false }}')">
                                                     Añadir Personal Especial
                                                 </button>
                                             @endcan
                                         </div>
                                     </div>
-                                    
-                                    
+
+
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
@@ -80,47 +93,57 @@
                                                         <td class="text-center">{{ $persona->estatus }}</td>
 
                                                         <td class="td-actions text-center">
-                                                            @can('residente_mtq_generateUser')
-                                                            <form class="" id="printForm" action="{{ route('personalEspecial.generateUser') }}" method="POST" style="display: inline-block;">
-                                                                @csrf
-                                                                @method('POST')
-                                                                <input type="hidden" name="personalIdRoles" id="personalIdRoles" value="">
-                                                                @if ($persona->userId != null)
-                                                                <button class="btnSinFondo" type="button" onclick="alertaDuplicado()">
-                                                                    <i class="fas fa-user-plus" style="color: #8caf48; font-size: x-large;"></i>
-                                                                </button>    
-                                                                @else                                                                
-                                                                <button class="btnSinFondo" type="button" onclick="alertaGuardarEvent(event,'{{ $persona->id }}')">
-                                                                    <i class="fas fa-user-plus" style="color: red; font-size: x-large;"></i>
-                                                                </button>
-                                                                @endif
-                                                            </form>
+                                                            @can('personalEspecial_generateUser')
+                                                                <form class="" id="printForm"
+                                                                    action="{{ route('personalEspecial.generateUser') }}"
+                                                                    method="POST" style="display: inline-block;">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <input type="hidden" name="personalIdRoles"
+                                                                        id="personalIdRoles" value="">
+                                                                    @if ($persona->userId != null)
+                                                                        <button class="btnSinFondo" type="button"
+                                                                            onclick="alertaDuplicado()">
+                                                                            <i class="fas fa-user-plus"
+                                                                                style="color: #8caf48; font-size: x-large;"></i>
+                                                                        </button>
+                                                                    @else
+                                                                        <button class="btnSinFondo" type="button"
+                                                                            onclick="alertaGuardarEvent(event,'{{ $persona->id }}')">
+                                                                            <i class="fas fa-user-plus"
+                                                                                style="color: red; font-size: x-large;"></i>
+                                                                        </button>
+                                                                    @endif
+                                                                </form>
                                                             @endcan
                                                             @can('personal_show')
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $persona->id }}','{{ $persona->nombres }}','{{ $persona->apellidoP }}','{{ $persona->apellidoM }}','{{ $persona->fechaNacimiento }}','{{ $persona->puestoId }}','{{ $persona->celular }}',
+                                                                <a href="#" data-bs-toggle="modal"
+                                                                    data-bs-target="#editarItem"
+                                                                    onclick="cargaItem('{{ $persona->id }}','{{ $persona->nombres }}','{{ $persona->apellidoP }}','{{ $persona->apellidoM }}','{{ $persona->fechaNacimiento }}','{{ $persona->puestoId }}','{{ $persona->celular }}',
                                                             '{{ $persona->mailEmpresarial }}','{{ $persona->mailpersonal }}','{{ $persona->estatus }}','{{ $persona->foto }}', '{{ true }}')">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
-                                                                fill="currentColor" class="bi bi-card-text accionesIconos"
-                                                                viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                                                <path
-                                                                    d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
-                                                            </svg>
-                                                            </a>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                        height="28" fill="currentColor"
+                                                                        class="bi bi-card-text accionesIconos"
+                                                                        viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                        <path
+                                                                            d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
+                                                                    </svg>
+                                                                </a>
                                                             @endcan
                                                             @can('personal_edit')
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
-                                                            onclick="cargaItem('{{ $persona->id }}','{{ $persona->nombres }}','{{ $persona->apellidoP }}','{{ $persona->apellidoM }}','{{ $persona->fechaNacimiento }}','{{ $persona->puestoId }}','{{ $persona->celular }}',
+                                                                <a href="#" data-bs-toggle="modal"
+                                                                    data-bs-target="#editarItem"
+                                                                    onclick="cargaItem('{{ $persona->id }}','{{ $persona->nombres }}','{{ $persona->apellidoP }}','{{ $persona->apellidoM }}','{{ $persona->fechaNacimiento }}','{{ $persona->puestoId }}','{{ $persona->celular }}',
                                                             '{{ $persona->mailEmpresarial }}','{{ $persona->mailpersonal }}','{{ $persona->estatus }}','{{ $persona->foto }}', '{{ false }}')">
-                                                                <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
-                                                                    fill="currentColor" class="bi bi-pencil accionesIconos"
-                                                                    viewBox="0 0 16 16">
-                                                                    <path
-                                                                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                                                </svg>
-                                                            </a>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg " width="28"
+                                                                        height="28" fill="currentColor"
+                                                                        class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                    </svg>
+                                                                </a>
                                                             @endcan
 
                                                             {{-- @can('user_edit') --}}
@@ -131,18 +154,24 @@
                                                             </a> --}}
                                                             {{-- @endcan --}}
                                                             @can('user_destroy')
-                                                            <form action="{{ route('personalEspecial.destroy', $persona->id) }}"
-                                                                method="POST" style="display: inline-block;"
-                                                                onsubmit="return confirm('¿Estás seguro que deseas eliminar este registro?')">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button class="btnSinFondo" type="submit"  rel="tooltip">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"  width="28" height="28"  fill="currentColor"  class="bi bi-x-circle"  viewBox="0 0 16 16">
-                                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                    </svg>
-                                                                </button>
-                                                            </form>
+                                                                <form
+                                                                    action="{{ route('personalEspecial.destroy', $persona->id) }}"
+                                                                    method="POST" style="display: inline-block;"
+                                                                    onsubmit="return confirm('¿Estás seguro que deseas eliminar este registro?')">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="btnSinFondo" type="submit"
+                                                                        rel="tooltip">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                            height="28" fill="currentColor"
+                                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                            <path
+                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                            <path
+                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                </form>
                                                             @endcan
                                                         </td>
                                                     </tr>
@@ -157,7 +186,7 @@
                                 </div>
                                 <div class="card-footer mr-auto">
                                     {{ $personal->appends(['estatus' => request('estatus')])->links() }}
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -175,17 +204,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('personalEspecial.store') }}" method="post" enctype="multipart/form-data">
+                    <form class="row d-flex" action="{{ route('personalEspecial.store') }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="estatusId" value="1">
                         <input type="hidden" name="personalEspecial" id="personalEspecial" value="1">
                         <div class="col-12 align-items-center">
                             <div class="text-center mx-auto border vistaFoto mb-4">
                                 <i><img class="img-fluid imgPersonal mb-2"
-                                    src="{{ asset('/img/general/avatar.jpg') }}"></i>
+                                        src="{{ asset('/img/general/avatar.jpg') }}"></i>
                                 <span class="mi-archivo">
-                                    <input class="mb-4 ver" type="file"
-                                        name="foto" id="mi-archivo" accept="image/*">
+                                    <input class="mb-4 ver" type="file" name="foto" id="mi-archivo"
+                                        accept="image/*">
                                 </span>
                                 <label for="mi-archivo">
                                     <span>sube Imagen</span>
@@ -196,30 +226,26 @@
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre(s):
                                 <span>*</span></label></br>
-                            <input type="text" class="inputCaja"
-                                required name="nombres" value="{{ old('nombres') }}">
+                            <input type="text" class="inputCaja" required name="nombres"
+                                value="{{ old('nombres') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Apellido Paterno:
                                 <span>*</span></label></br>
-                            <input type="text" class="inputCaja"
-                                required name="apellidoP"
+                            <input type="text" class="inputCaja" required name="apellidoP"
                                 value="{{ old('apellidoP') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Apellido Materno:</label></br>
-                            <input type="text" class="inputCaja"
-                                name="apellidoM" value="{{ old('apellidoM') }}">
+                            <input type="text" class="inputCaja" name="apellidoM" value="{{ old('apellidoM') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Puesto:
                                 <span>*</span></label></br>
-                            <select name="puestoId"
-                                class="form-select" required
-                                aria-label="Default select example">
+                            <select name="puestoId" class="form-select" required aria-label="Default select example">
                                 <option value="">Seleccione</option>
                                 @foreach ($vctPuestos as $item)
                                     <option value="{{ $item->id }}">
@@ -246,30 +272,26 @@
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Celular:</label></br>
-                            <input type="text" class="inputCaja"
-                                name="celular" value="{{ old('celular') }}">
+                            <input type="text" class="inputCaja" name="celular" value="{{ old('celular') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Fecha de Nacimiento:</label></br>
-                            <input type="date" class="inputCaja"
-                                name="fechaNacimiento"
+                            <input type="date" class="inputCaja" name="fechaNacimiento"
                                 value="{{ old('fechaNacimiento') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Correo Electrónico
                                 Personal:</label></br>
-                            <input type="email" class="inputCaja"
-                                name="mailpersonal"
+                            <input type="email" class="inputCaja" name="mailpersonal"
                                 value="{{ old('mailpersonal') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 " style="display: none;">
                             <label class="labelTitulo">Correo Electrónico
                                 Empresarial:</label></br>
-                            <input type="email" class="inputCaja"
-                                name="mailEmpresarial"
+                            <input type="email" class="inputCaja" name="mailEmpresarial"
                                 value="{{ old('mailEmpresarial') }}">
                         </div>
 
@@ -300,52 +322,53 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('personalEspecial.update', 0) }}" method="post" enctype="multipart/form-data">
+                    <form class="row d-flex" action="{{ route('personalEspecial.update', 0) }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         <input type="hidden" name="id" id="personalId" value="">
                         <div class="col-12 align-items-center">
                             <div class="text-center mx-auto border vistaFoto mb-4">
                                 <div class="image-container">
-                                    <i><img id="fotoImg" class="imgVista img-fluid" src="{{ asset('/img/general/avatar.jpg') }}"></i>
+                                    <i><img id="fotoImg" class="imgVista img-fluid"
+                                            src="{{ asset('/img/general/avatar.jpg') }}"></i>
                                 </div>
                                 <div id="contenedorBotonSubirImagen">
-                                    <div class="button-container mt-2" style="height: 50px; background-color: #a6ce34; color: white; font-weight: 500; font-size:14px">
+                                    <div class="button-container mt-2"
+                                        style="height: 50px; background-color: #a6ce34; color: white; font-weight: 500; font-size:14px">
                                         <label class="custom-file-upload mt-2">
                                             <input class="mb-4 ver" type="file" name="foto" accept="image/*">
-                                            <span>SUBE IMAGEN</span>  
+                                            <span>SUBE IMAGEN</span>
                                         </label>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nombre(s):
                                 <span>*</span></label></br>
-                            <input type="text" class="inputCaja"
-                                required name="nombres" id="nombres" value="{{ old('nombres') }}">
+                            <input type="text" class="inputCaja" required name="nombres" id="nombres"
+                                value="{{ old('nombres') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Apellido Paterno:
                                 <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="apellidoP"
-                                required name="apellidoP"
+                            <input type="text" class="inputCaja" id="apellidoP" required name="apellidoP"
                                 value="{{ old('apellidoP') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Apellido Materno:</label></br>
-                            <input type="text" class="inputCaja" id="apellidoM"
-                                name="apellidoM" value="{{ old('apellidoM') }}">
+                            <input type="text" class="inputCaja" id="apellidoM" name="apellidoM"
+                                value="{{ old('apellidoM') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Puesto:
                                 <span>*</span></label></br>
-                            <select id="puestoId" name="puestoId"
-                                class="form-select" required
+                            <select id="puestoId" name="puestoId" class="form-select" required
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>
                                 @foreach ($vctPuestos as $item)
@@ -373,37 +396,34 @@
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Celular:</label></br>
-                            <input type="text" class="inputCaja" id="celular"
-                                name="celular" value="{{ old('celular') }}">
+                            <input type="text" class="inputCaja" id="celular" name="celular"
+                                value="{{ old('celular') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Fecha de Nacimiento:</label></br>
-                            <input type="date" class="inputCaja" id="fechaNacimiento"
-                                name="fechaNacimiento"
+                            <input type="date" class="inputCaja" id="fechaNacimiento" name="fechaNacimiento"
                                 value="{{ old('fechaNacimiento') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Correo Electrónico
                                 Personal:</label></br>
-                            <input type="email" class="inputCaja" id="mailpersonal"
-                                name="mailpersonal"
+                            <input type="email" class="inputCaja" id="mailpersonal" name="mailpersonal"
                                 value="{{ old('mailpersonal') }}">
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Correo Electrónico
                                 Empresarial:</label></br>
-                            <input type="email" class="inputCaja" id="mailEmpresarial"
-                                name="mailEmpresarial"
+                            <input type="email" class="inputCaja" id="mailEmpresarial" name="mailEmpresarial"
                                 value="{{ old('mailEmpresarial') }}">
                         </div>
 
                         <div class="col-12 col-sm-6 mb-3">
                             <label class="labelTitulo">Estatus:</label></br>
-                            <select class="form-select" aria-label="Default select example"
-                                id="estatusId" name="estatusId">
+                            <select class="form-select" aria-label="Default select example" id="estatusId"
+                                name="estatusId">
                                 @foreach ($vctEstatus as $item)
                                     <option value="{{ $item->id }}">
                                         {{ $objValida->ucwords_accent($item->nombre) }} </option>
@@ -458,7 +478,7 @@
                                                                         <span class="check"></span>
                                                                     </span>
                                                                 </label>
-                                                                
+
                                                             </div>
 
                                                         </td>
@@ -484,7 +504,7 @@
 
     <script>
         function alertaGuardarEvent(event, id) {
-           
+
             if (event) {
                 event.preventDefault(); // Evita que el formulario se envíe automáticamente
             }
@@ -493,11 +513,11 @@
             const txtIdPersonal = document.getElementById('personalIdRoles');
             txtIdPersonal.value = id;
         }
-        
+
         function submitForm() {
             const rolesSeleccionados = document.querySelectorAll('input[name="roles[]"]:checked');
             if (rolesSeleccionados.length === 0) {
-                alert('Selecciona al menos un rol.'); 
+                alert('Selecciona al menos un rol.');
             } else {
                 rolesSeleccionados.forEach(function(rol) {
                     // Crear un elemento input para cada rol seleccionado
@@ -507,27 +527,29 @@
                     input.value = rol.value;
                     document.getElementById('printForm').appendChild(input);
                 });
-        
+
                 // Continuar con el envío del formulario
                 document.getElementById('printForm').submit();
             }
         }
-        
     </script>
 
     <style>
-        select[readonly], input[readonly], textarea[readonly]{
+        select[readonly],
+        input[readonly],
+        textarea[readonly] {
             color: grey;
-            cursor:no-drop;
+            cursor: no-drop;
         }
-        
-        select[readonly] option{
-            display:none;
+
+        select[readonly] option {
+            display: none;
         }
     </style>
-    
+
     <script>
-        function cargaItem(id, nombres, apellidoP, apellidoM, fechaNacimiento, puesto, celular, mailEmpresarial, mailPersonal, estatus, foto, value) {
+        function cargaItem(id, nombres, apellidoP, apellidoM, fechaNacimiento, puesto, celular, mailEmpresarial,
+            mailPersonal, estatus, foto, value) {
 
             const txtId = document.getElementById('personalId');
             txtId.value = id;
@@ -585,7 +607,7 @@
             const tituloModal = document.getElementById('tituloModal');
             const contenedorBotonGuardarTarea = document.getElementById('contenedorBotonGuardarTarea');
             const contenedorBotonSubirImagen = document.getElementById('contenedorBotonSubirImagen');
-            
+
 
             // Aplicar color gris a los campos con readonly
             campos.forEach((campo) => {
@@ -609,7 +631,7 @@
 
     <script>
         function Guardado() {
-            
+
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -636,9 +658,9 @@
             alertaDuplicado();
 
         }
-        if(slug == 8) {
+        if (slug == 8) {
             mostrarAlertaExitoCorta();
         }
     </script>
-    
+
 @endsection
