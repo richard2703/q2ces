@@ -45,7 +45,7 @@ class personalEspecialController extends Controller
 
         $personal = $personal->orderBy('nombres', 'asc')->paginate(15);
         $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
-        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->whereIn('id', [20, 21])->get();
+        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
         $vctEstatus = userEstatus::all();
         $roles = Role::all()->pluck('name', 'id');
         // dd($personal);
