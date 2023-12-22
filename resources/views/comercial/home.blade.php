@@ -158,23 +158,90 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12  cintaM marcos">
-                <h3>¡Cotiza en línea y empieza tu proyecto hoy!</h3>
-                <p>Obtén la renta de maquinaria pesada para construcción
-                    más eﬁciente y de excelente rendimiento en Q2CES, donde
-                    contamos con una amplia experiencia en el sector de la
-                    renta de este tipo de equipos que te permitirán conseguir
-                    resultados mucho más rápidos en todos tus proyectos de
-                    obra.</p>
-
-                <p>Manejamos los precios más competitivos y una atención
-                    personalizada desde una óptica de ingeniería civil, además
-                    de que tenemos al personal más capacitado.</p>
+            <div class="col-12  marcos">
                 <div class="text-center">
-                    <a href="#">
-                        <button class="button">Conoce más</button>
-                    </a>
+                    <h3>¡Cotiza en línea y empieza tu proyecto hoy!</h3>
                 </div>
+                <div class="text-center" id="myTab" role="tablist">
+                    <button class="button active" role="presentation" id="movimiento-tab" data-bs-toggle="tab"
+                        data-bs-target="#movimiento-tab-pane" type="button" role="tab"
+                        aria-controls="movimiento-tab-pane" aria-selected="true">
+                        Boton 1 Movimiento
+                    </button>
+                    <button class="button" role="presentation" id="grua-tab" data-bs-toggle="tab"
+                        data-bs-target="#grua-tab-pane" type="button" role="tab" aria-controls="grua-tab-pane"
+                        aria-selected="true">
+                        Boton 2 Grua
+                    </button>
+                    {{--  <button class="button">Boton 3 Maquinaria</button>  --}}
+
+
+
+                </div>
+
+                <div class="tab-content " id="myTabContent">
+
+                    <div class="tab-content " id="myTabContent">
+                        <div class="tab-pane fade show active" id="movimiento-tab-pane" role="tabpanel"
+                            aria-labelledby="movimiento-tab" tabindex="0">
+                            <div class="Row">
+                                <h3>¡Movimiento!</h3>
+                            </div>
+                            <p>Obtén la renta de maquinaria pesada para construcción
+                                más eﬁciente y de excelente rendimiento en Q2CES, donde
+                                contamos con una amplia experiencia en el sector de la
+                                renta de este tipo de equipos que te permitirán conseguir
+                                resultados mucho más rápidos en todos tus proyectos de
+                                obra.</p>
+
+                            <p>Manejamos los precios más competitivos y una atención
+                                personalizada desde una óptica de ingeniería civil, además
+                                de que tenemos al personal más capacitado.</p>
+                            <div class="text-center">
+                                <a href="#">
+                                    <button class="button">Conoce más</button>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-content " id="myTabContent">
+                        <div class="tab-pane fade   " id="grua-tab-pane" role="tabpanel" aria-labelledby="grua-tab"
+                            tabindex="0">
+                            <div class="Row">
+                                <h3>¡Grua!</h3>
+                            </div>
+                            <p>Obtén la renta de maquinaria pesada para construcción
+                                más eﬁciente y de excelente rendimiento en Q2CES, donde
+                                contamos con una amplia experiencia en el sector de la
+                                renta de este tipo de equipos que te permitirán conseguir
+                                resultados mucho más rápidos en todos tus proyectos de
+                                obra.</p>
+
+                            <p>Manejamos los precios más competitivos y una atención
+                                personalizada desde una óptica de ingeniería civil, además
+                                de que tenemos al personal más capacitado.</p>
+                            <div class="text-center">
+                                <a href="#">
+                                    <button class="button">Conoce más</button>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {{--  <div class="tab-content contentCargas" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                        tabindex="0">
+                        <div class="Row">
+                            <h3>¡Cotiza en línea y empieza tu proyecto hoy!</h3>
+                        </div>
+
+                    </div>
+                </div>  --}}
+
+
             </div>
             {{--  <div class="col-12 col-md-6 marcos">
                 <img src="{{ asset('img/comercial/layout/whats.svg') }}" style="width: 50%;">
