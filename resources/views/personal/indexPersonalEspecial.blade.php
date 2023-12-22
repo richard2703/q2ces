@@ -1,8 +1,8 @@
 @extends('layouts.main', ['activePage' => 'personal', 'titlePage' => __('Lista de Personal')])
 @section('content')
-<?php
+    <?php
         $objValida = new Validaciones();
-        ?>
+    ?>
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -99,7 +99,7 @@
                                                             @can('personal_show')
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                             onclick="cargaItem('{{ $persona->id }}','{{ $persona->nombres }}','{{ $persona->apellidoP }}','{{ $persona->apellidoM }}','{{ $persona->fechaNacimiento }}','{{ $persona->puestoId }}','{{ $persona->celular }}',
-                                                            '{{ $persona->mailEmpresarial }}','{{ $persona->mailpersonal }}','{{ $persona->estatus }}','{{ $persona->puestoNivelId }}','{{ $persona->foto }}', '{{ true }}')">
+                                                            '{{ $persona->mailEmpresarial }}','{{ $persona->mailpersonal }}','{{ $persona->estatus }}','{{ $persona->foto }}', '{{ true }}')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
                                                                 fill="currentColor" class="bi bi-card-text accionesIconos"
                                                                 viewBox="0 0 16 16">
@@ -113,7 +113,7 @@
                                                             @can('personal_edit')
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                             onclick="cargaItem('{{ $persona->id }}','{{ $persona->nombres }}','{{ $persona->apellidoP }}','{{ $persona->apellidoM }}','{{ $persona->fechaNacimiento }}','{{ $persona->puestoId }}','{{ $persona->celular }}',
-                                                            '{{ $persona->mailEmpresarial }}','{{ $persona->mailpersonal }}','{{ $persona->estatus }}','{{ $persona->puestoNivelId }}','{{ $persona->foto }}', '{{ false }}')">
+                                                            '{{ $persona->mailEmpresarial }}','{{ $persona->mailpersonal }}','{{ $persona->estatus }}','{{ $persona->foto }}', '{{ false }}')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
                                                                     fill="currentColor" class="bi bi-pencil accionesIconos"
                                                                     viewBox="0 0 16 16">
@@ -209,6 +209,12 @@
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Apellido Materno:</label></br>
+                            <input type="text" class="inputCaja"
+                                name="apellidoM" value="{{ old('apellidoM') }}">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Puesto:
                                 <span>*</span></label></br>
                             <select name="puestoId"
@@ -223,7 +229,7 @@
                             </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        {{--  <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nivel de Puesto:
                                 <span>*</span></label></br>
                             <select name="puestoNivelId"
@@ -236,13 +242,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Apellido Materno:</label></br>
-                            <input type="text" class="inputCaja"
-                                name="apellidoM" value="{{ old('apellidoM') }}">
-                        </div>
+                        </div>  --}}
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Celular:</label></br>
@@ -336,6 +336,12 @@
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
+                            <label class="labelTitulo">Apellido Materno:</label></br>
+                            <input type="text" class="inputCaja" id="apellidoM"
+                                name="apellidoM" value="{{ old('apellidoM') }}">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Puesto:
                                 <span>*</span></label></br>
                             <select id="puestoId" name="puestoId"
@@ -350,7 +356,7 @@
                             </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 mb-3 ">
+                        {{--  <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Nivel de Puesto:
                                 <span>*</span></label></br>
                             <select id="puestoNivelId" name="puestoNivelId"
@@ -363,13 +369,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
-
-                        <div class=" col-12 col-sm-6 mb-3 ">
-                            <label class="labelTitulo">Apellido Materno:</label></br>
-                            <input type="text" class="inputCaja" id="apellidoM"
-                                name="apellidoM" value="{{ old('apellidoM') }}">
-                        </div>
+                        </div>  --}}
 
                         <div class=" col-12 col-sm-6 mb-3 ">
                             <label class="labelTitulo">Celular:</label></br>
@@ -382,17 +382,6 @@
                             <input type="date" class="inputCaja" id="fechaNacimiento"
                                 name="fechaNacimiento"
                                 value="{{ old('fechaNacimiento') }}">
-                        </div>
-
-                        <div class="col-12 col-sm-6 mb-3">
-                            <label class="labelTitulo">Estatus:</label></br>
-                            <select class="form-select" aria-label="Default select example"
-                                id="estatusId" name="estatusId">
-                                @foreach ($vctEstatus as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $objValida->ucwords_accent($item->nombre) }} </option>
-                                @endforeach
-                            </select>
                         </div>
 
                         <div class=" col-12 col-sm-6 mb-3 ">
@@ -409,6 +398,17 @@
                             <input type="email" class="inputCaja" id="mailEmpresarial"
                                 name="mailEmpresarial"
                                 value="{{ old('mailEmpresarial') }}">
+                        </div>
+
+                        <div class="col-12 col-sm-6 mb-3">
+                            <label class="labelTitulo">Estatus:</label></br>
+                            <select class="form-select" aria-label="Default select example"
+                                id="estatusId" name="estatusId">
+                                @foreach ($vctEstatus as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $objValida->ucwords_accent($item->nombre) }} </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="modal-footer">
@@ -527,7 +527,7 @@
     </style>
     
     <script>
-        function cargaItem(id, nombres, apellidoP, apellidoM, fechaNacimiento, puesto, celular, mailEmpresarial, mailPersonal, estatus, puestoNivel, foto, value) {
+        function cargaItem(id, nombres, apellidoP, apellidoM, fechaNacimiento, puesto, celular, mailEmpresarial, mailPersonal, estatus, foto, value) {
 
             const txtId = document.getElementById('personalId');
             txtId.value = id;
@@ -551,15 +551,6 @@
                 if (txtPuesto.options[i].value == puesto) {
                     // txtPuesto.options[i].selected = true;
                     txtPuesto.selectedIndex = i;
-                }
-            }
-
-            const txtPuestoNivel = document.getElementById('puestoNivelId');
-
-            for (let i = 0; i < txtPuestoNivel.options.length; i++) {
-                if (txtPuestoNivel.options[i].value == puestoNivel) {
-                    // txtPuestoNivel.options[i].selected = true;
-                    txtPuestoNivel.selectedIndex = i;
                 }
             }
 
