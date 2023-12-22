@@ -109,28 +109,52 @@
                             alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
+                        <img class="px-1" src="{{ asset('img/comercial/home/GENIE.svg') }}" height="100" width="250"
                             alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
+                        <img class="px-1" src="{{ asset('img/comercial/home/JCB.svg') }}" height="100" width="250"
                             alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
+                        <img class="px-1" src="{{ asset('img/comercial/home/JohnDeere.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/SCHWING.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/YANMAR.svg') }}" height="100" width="250"
                             alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
+                        <img class="px-1" src="{{ asset('img/comercial/home/Ford.svg') }}" height="100" width="250"
                             alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
-                            alt="">
+                        <img class="px-1" src="{{ asset('img/comercial/home/INTERNATIONAL.svg') }}" height="100"
+                            width="250" alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
-                            alt="">
+                        <img class="px-1" src="{{ asset('img/comercial/home/KENWORTH.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/PLANELEC.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/SCHWING.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/VOLVO.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/WACKER.svg') }}" height="100"
+                            width="250" alt="">
                     </div>
                 </div>
             </div>
