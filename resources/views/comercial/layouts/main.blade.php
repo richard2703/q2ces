@@ -100,7 +100,7 @@
                             <li class="{{ $activePage == 'inicio' ? 'activo' : '' }}">
                                 <a href="{{ url('/') }}">Inicio</a>
                             </li>
-                            <li><a href="">¿Quiénes Somos?</a></li>
+                            <li class="{{ $activePage == 'quienesSomos' ? 'activo' : '' }}"><a href="{{ route('quienesSomos.index') }}">¿Quiénes Somos?</a></li>
                             <li>
                                 <a href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
