@@ -412,6 +412,13 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('personalEspecial_index')
+                        <li>
+                            <a href="{{ route('personalEspecial.index') }}" class="">
+                                <i class="bi bi-circle"></i><span>Personal Especial</span>
+                            </a>
+                        </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan
@@ -446,8 +453,6 @@
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('calendarioMtq.index') }}" class="">
-                                    {{--  <a href="#" class="">  --}}
-
                                     <i class="bi bi-circle"></i><span>Calendario</span>
                                 </a>
                             </li>

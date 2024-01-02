@@ -55,11 +55,11 @@
                                     </form>
                                 </div>  --}}
                                 <div class="col-12 pb-3 text-end">
-                                    @can('calendario_mtq_create_mantenimiento')
+                                    @can('mantenimiento_create')
                                         <button data-bs-toggle="modal" data-bs-target="#modalEvento" type="button"
                                             style="height: 40px" class="btn botonGral ">Agregar Mantenimiento</button>
                                     @endcan
-                                    @can('maquinaria_mtq_update_uso_bloque')
+                                    @can('maquinariaUso_mtq_update_uso_bloque')
                                         <a href="{{ route('uso.create') }}">
                                             <button type="button" class="btn botonGral">Registrar Uso</button>
                                         </a>
@@ -279,15 +279,13 @@
                             <input type="text" class="inputCaja" name="km" value="" readonly
                                 id="km">
                         </div>
-
-                        @can('maquinaria_mtq_update_uso')
-                            <div class=" col-12 col-sm-6  mb-3 ">
-                                <label class="labelTitulo">Edicion de Uso:</label></br>
-                                <input type="hidden" name="id[]" id="id" value="" id="idmaq">
-                                <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor[]"
-                                    value="{{ old('numserie') }}" id="valor">
-                            </div>
-                        @endcan
+                    
+                        <div class=" col-12 col-sm-6  mb-3 ">
+                            <label class="labelTitulo">Edicion de Uso:</label></br>
+                            <input type="hidden" name="id[]" id="id" value="" id="idmaq">
+                            <input type="text" class="inputCaja" placeholder="Ej. NS01234ABCD" name="valor[]"
+                                value="{{ old('numserie') }}" id="valor">
+                        </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

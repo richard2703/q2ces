@@ -33,7 +33,7 @@
                             @endif
                             <div class="row">
                                 <div class="col-4 text-left">
-                                    <a href="{{ route('catalogos.index') }}">
+                                    <a href="{{ route('catalogos.index', ['seccion' => 'caja']) }}">
                                         <button class="btn regresar">
                                             <span class="material-icons">
                                                 reply
@@ -125,7 +125,7 @@
 
                                 </tbody>
                             </table>
-                            <div class="card-footer mr-auto">
+                            <div class="card-footer mr-auto d-flex justify-content-center">
                                 {{ $records->links() }}
                             </div>
                         </div>

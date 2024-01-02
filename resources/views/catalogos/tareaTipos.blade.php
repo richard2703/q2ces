@@ -37,7 +37,7 @@
                                         <div class="d-flex p-3">
                                             <div class="col-12 text-right">
 
-                                                <a href="{{ route('catalogos.index') }}">
+                                                <a href="{{ route('catalogos.index', ['seccion' => 'mantenimiento']) }}">
                                                     <button class="btn regresar">
                                                         <span class="material-icons">
                                                             reply

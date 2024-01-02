@@ -69,7 +69,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Personal:</label></br>
                                                 <select id="personal" name="personal" class="form-select"
-                                                    aria-label="Default select example">
+                                                    aria-label="Default select example" required>
                                                     <option value=""selected>Seleccione</option>
                                                     @forelse ($personal as $persona)
                                                         <option value="{{ $persona->id }}"
@@ -85,7 +85,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Comprobante:</label></br>
                                                 <select id="comprobanteId" name="comprobanteId" class="form-select"
-                                                    aria-label="Default select example">
+                                                    aria-label="Default select example" required>
                                                     <option value="" selected>Seleccione</option>
                                                     @foreach ($vctComprobantes as $item)
                                                         <option value="{{ $item->id }}"
@@ -98,9 +98,9 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Número de Comprobante:
-                                                    <span>*</span></label></br>
+                                                    <span></span></label></br>
                                                 <input type="text" class="inputCaja text-right" id="ncomprobante"
-                                                    required name="ncomprobante" maxlength="100000" step="1"
+                                                    name="ncomprobante" maxlength="100000" step="1"
                                                     min="1" pattern="^\d*(\.\d{0,2})?$" max="99999"
                                                     placeholder="ej. 100" value="{{ $cajaChica->ncomprobante }}">
                                             </div>
@@ -157,7 +157,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Movimiento:</label></br>
                                                 <select id="tipo" name="tipo" class="form-select"
-                                                    aria-label="Default select example">
+                                                    aria-label="Default select example" required>
                                                     <option value="" selected>Seleccione</option>
                                                     <option value="1" {{ $cajaChica->tipo == 1 ? 'selected' : '' }}>
                                                         Ingreso </option>
@@ -183,7 +183,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Cantidad:</label></br>
                                                 <input type="number" class="inputCaja text-right" id="cantidad"
-                                                    name="cantidad" maxlength="100000" step="0.01" min="1"
+                                                    name="cantidad" maxlength="100000" step="0.01" min="0"
                                                     max="99999" placeholder="ej. 100"
                                                     value={{ $cajaChica->cantidad }}>
                                             </div>

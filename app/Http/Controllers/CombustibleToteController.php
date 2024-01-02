@@ -30,18 +30,18 @@ class CombustibleToteController extends Controller
             ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
             ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
             ->where('puestoNivel.usoCombustible', 1)
-            ->where('puestoNivel.estatusId', 1)->get();
+            ->where('personal.estatusId', 1)->orderBy('nombres', 'asc')->get();
         // dd($despachador);
         $despachadores = personal::join('puesto', 'personal.puestoId', 'puesto.id')
             ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
             ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
             ->where('puestoNivel.usoCombustible', 1)
-            ->where('puestoNivel.estatusId', 1)->get();
+            ->where('personal.estatusId', 1)->orderBy('nombres', 'asc')->get();
         $personal = personal::join('puesto', 'personal.puestoId', 'puesto.id')
             ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
             ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
             ->where('puestoNivel.usoCombustible', 1)
-            ->where('puestoNivel.estatusId', 1)->get();
+            ->where('personal.estatusId', 1)->orderBy('nombres', 'asc')->get();
         $maquinaria = maquinaria::where("cisterna", 1)->orderBy('nombre', 'asc')->get();
         $cisternas = maquinaria::where("cisterna", 0)->orderBy('nombre', 'asc')->get();
 

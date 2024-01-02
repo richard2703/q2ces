@@ -20,7 +20,7 @@
                                         </button>
                                     </h2>
 
-                                    <div id="datosPersonales" class="accordion-collapse collapse show"
+                                    <div id="datosPersonales" class="accordion-collapse collapse"
                                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <div class="row mt-3 d-flex">
@@ -516,4 +516,62 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const seccion = urlParams.get('seccion');
+        
+            if (seccion === 'inventario') {
+                // Código para desplegar automáticamente la sección de Inventario
+                const btnInventario = document.querySelector('[data-bs-target="#inventario"]');
+                if (btnInventario) {
+                    btnInventario.setAttribute('aria-expanded', true);
+                    btnInventario.classList.remove('collapsed');
+                    document.getElementById('inventario').classList.add('show');
+                }
+            } else if (seccion === 'maquinaria') {
+                // Código para desplegar automáticamente la sección de Maquinaria
+                const btnMaquinaria = document.querySelector('[data-bs-target="#Maquinaria"]');
+                if (btnMaquinaria) {
+                    btnMaquinaria.setAttribute('aria-expanded', true);
+                    btnMaquinaria.classList.remove('collapsed');
+                    document.getElementById('Maquinaria').classList.add('show');
+                }
+            } else if (seccion === 'mantenimiento') {
+                // Código para desplegar automáticamente la sección de Mantenimiento y Servicios
+                const btnMantenimiento = document.querySelector('[data-bs-target="#mantenimiento"]');
+                if (btnMantenimiento) {
+                    btnMantenimiento.setAttribute('aria-expanded', true);
+                    btnMantenimiento.classList.remove('collapsed');
+                    document.getElementById('mantenimiento').classList.add('show');
+                }
+            } else if (seccion === 'caja') {
+                // Código para desplegar automáticamente la sección de Caja Chica
+                const btnCaja = document.querySelector('[data-bs-target="#caja"]');
+                if (btnCaja) {
+                    btnCaja.setAttribute('aria-expanded', true);
+                    btnCaja.classList.remove('collapsed');
+                    document.getElementById('caja').classList.add('show');
+                }
+            } else if (seccion === 'clientes') {
+                // Código para desplegar automáticamente la sección de Clientes y Proveedores
+                const btnClientes = document.querySelector('[data-bs-target="#clientes"]');
+                if (btnClientes) {
+                    btnClientes.setAttribute('aria-expanded', true);
+                    btnClientes.classList.remove('collapsed');
+                    document.getElementById('clientes').classList.add('show');
+                }
+            } else if (seccion === 'recursos_humanos') {
+                // Código para desplegar automáticamente la sección de Recursos Humanos
+                const btnRecursosHumanos = document.querySelector('[data-bs-target="#datosPersonales"]');
+                if (btnRecursosHumanos) {
+                    btnRecursosHumanos.setAttribute('aria-expanded', true);
+                    btnRecursosHumanos.classList.remove('collapsed');
+                    document.getElementById('datosPersonales').classList.add('show');
+                }
+            }
+            // Repite este patrón para las demás secciones que desees desplegar automáticamente
+        });
+        
+    </script>
 @endsection

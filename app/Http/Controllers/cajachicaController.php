@@ -57,8 +57,8 @@ class cajaChicaController extends Controller
         $registros = cajaChica::join('personal', 'cajaChica.personal', 'personal.id')
             ->leftJoin('obras', 'cajaChica.obra', 'obras.id')
             ->leftJoin('maquinaria', 'cajaChica.equipo', 'maquinaria.id')
-            ->join('conceptos', 'cajaChica.concepto', 'conceptos.id')
-            ->join('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
+            ->leftJoin('conceptos', 'cajaChica.concepto', 'conceptos.id')
+            ->leftJoin('comprobante', 'cajaChica.comprobanteId', 'comprobante.id')
             ->leftJoin('clientes', 'obras.clienteId', 'clientes.id')
             ->select(
                 'cajaChica.id',
