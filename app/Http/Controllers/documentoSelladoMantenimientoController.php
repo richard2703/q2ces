@@ -25,7 +25,7 @@ class documentoSelladoMantenimientoController extends Controller
     {
         $id = $request->query('id');
         $mantenimiento = mantenimientos::select(
-            'mantenimientos.*',
+            'mantenimientos.*','maquinaria.compania',
             DB::raw("CONCAT(maquinaria.identificador,' - ', maquinaria.nombre)as maquinaria"),
         )
             ->join('maquinaria', 'maquinaria.id', '=', 'mantenimientos.maquinariaId')

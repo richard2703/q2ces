@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Alta de Accesorios')])
+@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Alta de Documentos')])
 @section('content')
     <div class="content">
         <?php
@@ -22,11 +22,11 @@
                         <div class="card-body contCart">
                         <div class="ml-3">
                             <div class="p-1 align-self-start bacTituloPrincipal">
-                                <h2 class="my-3 ms-3 texticonos">Subir Imagenes del Documento Sellado</h2>
+                                <h2 class="my-3 ms-3 texticonos">{{ $mantenimiento->compania == 'mtq' ? 'MTQ' : '' }} Subir Imagenes del Documento Sellado</h2>
                             </div>
                             <div>
                                 <div class="col-4 text-left mt-3" style="margin-left:20px">
-                                    <form action="{{ route('mantenimientos.index') }}" method="GET" style="display: inline-block;">
+                                    <form action="{{ $mantenimiento->compania == 'mtq' ? route('mantenimientos.indexMtq'):  route('mantenimientos.index')  }}" method="GET" style="display: inline-block;">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $id }}">
                                         <button class="btnSinFondo btn regresar" type="submit" rel="tooltip">
@@ -47,7 +47,7 @@
                                 <input type="hidden" name="userId" id="userId" value="{{ auth()->user()->id }}">
                                 <input type="hidden" name="mantenimientoId" value="{{ $id }}">
                                 <div class="row mt-3" style="padding-left: 40px">
-                                   
+
                                     <div class="d-flex p-3">
                                         <div class="col-12" id="elementos">
                                             <div class="d-flex">
@@ -57,7 +57,7 @@
                                             </div>
 
                                             <div class="row opcion divBorderItems" id="opc">
-                                                
+
                                                 <div class="col-12 col-md-12 px-2 mt-4">
                                                     <div class="text-center mx-auto border  mb-4">
 
@@ -104,7 +104,7 @@
                                                                 <input class="mb-4 ver "
                                                                     type="file" name="ruta[]"
                                                                     id="mi-archivo"
-                                                                    accept="image/*" multiple
+                                                                    accept="image/*,.pdf" multiple
                                                                     data-max="{{ $numFotosPermitidas }}">
                                                             </span>
                                                             <label for="mi-archivo">
@@ -136,7 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
-                       
+
                                     <div class="col-12 text-center mb-3 mt-3">
                                         <button type="submit" class="btn botonGral"
                                             onclick="alertaGuardar()">Guardar</button>
@@ -153,7 +153,7 @@
             color: grey;
             cursor:no-drop;
         }
-        
+
         select[readonly] option{
             display:none;
         }
@@ -168,7 +168,7 @@
             jQuery('span.'+idname).next().find('span').html(filename);
         });
     </script>
-    
+
     <script src="{{ asset('js/cardArchivos.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -176,12 +176,12 @@
 
     <script>
         var contador = 1;
-    
+
         function crearItems() {
             contador++;
             var $nuevoElemento = $('.opcion:first').clone();
             $nuevoElemento.find("input").val("");
-            
+
             // Modificar los IDs de los inputs
             $nuevoElemento.find("input").each(function() {
                 var idOriginal = $(this).attr("id");
@@ -214,7 +214,7 @@
                 $(this).attr("id", nuevoId);
             });
 
-    
+
             $nuevoElemento.find("div[id='iconContainer']").each(function() {
                 var idOriginal = $(this).attr("id");
                 var nuevoId = idOriginal + contador;
@@ -232,7 +232,7 @@
                 var nuevoId = idOriginal + contador;
                 $(this).attr("id", nuevoId);
             });
-    
+
             /*$nuevoElemento.find("span[class='iconXML']").each(function() {
                 var idOriginal = $(this).attr("id");
                 var nuevoId = idOriginal + contador;
@@ -244,10 +244,10 @@
                 var nuevoId = idOriginal + contador;
                 $(this).attr("id", nuevoId);
             });*/
-            
+
             $nuevoElemento.appendTo('#elementos');
         }
-    
+
         // Borrar registro
         $(document).on('click', '#removeRow', function() {
             if ($('.opcion').length > 1) {
@@ -255,8 +255,8 @@
             }
         });
     </script>
-    
-    
+
+
     <script>
         function handleDocumento(id, button) {
             console.log('BUTTON',button.id);
@@ -345,7 +345,7 @@
             let idDinamico = button.id;
             // Resto del código que utilizas para manejar los eventos, pero ahora con el ID proporcionado
             var facturaInput = document.getElementById(id + idDinamico);
-            
+
             console.log(idDinamico);
             var downloadFacturaButton = document.getElementById("downloadButtonXML"+ idDinamico);
             var removeFacturaButton = document.getElementById("removeButtonXML"+ idDinamico);
@@ -529,7 +529,7 @@
             document.getElementById('mi-archivo').addEventListener('change', function() {
                 var input = this;
                 var maxAllowed = parseInt(input.getAttribute('data-max'));
-    
+
                 if (input.files.length > maxAllowed) {
                     input.value = "";
                     Swal.fire({
@@ -537,10 +537,10 @@
                         title: 'Error...',
                         text: '3 imagenes es el maximo permitido ',
                     })
-    
+
                 }
             });
         });
     </script>
-    
+
 @endsection

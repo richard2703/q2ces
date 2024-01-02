@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario')])
+@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Mantenimientos')])
 @section('content')
 @section('content')
 <div class="content">
@@ -8,7 +8,7 @@
                 <div class="card" >
                     <div class="card-header bacTituloPrincipal">
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
-                        Vista Previa de Impresion de Mantenimiento
+                        {{ $maquinaria->compania == 'mtq' ? 'MTQ' : '' }} Vista Previa de Impresion de Mantenimiento
                     </div>
                     <div class="card-body">
                         <div class="row divBorder">
@@ -157,32 +157,32 @@
 
                                         @if ($gastos->isNotEmpty())
                                             @if ($mecanico == "false")
-                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, 
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}},
                                                     @if ($gastos[0]->marca)
                                                         Marca: {{$gastos[0]->marca}},
                                                     @else
-                                                        
-                                                    @endif 
+
+                                                    @endif
                                                     @if ($gastos[0]->modelo)
                                                         Modelo: {{$gastos[0]->modelo}}
                                                     @else
-                                                        
+
                                                     @endif
                                                 </td>
                                                 <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
                                                 <td style="border: 1px solid #727176; font-weight: 600 !important;">$ {{number_format($gastos[0]->costo, 2, '.', ',')}}</td>
                                                 <td style="border: 1px solid #727176; font-weight: 600 !important;">$ {{number_format($gastos[0]->total, 2, '.', ',')}}</td>
                                             @else
-                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, 
+                                                <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}},
                                                 @if ($gastos[0]->marca)
                                                     Marca: {{$gastos[0]->marca}},
                                                 @else
-                                                    
-                                                @endif 
+
+                                                @endif
                                                 @if ($gastos[0]->modelo)
                                                     Modelo: {{$gastos[0]->modelo}}
                                                 @else
-                                                    
+
                                                 @endif</td>
                                                 <td style="border: 1px solid #727176; font-weight: 600 !important;">{{ number_format($gastos[0]->cantidad, 2) }}</td>
                                             @endif
@@ -195,28 +195,28 @@
                                         @if ($mecanico == "false")
                                             <td style="border: 1px solid #727176;">{{$item->concepto}}
                                                 @if ($item->marca)
-                                                , Marca: {{$item->marca}}, 
+                                                , Marca: {{$item->marca}},
                                             @else
-                                                
-                                            @endif 
+
+                                            @endif
                                             @if ($item->modelo)
                                                 Modelo: {{$item->modelo}}
                                             @else
-                                                
+
                                             @endif</td>
                                             <td style="border: 1px solid #727176;">{{ number_format($item->cantidad, 2) }}</td>
                                             <td style="border: 1px solid #727176;">${{ number_format($item->costo, 2, '.', ',') }}</td>
                                             <td style="border: 1px solid #727176;">${{ number_format($item->total, 2, '.', ',') }}</td>
                                         @else
                                             <td style="border: 1px solid #727176;">{{$item->concepto}} @if ($item->marca)
-                                                , Marca: {{$item->marca}}, 
+                                                , Marca: {{$item->marca}},
                                             @else
-                                                
-                                            @endif 
+
+                                            @endif
                                             @if ($item->modelo)
                                                 Modelo: {{$item->modelo}}
                                             @else
-                                                
+
                                             @endif</td>
                                             <td style="border: 1px solid #727176;">{{ number_format($item->cantidad, 2) }}</td>
                                         @endif
