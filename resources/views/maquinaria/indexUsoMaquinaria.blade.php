@@ -46,11 +46,16 @@
                                         <th class="labelTitulo text-center">Placas</th>
                                         <th class="labelTitulo text-center">Tipo</th>
                                         <th class="labelTitulo text-center">Uso Actual</th>
-                                        <th class="labelTitulo text-center no-wrap">Resta para Mantenimiento</th>
+                                        <th class="labelTitulo text-center">Ultimo</th>
+                                        <th class="labelTitulo text-center no-wrap">Km para Mantenimiento</th>
                                         <th class="labelTitulo text-center no-wrap">Próximo Mantenimiento</th>
                                         <th class="labelTitulo text-center" style="width:120px">Acciones</th>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $blnExiste = false;
+                                            $strSinUso = '---';
+                                        @endphp
                                         @forelse ($maquinaria as $maquina)
                                             <tr>
                                                 <td class="text-center">{{ $maquina->identificador }}</td>
@@ -60,6 +65,24 @@
                                                 <td class="text-center">{{ $maquina->placas }}</td>
                                                 <td class="text-center">{{ $maquina->kom }}</td>
                                                 <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
+                                                <td class="text-center">
+                                                    @php
+                                                    $blnExiste = false;
+                                                @endphp
+                                                @foreach ($vctUsos as $item)
+                                                    @if ($item->maquinariaId == $maquina->id)
+                                                        {{ $item->usoMantenimiento }}
+                                                        @php
+                                                            $blnExiste = true;
+                                                        @endphp
+                                                    @endif
+                                                @endforeach
+
+                                                @if ($blnExiste == false)
+                                                    {{ $strSinUso }}
+                                                @endif
+
+                                                </td>
 
                                                 <td class="text-center">
                                                     @if ($maquina->mantenimiento != 0)

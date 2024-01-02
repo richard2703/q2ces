@@ -61,8 +61,17 @@ class usoMaquinariasController extends Controller
             $maquinariaAsignada = null;
         }
 
+        $vctUsos = usoMaquinarias::select('usoMaquinarias.*')
+        ->selectRaw('max( usoMaquinarias.uso)  as usoMantenimiento')
+        ->join('maquinaria','maquinaria.id','usoMaquinarias.maquinariaId')
+        ->where('usoMaquinarias.proviene','=','Mantenimiento')
+        ->where('maquinaria.compania', 'mtq')
+        ->groupBy('usoMaquinarias.maquinariaId')
+        ->orderBy('usoMaquinarias.maquinariaId','asc')
+        ->orderBy('usoMaquinarias.id','asc')
+        ->get();
         // dd($residenteAutos);
-        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria', 'servicios', 'marca', 'maquinariaAsignada', 'residenteAutos'));
+        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria', 'servicios', 'marca', 'maquinariaAsignada', 'residenteAutos','vctUsos'));
     }
 
     public function indexQ2ces()
@@ -75,9 +84,21 @@ class usoMaquinariasController extends Controller
             ->orderBy('identificador', 'asc')
             ->paginate(15);
 
+        $vctUsos = usoMaquinarias::select('usoMaquinarias.*')
+        ->selectRaw('max( usoMaquinarias.uso)  as usoMantenimiento')
+        ->join('maquinaria','maquinaria.id','usoMaquinarias.maquinariaId')
+        ->where('usoMaquinarias.proviene','=','Mantenimiento')
+        ->where('maquinaria.compania', null)
+        ->groupBy('usoMaquinarias.maquinariaId')
+        ->orderBy('usoMaquinarias.maquinariaId','asc')
+        ->orderBy('usoMaquinarias.id','asc')
+        ->get();
+
+        // dd($vctUsos);
+
         $servicios = serviciosMtq::all();
 
-        return view('maquinaria.indexUsoMaquinaria', compact('maquinaria', 'servicios', 'marca'));
+        return view('maquinaria.indexUsoMaquinaria', compact('maquinaria', 'servicios', 'marca','vctUsos'));
     }
 
     /**
