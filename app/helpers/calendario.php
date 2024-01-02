@@ -581,7 +581,7 @@ class Calendario {
                         $vctDebug[] = 'Podemos editar el día';
                     } else {
                         $vctDebug[] = 'No podemos editar, el día es mayor a la fecha de hoy';
-                        $blnBloquear=true;
+                        $blnBloquear = true;
                     }
 
                 } else {
@@ -604,9 +604,36 @@ class Calendario {
 
         } else {
             $vctDebug[] = 'No es día de corte ' . $dtToday->format( 'N' );
-            $blnBloquear=true;
+
+            if ( $blnEnSemanaEnCurso == 1 ) {
+                $vctDebug[] = 'Estamos en la semana en curso';
+                if ( $dteFecha <= $dtToday ) {
+                    $vctDebug[] = 'Podemos editar el día';
+                } else {
+                    $vctDebug[] = 'No podemos editar, el día es mayor a la fecha de hoy';
+                    $blnBloquear = true;
+                }
+
+            } else {
+                $vctDebug[] = 'Ya estamos fuera de la semana en curso';
+                if ( $dteFecha >= $vctSemanaTrabajoSeleccionada[ 0 ] ) {
+                    if ( ( $intSemanaDiaInicial + 1 ) == $intSemanaDiaCorte ) {
+                        $vctDebug[] = 'Podemos editar, estamos en fecha maxima de corte ';
+                    } else {
+                        $vctDebug[] = 'Estamos fuera de corte';
+                        $blnBloquear = true;
+
+                    }
+                } else {
+                    $vctDebug[] = 'Estamos fuera del rango permitido de la semana de corte';
+                    $blnBloquear = true;
+                }
+
+            }
+
         }
-        $vctDebug[] = "Bloquear: " . ($blnBloquear==true?'Sí':'No');
+
+        $vctDebug[] = 'Bloquear: ' . ( $blnBloquear == true?'Sí':'No' );
 
         // dd( $vctDebug );
         return $blnBloquear;
