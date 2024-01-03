@@ -479,7 +479,54 @@
                             @endforeach
 
                         </div>
-                        {{--  GRAFICO CARGAS  --}}
+                        {{--  <form action="{{ route('inventario.updateReservaEquipo') }}" method="post">
+                            <div class="row" style="padding: 0 10px;">
+                                @csrf
+                                <div class="col-4 d-flex mb-4">
+                                    <div class="me-2">
+                                        <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                            alt="" style="width:40px;">
+                                    </div>
+                                    <div style="width: 90%! important;">
+                                        <label class="labelTitulo">Reserva:
+                                            <span>*</span></label></br>
+                                        <input type="number" step="0.01" min="0.01"
+                                            required class="inputCaja" id="litros"
+                                            name="contenido" value="">
+                                    </div>
+                                </div>
+                                <div class="col-4 d-flex mb-4">
+                                    <div class="me-2">
+                                        <img src="{{ asset('/img/inventario/precio.svg') }}"
+                                            alt="" style="width:40px;">
+                                    </div>
+                                    <div style="width: 90%! important;">
+                                        <label class="labelTitulo">Último Precio:
+                                            <span>*</span></label></br>
+                                        <input type="number" step="0.01" min="0.01"
+                                            required class="inputCaja" id="precio"
+                                            name="ultimoPrecio" value="">
+                                    </div>
+                                </div>
+                                <div class="col-4 d-flex mb-4">
+                                    <div class="me-2">
+                                        <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                            alt="" style="width:40px;">
+                                    </div>
+                                    <div style="width: 90%! important;">
+                                        <label class="labelTitulo">Última Carga:
+                                            <span>*</span></label></br>
+                                            <input type="number" name="ultimaCarga" value="" class="inputCaja" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center mb-3 ">
+                                    <button type="submit" class="btn botonGral"
+                                        onclick="test()">Guardar</button>
+                                </div>
+                            </div>
+                            </form>
+                            
+                        GRAFICO CARGAS  --}}
                         <div class="row">
                             <div class="col-12">
 
