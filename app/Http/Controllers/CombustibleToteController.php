@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Calculos;
 use App\Http\Controllers\Controller;
 use App\Models\carga;
 use App\Models\cisternas;
@@ -26,6 +27,7 @@ class CombustibleToteController extends Controller
         // $extintores = extintores::orderBy('created_at', 'desc')->paginate(15);
         // $ubicaciones = ubicaciones::all();
         $usuarios = personal::all();
+        $cisternaTipo = cisternas::where("id", 1)->first();
         $despachador = personal::join('puesto', 'personal.puestoId', 'puesto.id')
             ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
             ->select('personal.id', 'personal.nombres', 'personal.apellidoP')
@@ -148,7 +150,7 @@ class CombustibleToteController extends Controller
         // dd($cisternas);
 
         // en este caso solo recuerda que cisternas son las maquinarias pero tuvimos que ponerle ese nombre porque estaba causando conflicto si lo cambiamos a maquinaria y cisterna en singular son las cisternas todas las cisternas del TOTE
-        return view('combustibleTote.indexCombustibleTote', compact('despachador', 'personal', 'maquinaria', 'cisternas', 'cisterna', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
+        return view('combustibleTote.indexCombustibleTote', compact('cisternaTipo', 'despachador', 'personal', 'maquinaria', 'cisternas', 'cisterna', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
         // return view('extintores.indexExtintores', compact('extintores', 'ubicaciones'));
     }
 
@@ -395,8 +397,6 @@ class CombustibleToteController extends Controller
         // if ($blnHayImagen == false) {
         //     return redirect()->back()->withInput()->withErrors("Se requiere al menos una imagen de kilometraje o del homometro.");
         // }
-
-
     }
 
 
@@ -429,9 +429,190 @@ class CombustibleToteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateDescarga(Request $request)
     {
-        //
+        abort_if(Gate::denies('combustible_edit'), 403);
+        $objCalculo = new Calculos();
+
+        // $request->validate([
+        //     'descargaLitros' => 'required|numeric',
+        //     'descargaKms' => 'required|numeric',
+        //     'descargaHoras' => 'required|numeric',
+        //     'descargaFileImgKms' => 'nullable',
+        //     'descargaFileImgHoras' => 'nullable',
+        // ], [
+        //     'descargaLitros.required' => 'El campo litros es obligatorio.',
+        //     'descargaKms.required' => 'El campo Km/Mi es obligatorio.',
+        //     'descargaHoras.required' => 'El campo horómetro es obligatorio.',
+        //     'descargaImgenKms.required' => 'El campo imagen de kilometraje es obligatorio.',
+        //     'descargaImgenHoras.required' => 'El campo imagen de horómetro es obligatorio.',
+        //     'descargaLitros.numeric' => 'El campo litros debe de ser numérico.',
+        //     'descargaKms.numeric' => 'El campo Km/Mi debe de ser numérico.',
+        //     'descargaHoras.numeric' => 'El campo horometro debe de ser numérico.',
+        // ]);
+        //*** buscamos el registro */
+        $descarga = descarga::where("id", $request['descargaId'])->first();
+
+        // dd($request);
+        //*** obtenemos informacion para ajustes */
+        $strSegundos = substr($descarga->created_at, -2);
+        $decLitros = $descarga->litros;
+
+        $descarga->litros = $request['descargaLitros'];
+        $descarga->kilometrajeNuevo = $request['kilometrajeNuevo'];
+        $descarga->horas = $request['horas'];
+        $descarga->maquinariaId = $request['descargaMaquinaria'];
+        $descarga->operadorId = $request['descargaOperador'];
+        $descarga->servicioId = $request['descargaServicio'];
+        $descarga->receptorId = $request['descargaDespachador'];
+        $descarga->fechaLlegada = $request['fechaLlegada'];
+
+        $descarga->grasa = $request['grasa'];
+        $descarga->hidraulico = $request['hidraulico'];
+        $descarga->anticongelante = $request['Anticongelante'];
+        $descarga->motor = $request['motor'];
+        $descarga->direccion = $request['direccion'];
+        $descarga->otro = $request['otro'];
+        $descarga->otroComment = $request['otroComment'];
+
+        // $descarga->created_at = ($request['descargaFecha'] . " " . $request['descargaHora'] . ":" . $strSegundos);
+
+        if ($request->hasFile("descargaFileImgKms")) {
+            $descarga->imgKm = time() . '_' . 'imgKm.' . $request->file('descargaFileImgKms')->getClientOriginalExtension();
+            $request->file('descargaFileImgKms')->storeAs('/public/combustibles', $descarga->imgKm);
+            // $blnHayImagen = true;
+        }
+        if ($request->hasFile("descargaFileImgHoras")) {
+            $descarga->imgHoras = time() . '_' . 'imgHoras.' . $request->file('descargaFileImgHoras')->getClientOriginalExtension();
+            $request->file('descargaFileImgHoras')->storeAs('/public/combustibles', $descarga->imgHoras);
+            // $blnHayImagen = true;
+        }
+
+        // //*** Preguntamos si no hay una imagen cargada */
+        // if ($blnHayImagen == false) {
+        //     return redirect()->back()->withInput()->withErrors("Se requiere al menos una imagen de kilometraje o del homometro.");
+        // }
+
+        // dd($descarga);
+        $descarga->update();
+
+        //*** obtenemos el total de cargas y descargas para obtener el nivel de la cisterna */
+        $decLitrosCargados = $objCalculo->getTotalLitrosCargas($descarga->maquinariaId);
+        $decLitrosDescargados = $objCalculo->getTotalLitrosDescargas($descarga->maquinariaId);
+        $litrosActualizados = ($decLitrosCargados - $decLitrosDescargados);
+
+        $cisternaTipo = cisternas::where("id", 1)->first();
+        if ($decLitros > $descarga->litros) {
+            $litrosFinales = $decLitros - $descarga->litros;
+            $cisternaTipo->contenido = ($cisternaTipo->contenido + $litrosFinales);
+
+            $cisternaTipo->save();
+        } else {
+            $litrosFinales = $decLitros - $descarga->litros;
+            $cisternaTipo->contenido = ($cisternaTipo->contenido + ($litrosFinales));
+
+            $cisternaTipo->save();
+        }
+
+        //buscamos el equipo para actulizar el nivel de la cisterna
+        $cisterna =   maquinaria::where("id", $descarga->maquinariaId)->first();
+        $cisterna->cisternaNivel = $litrosActualizados;
+        $cisterna->update();
+
+        Session::flash('message', 1);
+
+        if ($descarga->tipoCisternaId != null) {
+            return redirect()->route('combustibleTote.index');
+        } else {
+            return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        }
+    }
+
+    public function updateCarga(Request $request)
+    {
+        abort_if(Gate::denies('combustible_edit'), 403);
+        // dd($request);
+        $objCalculo = new Calculos();
+
+        $request->validate([
+            'cargaLitros' => 'required|numeric|between:0,9999.99',
+            // 'cargaPrecio' => 'required|numeric|max:30|min:10',
+        ], [
+            'cargaLitros.required' => 'El campo litros es obligatorio.',
+            'cargaPrecio.required' => 'El campo precio es obligatorio.',
+            'cargaLitros.numeric' => 'El campo litros debe de ser numérico.',
+            'cargaPrecio.numeric' => 'El campo precio debe de ser numérico.',
+            // 'cargaPrecio.minimo' => 'El campo precio debiera de ser mayor a 10 pesos.',
+            // 'cargaPrecio.maximo' => 'El campo precio debiera de ser menor a 30 pesos.',
+        ]);
+        //*** obtenemos el registro */
+        $carga = carga::where("id", $request['cargaId'])->first();
+
+        //*** obtenemos informacion para ajustes */
+        // $strSegundos = substr($carga->created_at, -2);
+        $decLitros = $carga->litros;
+
+        $carga->litros = $request['cargaLitros'];
+        $carga->maquinariaId = $request['cargaMaquinaria'];
+        $carga->operadorId = $request['cargaOperador'];
+        $carga->precio = $request['cargaPrecio'];
+        $carga->comentario = $request['comentario'];
+        $carga->horaLlegadaCarga = $request['cargaHora'];
+        $carga->created_at = ($request['cargaFecha'] . " " . $request['cargaHora']);
+        //*** Actualizamos la carga */
+        $ultimaCarga = carga::latest()->first();
+        //dd($ultimaCarga->created_at, $carga->created_at);
+        $carga->update();
+
+        //*** obtenemos el total de cargas y descargas para obtener el nivel de la cisterna */
+        $decLitrosCargados = $objCalculo->getTotalLitrosCargas($carga->maquinariaId);
+        $decLitrosDescargados = $objCalculo->getTotalLitrosDescargas($carga->maquinariaId);
+        $litrosActualizados = ($decLitrosCargados - $decLitrosDescargados);
+        // dd($decLitros, $carga->litros, $decLitrosCargados, $decLitrosDescargados, $litrosActualizados);
+        $cisternaTipo = cisternas::where("id", 1)->first();
+        if ($decLitros > $carga->litros) {
+            $litrosFinales = $decLitros - $carga->litros;
+            $cisternaTipo->contenido = ($cisternaTipo->contenido - $litrosFinales);
+
+            if ($ultimaCarga->created_at <= $carga->created_at) {
+                $cisternaTipo->ultimaCarga = $carga->litros;
+                $cisternaTipo->ultimoPrecio = $carga->precio;
+                $cisternaTipo->updated_at = $carga->created_at;
+            }
+            $cisternaTipo->save();
+        } else {
+            $litrosFinales = $decLitros - $carga->litros;
+            $cisternaTipo->contenido = ($cisternaTipo->contenido - ($litrosFinales));
+
+            if ($ultimaCarga->created_at <= $carga->created_at) {
+                $cisternaTipo->ultimaCarga = $carga->litros;
+                $cisternaTipo->ultimoPrecio = $carga->precio;
+                $cisternaTipo->updated_at = $carga->created_at;
+            }
+            $cisternaTipo->save();
+        }
+
+        //buscamos el equipo para actulizar el nivel de la cisterna
+        $cisterna = maquinaria::where("id", $carga->maquinariaId)->first();
+        $cisterna->cisternaNivel = $litrosActualizados;
+        $cisterna->update();
+
+        Session::flash('message', 1);
+
+        if ($carga->tipoCisternaId != null) {
+            return redirect()->route('combustibleTote.index');
+        } else {
+            return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+        }
+    }
+
+    public function updateReserva(Request $request)
+    {
+        $cisternaTipo = cisternas::where("id", 1)->first();
+        $data = $request->all();
+        // dd($data);
+        $cisternaTipo->update($data);
+        return redirect()->route('combustibleTote.index');
     }
 
     /**

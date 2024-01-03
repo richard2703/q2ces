@@ -508,7 +508,54 @@
                                         </div>
                                     </div>
                             @endforeach
-
+                            
+                            
+                        </div>
+                        <form action="{{ route('combustibleTote.updateReserva') }}" method="post">
+                        <div class="row" style="padding: 0 10px;">
+                            @csrf
+                            <div class="col-4 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Reserva:
+                                        <span>*</span></label></br>
+                                    <input type="number" step="0.01" min="0.01"
+                                        required class="inputCaja" id="litros"
+                                        name="contenido" value="{{$cisternaTipo->contenido}}">
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/precio.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Último Precio:
+                                        <span>*</span></label></br>
+                                    <input type="number" step="0.01" min="0.01"
+                                        required class="inputCaja" id="precio"
+                                        name="ultimoPrecio" value="{{$cisternaTipo->ultimoPrecio}}">
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Última Carga:
+                                        <span>*</span></label></br>
+                                        <input type="number" name="ultimaCarga" value="{{$cisternaTipo->ultimaCarga}}" class="inputCaja" required>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mb-3 ">
+                                <button type="submit" class="btn botonGral"
+                                    onclick="test()">Guardar</button>
+                            </div>
+                        </form>
                         </div>
                         {{--  GRAFICO CARGAS  --}}
                         {{--  <div class="row">
@@ -1019,7 +1066,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('inventario.updateCarga') }}" method="post" class="row">
+                    <form action="{{ route('combustibleTote.updateCarga') }}" method="post" class="row">
                         @csrf
                         @method('put')
 
@@ -1092,7 +1139,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('inventario.updateDescarga') }}" method="post" class="row"
+                    <form action="{{ route('combustibleTote.updateDescarga') }}" method="post" class="row"
                         enctype="multipart/form-data">
                         @csrf
                         @method('put')

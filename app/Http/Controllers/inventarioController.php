@@ -26,6 +26,7 @@ use App\Models\tipoUniforme;
 use App\Models\asignacionUniforme;
 use App\Models\cisternas;
 use App\Models\descargaDetalle;
+use App\Models\inventarioEstatus;
 use App\Models\obras;
 
 class inventarioController extends Controller
@@ -169,12 +170,61 @@ class inventarioController extends Controller
 
             return view('inventario.dashCombustible', compact('despachador', 'vctObras', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
         } else {
-            $inventarios = inventario::where("tipo",  $tipo)->orderBy('created_at', 'desc')->paginate(15);
+
+            $estatus = request()->input('estatus');
+            // dd($estatus);
+            switch ($estatus) {
+                case '0':
+                    $inventarios = inventario::where('tipo', $tipo)
+                        ->orderBy('created_at', 'desc')
+                        ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'estatusId')
+                        ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus')
+                        ->paginate(15);
+                    break;
+                case '5':
+                    $inventarios = inventario::where('tipo', $tipo)
+                        ->where('cantidad', '>', 0)
+                        ->orderBy('created_at', 'desc')
+                        ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'estatusId')
+                        ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus')
+                        ->paginate(15);
+                    break;
+
+                case '6':
+                    $inventarios = inventario::where('tipo', $tipo)
+                        ->where('cantidad', '<=', 0)
+                        ->orderBy('created_at', 'desc')
+                        ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'estatusId')
+                        ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus')
+                        ->paginate(15);
+                    break;
+
+                default:
+                    if ($estatus == null) {
+
+                        $inventarios = inventario::where('tipo', $tipo)
+                            ->where('cantidad', '>', 0)
+                            ->orderBy('created_at', 'desc')
+                            ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'estatusId')
+                            ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus')
+                            ->paginate(15);
+                    } else {
+                        $inventarios = inventario::where('tipo', $tipo)
+                            ->where('estatusId', $estatus)
+                            ->orderBy('created_at', 'desc')
+                            ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'estatusId')
+                            ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus')
+                            ->paginate(15);
+                        break;
+                    }
+            }
+
 
             if ($inventarios == null) {
                 $inventarios = null;
             }
-
+            // dd($inventarios);
+            // dd($estatus, $inventarios, $tipo);
             return view('inventario.indexInventario', compact('inventarios', 'tipo'));
         }
     }
@@ -230,6 +280,7 @@ class inventarioController extends Controller
                         $objMovimiento->movimiento = 1;
                         $objMovimiento->inventarioId = $objResidente->id;
                         $objMovimiento->cantidad = $request['restock']['cantidad'][$i];
+                        $objMovimiento->estatusId = 1;
                         $objMovimiento->precioUnitario = ($request['restock']['costo'][$i] / $request['restock']['cantidad'][$i]);
                         $objMovimiento->total = $request['restock']['costo'][$i];
                         $objMovimiento->usuarioId = $request['restock']['usuarioId'][0];
@@ -325,7 +376,7 @@ class inventarioController extends Controller
     public function show(inventario $inventario)
     {
         abort_if(Gate::denies('inventario_show'), 403);
-
+        $vctEstatus = inventarioEstatus::all();
         $vctDesde = maquinaria::all()->sortBy('identificador');
         $vctHasta = maquinaria::all()->sortBy('identificador');
         $vctTipos = tipoUniforme::all()->sortBy('nombre');
@@ -336,7 +387,7 @@ class inventarioController extends Controller
         $inventario = inventario::where("id", $inventario->id)->first();
         // dd($inventario);
 
-        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta', 'vctTipos', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
+        return view('inventario.detalleInventarioVista', compact('inventario', 'vctDesde', 'vctHasta', 'vctEstatus', 'vctTipos', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
 
     /**
@@ -347,13 +398,19 @@ class inventarioController extends Controller
      */
     public function edit(inventario $inventario)
     {
-        abort_if(Gate::denies('inventario_edit'), 403);
-
-        $inventario = inventario::where("id", $inventario->id)->first();
+        abort_if(Gate::denies('inventario_show'), 403);
+        $vctEstatus = inventarioEstatus::all();
+        $vctDesde = maquinaria::all()->sortBy('identificador');
+        $vctHasta = maquinaria::all()->sortBy('identificador');
         $vctTipos = tipoUniforme::all()->sortBy('nombre');
-
+        $vctMarcas = marca::all()->sortBy('nombre');
+        $vctProveedores = proveedor::all()->sortBy('nombre');
+        $vctMaquinaria = maquinaria::all()->sortBy('identificador');
+        // dd($vctDesde);
+        $inventario = inventario::where("id", $inventario->id)->first();
         // dd($inventario);
-        return view('inventario.detalleInventario', compact('inventario'));
+
+        return view('inventario.detalleInventario', compact('inventario', 'vctDesde', 'vctHasta', 'vctEstatus', 'vctTipos', 'vctMarcas', 'vctProveedores', 'vctMaquinaria'));
     }
 
     /**
@@ -392,8 +449,9 @@ class inventarioController extends Controller
         ]);
         $data = $request->only(
             'nombre',
-            'marca',
+            'marcaId',
             'modelo',
+            'estatusId',
             'proveedor',
             'numparte',
             'cantidad',
@@ -430,11 +488,17 @@ class inventarioController extends Controller
      * @param  \App\Models\inventario  $inventario
      * @return \Illuminate\Http\Response
      */
-    public function destroy(inventario $inventario)
+    public function destroy($id, $estatusId = 4)
     {
+        // dd($id);
         abort_if(Gate::denies('inventario_destroy'), 403);
+        $inventario = inventario::select("*")->where('id', '=', $id)->first();
+        $inventario->estatusId = $estatusId;
+        $inventario->save();
 
-        return redirect()->back()->with('failed', 'No se puede eliminar');
+        Session::flash('message', 4);
+
+        return redirect()->route('inventario.index', $inventario->tipo);
     }
 
     /**
@@ -808,15 +872,20 @@ class inventarioController extends Controller
         $carga->update();
 
         //*** obtenemos el total de cargas y descargas para obtener el nivel de la cisterna */
-        $decLitrosCargados = $objCalculo->getTotalLitrosCargas($carga->maquinariaId);
-        $decLitrosDescargados = $objCalculo->getTotalLitrosDescargas($carga->maquinariaId);
-        $litrosActualizados = ($decLitrosCargados - $decLitrosDescargados);
+        // $decLitrosCargados = $objCalculo->getTotalLitrosCargas($carga->maquinariaId);
+        // $decLitrosDescargados = $objCalculo->getTotalLitrosDescargas($carga->maquinariaId);
+        // $litrosActualizados = ($decLitrosCargados - $decLitrosDescargados);
 
-        //buscamos el equipo para actulizar el nivel de la cisterna
         $cisterna =   maquinaria::where("id", $carga->maquinariaId)->first();
-        $cisterna->cisternaNivel = $litrosActualizados;
-        $cisterna->update();
-
+        if ($decLitros > $carga->litros) {
+            $litrosFinales = $decLitros - $carga->litros;
+            $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $litrosFinales);
+            $cisterna->save();
+        } else {
+            $litrosFinales = $decLitros - $carga->litros;
+            $cisterna->cisternaNivel = ($cisterna->cisternaNivel - ($litrosFinales));
+            $cisterna->save();
+        }
         Session::flash('message', 1);
 
         if ($carga->tipoCisternaId != null) {
@@ -898,15 +967,21 @@ class inventarioController extends Controller
         $descarga->update();
 
         //*** obtenemos el total de cargas y descargas para obtener el nivel de la cisterna */
-        $decLitrosCargados = $objCalculo->getTotalLitrosCargas($descarga->maquinariaId);
-        $decLitrosDescargados = $objCalculo->getTotalLitrosDescargas($descarga->maquinariaId);
-        $litrosActualizados = ($decLitrosCargados - $decLitrosDescargados);
+        // $decLitrosCargados = $objCalculo->getTotalLitrosCargas($descarga->maquinariaId);
+        // $decLitrosDescargados = $objCalculo->getTotalLitrosDescargas($descarga->maquinariaId);
+        // $litrosActualizados = ($decLitrosCargados - $decLitrosDescargados);
 
         //buscamos el equipo para actulizar el nivel de la cisterna
         $cisterna =   maquinaria::where("id", $descarga->maquinariaId)->first();
-        $cisterna->cisternaNivel = $litrosActualizados;
-        $cisterna->update();
-
+        if ($decLitros > $descarga->litros) {
+            $litrosFinales = $decLitros - $descarga->litros;
+            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $litrosFinales);
+            $cisterna->save();
+        } else {
+            $litrosFinales = $decLitros - $descarga->litros;
+            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $litrosFinales);
+            $cisterna->save();
+        }
         Session::flash('message', 1);
 
         if ($descarga->tipoCisternaId != null) {
@@ -951,19 +1026,22 @@ class inventarioController extends Controller
         }
 
         //*** actualizamos el nivel de la cisterna */
-        $decNivelCisterna = $objCalculo->getNivelTotalCisterna($maquinariaId);
+        // $decNivelCisterna = $objCalculo->getNivelTotalCisterna($maquinariaId);
 
         // dd('Borrando ' . $cargaId . " " . $maquinariaId . " y su nivel queda en " . $decNivelCisterna);
         //buscamos el equipo para actulizar el nivel de la cisterna
-        $cisterna =   maquinaria::where("id", $maquinariaId)->first();
-        $cisterna->cisternaNivel = $decNivelCisterna;
-        $cisterna->update();
+
 
         Session::flash('message', 1);
-
+        $cisterna =   maquinaria::where("id", $maquinariaId)->first();
         if ($carga->tipoCisternaId != null) {
+            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $carga->litros);
+            $cisterna->save();
+
             return redirect()->route('combustibleTote.index');
         } else {
+            $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $carga->litros);
+            $cisterna->save();
             return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
         }
     }
@@ -983,29 +1061,33 @@ class inventarioController extends Controller
         }
         // dd($descarga, $descargaId);
         $maquinariaId = $descarga->maquinariaId;
-        $decNivelCisterna = $objCalculo->getNivelTotalCisterna($maquinariaId);
-        $cisterna =   maquinaria::where("id", $maquinariaId)->first();
-        $cisterna->cisternaNivel = $decNivelCisterna;
-        $cisterna->update();
+        // $decNivelCisterna = $objCalculo->getNivelTotalCisterna($maquinariaId);
+        // $cisterna = maquinaria::where("id", $maquinariaId)->first();
+        // $cisterna->cisternaNivel = $decNivelCisterna;
+        // $cisterna->update();
 
         $descargadetalleId = descargaDetalle::select("*")->where('descargaId', '=', $descargaId)->first();
         // dd($descargadetalleId);
         if ($descargadetalleId != null) {
             $descargadetalleId->delete();
         }
-
-        //*** eliminamos el registro */
-        $descarga->delete();
-
         Session::flash('message', 1);
+        $cisterna = maquinaria::where("id", $maquinariaId)->first();
         if ($descarga->tipoCisternaId != null) {
+            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $descarga->litros);
+            // dd($cisterna->cisternaNivel, $descarga->litros);
+            $cisterna->save();
+
+            $descarga->delete();
             return redirect()->route('combustibleTote.index');
         } else {
+            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $descarga->litros);
+            // dd($cisterna->cisternaNivel, $descarga->litros);
+            $cisterna->save();
+            $descarga->delete();
             return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
         }
     }
-
-
 
     /**
      * Obtiene los uniformes registrados por el tipo de uniforme
