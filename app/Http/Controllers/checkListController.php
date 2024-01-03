@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\Helpers\Calendario;
+use App\Helpers\calendario;
 use stdClass;
 
 class checkListController extends Controller {
