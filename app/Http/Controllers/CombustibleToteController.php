@@ -85,7 +85,7 @@ class CombustibleToteController extends Controller
         $cargas = carga::select(
             'carga.id',
             db::raw("CONCAT(maquinaria.identificador,' ',maquinaria.nombre) AS equipo"),
-            'carga.maquinariaid',
+            'carga.maquinariaId',
             DB::raw("CONCAT(personal.nombres,' ',personal.apellidoP) AS operador"),
             'carga.operadorid',
             'carga.litros',
@@ -96,9 +96,11 @@ class CombustibleToteController extends Controller
             'carga.comentario',
             'carga.kilometraje'
         )
-            ->join('maquinaria', 'maquinaria.id', '=', 'carga.maquinariaId')
-            ->join('personal', 'personal.id', '=', 'carga.operadorId')
-            ->join('cisternas', 'cisternas.id', '=', 'carga.tipoCisternaId')
+            ->leftJoin('maquinaria', 'maquinaria.id', '=', 'carga.maquinariaId')
+            ->leftJoin('personal', 'personal.id', '=', 'carga.operadorId')
+            ->leftJoin('cisternas', 'cisternas.id', '=', 'carga.tipoCisternaId')
+            // ->orWhere('carga.maquinariaId', null)
+            // ->whereNull('carga.maquinariaId')
             ->where('maquinaria.cisterna', '=', 1)
             ->where('cisternas.nombre', '=', 'Tote')
             ->orderBy('carga.created_at', 'desc')
@@ -608,10 +610,19 @@ class CombustibleToteController extends Controller
 
     public function updateReserva(Request $request)
     {
-        $cisternaTipo = cisternas::where("id", 1)->first();
+        $cisternaTipo = cisternas::where("id", $request->tipoCisternaId)->first();
         $data = $request->all();
         // dd($data);
         $cisternaTipo->update($data);
+        $carga['userId'] = auth()->user()->id;
+        $carga['comentario'] = 'Este Movimiento Indica un Ajuste manual a la reserva';
+        $carga['litros'] = $data['contenido'];
+        $carga['tipoCisternaId'] = $data['tipoCisternaId'];
+        carga::create($carga);
+        // $cisternaTipo->ultimaCarga = $request['contenido'];
+        $cisternaTipo->update();
+        Session::flash('message', 1);
+
         return redirect()->route('combustibleTote.index');
     }
 
