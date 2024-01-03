@@ -479,6 +479,14 @@
                             @endforeach
 
                         </div>
+                        <div class="row" style="padding: 0 10px;">
+                            @csrf
+                            <div class="col-12 text-center mb-3 ">
+                                <button type="button" class="btn botonGral" data-bs-toggle="modal" data-bs-target="#myModal">
+                                    Realizar Ajuste en Reserva
+                                </button>                                
+                            </div>
+                        </div>
                         {{--  <form action="{{ route('inventario.updateReservaEquipo') }}" method="post">
                             <div class="row" style="padding: 0 10px;">
                                 @csrf
@@ -1322,6 +1330,72 @@
         </div>
     </div>
 
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Reserva</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('inventario.updateReservaEquipo') }}" method="post">
+                        <div class="row" style="padding: 0 10px;">
+                            @csrf
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/equipo_1.svg') }}" alt="" style="width:40px;">
+                                </div>
+                                
+                                    <div style="width: 90%! important;">
+                                        <label class="labelTitulo">Equipo:</label></br>
+                                        <select id="maquinariaIdReserva" name="maquinariaId"
+                                            class="form-select"
+                                            aria-label="Default select example" required>
+                                            <option value="">Seleccione</option>
+                                            @foreach ($cisternas as $maquina)
+                                                <option value="{{ $maquina->id }}" data-cisterna="{{ $maquina->cisternaNivel }}">
+                                                    {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                
+                            </div>
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Reserva Teorica:
+                                        <span></span></label></br>
+                                    <input type="number" step="0.01" min="0.01"
+                                        required class="inputCaja" id="reservaTeorica"
+                                        readonly value="">
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Reserva Real:
+                                        <span>*</span></label></br>
+                                        <input type="number" name="contenido" class="inputCaja" required>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mb-3 ">
+                                <button type="submit" class="btn botonGral"
+                                    onclick="test()">Guardar</button>
+                            </div>
+                        </div>
+                        </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function mostrarModalConfirmacion() {
@@ -1862,6 +1936,20 @@
                 
                 // Actualiza el valor del input 'horometro'
                 $('#kilometrajeCarga').val(kmValue);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Captura el evento de cambio en el select
+            $('#maquinariaIdReserva').on('change', function () {
+                // Obtiene el valor del atributo 'data-odometro' de la opción seleccionada
+                var selectedOption = $(this).find(':selected');
+                var kmValue = selectedOption.data('cisterna');
+                
+                // Actualiza el valor del input 'horometro'
+                $('#reservaTeorica').val(kmValue);
             });
         });
     </script>

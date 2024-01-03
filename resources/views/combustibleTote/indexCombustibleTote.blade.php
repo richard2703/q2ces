@@ -511,52 +511,15 @@
                             
                             
                         </div>
-                        <form action="{{ route('combustibleTote.updateReserva') }}" method="post">
                         <div class="row" style="padding: 0 10px;">
                             @csrf
-                            <div class="col-4 d-flex mb-4">
-                                <div class="me-2">
-                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
-                                        alt="" style="width:40px;">
-                                </div>
-                                <div style="width: 90%! important;">
-                                    <label class="labelTitulo">Reserva:
-                                        <span>*</span></label></br>
-                                    <input type="number" step="0.01" min="0.01"
-                                        required class="inputCaja" id="litros"
-                                        name="contenido" value="{{$cisternaTipo->contenido}}">
-                                </div>
-                            </div>
-                            <div class="col-4 d-flex mb-4">
-                                <div class="me-2">
-                                    <img src="{{ asset('/img/inventario/precio.svg') }}"
-                                        alt="" style="width:40px;">
-                                </div>
-                                <div style="width: 90%! important;">
-                                    <label class="labelTitulo">Último Precio:
-                                        <span>*</span></label></br>
-                                    <input type="number" step="0.01" min="0.01"
-                                        required class="inputCaja" id="precio"
-                                        name="ultimoPrecio" value="{{$cisternaTipo->ultimoPrecio}}">
-                                </div>
-                            </div>
-                            <div class="col-4 d-flex mb-4">
-                                <div class="me-2">
-                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
-                                        alt="" style="width:40px;">
-                                </div>
-                                <div style="width: 90%! important;">
-                                    <label class="labelTitulo">Última Carga:
-                                        <span>*</span></label></br>
-                                        <input type="number" name="ultimaCarga" value="{{$cisternaTipo->ultimaCarga}}" class="inputCaja" required>
-                                </div>
-                            </div>
                             <div class="col-12 text-center mb-3 ">
-                                <button type="submit" class="btn botonGral"
-                                    onclick="test()">Guardar</button>
+                                <button type="button" class="btn botonGral" data-bs-toggle="modal" data-bs-target="#myModal">
+                                    Realizar Ajuste en Reserva
+                                </button>                                
                             </div>
-                        </form>
                         </div>
+                        
                         {{--  GRAFICO CARGAS  --}}
                         {{--  <div class="row">
                             <div class="col-12">
@@ -1313,6 +1276,67 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Reserva</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('combustibleTote.updateReserva') }}" method="post">
+                        <div class="row" style="padding: 0 10px;">
+                            @csrf
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="http://127.0.0.1:8000/img/inventario/CISTERNA-01.svg" alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Cisterna:</label><br>
+                                    <select id="cisternaId" name="tipoCisternaId" class="form-select" aria-label="Default select example" required="">
+                                        
+                                                                                                                        <option value="1">
+                                                Tote
+                                            </option>
+                                                                                                                </select>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Reserva Teorica:
+                                        <span></span></label></br>
+                                    <input type="number" step="0.01" min="0.01"
+                                        required class="inputCaja" id="litros"
+                                        readonly value="{{$cisternaTipo->contenido}}">
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Reserva Real:
+                                        <span>*</span></label></br>
+                                        <input type="number" name="contenido" class="inputCaja" required>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mb-3 ">
+                                <button type="submit" class="btn botonGral"
+                                    onclick="test()">Guardar</button>
+                            </div>
+                        </div>
+                        </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>

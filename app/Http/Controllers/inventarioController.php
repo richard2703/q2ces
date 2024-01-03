@@ -1236,6 +1236,22 @@ class inventarioController extends Controller
         }
     }
 
+    public function updateReservaEquipo(Request $request)
+    {
+        $cisternaTipo = maquinaria::where("id", $request->maquinariaId)->first();
+        $carga['userId'] = auth()->user()->id;
+        $carga['comentario'] = 'Este Movimiento Indica un Ajuste manual a la reserva';
+        $carga['litros'] = $request['contenido'];
+        $carga['tipoCisternaId'] = null;
+        carga::create($carga);
+        $cisternaTipo->cisternaNivel = $request['contenido'];
+        $cisternaTipo->update();
+        Session::flash('message', 1);
+
+        return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
+    }
+
+
     public function movimiento(Request $request, inventario $producto)
     {
         abort_if(Gate::denies('inventario_edit'), 403);
