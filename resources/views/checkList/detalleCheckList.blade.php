@@ -164,7 +164,7 @@
 
                                                                             @forelse ($records as $tarea)
                                                                                 @if ($item->grupoId == $tarea->grupoId)
-                                                                                    <div class="row">
+                                                                                    <div class="row py-2">
                                                                                         <div class="col-4">
                                                                                             <div class="screenChecklists">
                                                                                                 @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 32, false); @endphp
@@ -172,7 +172,8 @@
                                                                                                 {{ $tarea->tarea }}
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="col-2 td-actions text-center">
+                                                                                        <div
+                                                                                            class="col-2 td-actions text-center">
                                                                                             @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tareaTipoValor, 32, false);  @endphp
                                                                                             @php
                                                                                                 if (is_null($tarea->ruta) == false) {
@@ -240,15 +241,17 @@
 
                                                                                     @forelse ($records as $tarea)
                                                                                         @if ($item->grupoId == $tarea->grupoId)
-                                                                                            <div class="row">
+                                                                                            <div class="row py-2">
                                                                                                 <div class="col-4">
-                                                                                                    <div class="screenChecklists">
+                                                                                                    <div
+                                                                                                        class="screenChecklists">
                                                                                                         @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 32, false); @endphp
                                                                                                         &nbsp;
                                                                                                         {{ $tarea->tarea }}
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="col-2 td-actions text-center">
+                                                                                                <div
+                                                                                                    class="col-2 td-actions text-center">
                                                                                                     @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tareaTipoValor, 32, false);  @endphp
                                                                                                     @php
                                                                                                         if (is_null($tarea->ruta) == false) {
@@ -257,7 +260,8 @@
                                                                                                         }
                                                                                                     @endphp
                                                                                                 </div>
-                                                                                                <div class="col-6 text-left">
+                                                                                                <div
+                                                                                                    class="col-6 text-left">
                                                                                                     {{ $tarea->resultado }}
                                                                                                 </div>
                                                                                             </div>

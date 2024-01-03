@@ -149,8 +149,9 @@
 
                                                                         @forelse ($vctTareas as $tarea)
                                                                             @if ($item->grupoId == $tarea->grupoId)
-                                                                                <div class="row">
-                                                                                    <div class="col-5 td-actions text-left">
+                                                                                <div class="row py-2">
+                                                                                    <div
+                                                                                        class="col-5 td-actions text-left">
                                                                                         <div class="screenChecklists">
                                                                                             @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 32, false); @endphp
                                                                                             &nbsp;
@@ -183,10 +184,12 @@
                                                                                             id="controlHtml"
                                                                                             value="{{ $tarea->controlHtml }}">
                                                                                     </div>
-                                                                                    <div class="col-1 td-actions text-center">
+                                                                                    <div
+                                                                                        class="col-1 td-actions text-center">
                                                                                         @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tipoId, 32);  @endphp
                                                                                     </div>
-                                                                                    <div class="col-6 td-actions text-left">
+                                                                                    <div
+                                                                                        class="col-6 td-actions text-left">
                                                                                         @php echo $objPresentacion->getControlByTarea($tarea->tareaId, $tarea->resultado, $tarea->valor, $intCont); @endphp
                                                                                     </div>
                                                                                 </div>
@@ -246,9 +249,10 @@
 
                                                                                 @forelse ($vctTareas as $tarea)
                                                                                     @if ($item->grupoId == $tarea->grupoId)
-                                                                                        <div class="row">
+                                                                                        <div class="row py-2">
                                                                                             <div class="col-5">
-                                                                                                <div class="screenChecklists">
+                                                                                                <div
+                                                                                                    class="screenChecklists">
                                                                                                     @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 32, false); @endphp
                                                                                                     &nbsp;
                                                                                                     {{ $tarea->tarea }}
@@ -282,11 +286,13 @@
                                                                                                     id="controlHtml"
                                                                                                     value="{{ $tarea->controlHtml }}">
                                                                                             </div>
-                                                                                            <div class="col-1 td-actions text-center">
+                                                                                            <div
+                                                                                                class="col-1 td-actions text-center">
                                                                                                 @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tipoId, 32, false);  @endphp
                                                                                             </div>
 
-                                                                                            <div class="col-6  td-actions text-left">
+                                                                                            <div
+                                                                                                class="col-6  td-actions text-left">
                                                                                                 @php echo $objPresentacion->getControlByTarea($tarea->tareaId, $tarea->resultado, $tarea->valor, $intCont); @endphp
                                                                                             </div>
                                                                                         </div>

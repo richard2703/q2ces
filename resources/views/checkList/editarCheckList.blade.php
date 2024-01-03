@@ -160,7 +160,7 @@
 
                                                                         @forelse ($vctRecords as $tarea)
                                                                             @if ($item->grupoId == $tarea->grupoId)
-                                                                                <div class="row">
+                                                                            <div class="row py-2">
                                                                                     <div
                                                                                         class="col-4 td-actions text-left">
 
@@ -266,7 +266,7 @@
 
                                                                                 @forelse ($vctRecords as $tarea)
                                                                                     @if ($item->grupoId == $tarea->grupoId)
-                                                                                        <div class="row">
+                                                                                        <div class="row py-2">
                                                                                             <div class="col-4 td-actions text-left">
                                                                                                 <div class="screenChecklists">
                                                                                                     @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 32, false); @endphp
