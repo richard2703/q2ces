@@ -45,7 +45,7 @@ class personalEspecialController extends Controller
 
         $personal = $personal->orderBy('nombres', 'asc')->paginate(15);
         $vctPuestos = puesto::orderBy('nombre', 'asc')->get();
-        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->whereIn('id', [20, 21])->get();
+        $vctNiveles = puestoNivel::orderBy('nombre', 'asc')->get();
         $vctEstatus = userEstatus::all();
         $roles = Role::all()->pluck('name', 'id');
         // dd($personal);
@@ -57,7 +57,10 @@ class personalEspecialController extends Controller
     {
         abort_if(Gate::denies('personal_create'), 403);
         $personal = $request->all();
-        // dd($personal);
+        // $puestoNivel = puesto::where('id', $personal['puestoId'])->first();
+
+        // $personal['nivelPuestoId'] = $puestoNivel->puestoNivelId;
+        //dd($personal);
         // conversion a mayuscula de algunos campos
         $personal['mailpersonal'] = strtolower($personal['mailpersonal']);
         /* Generación del email empresarial */
@@ -279,7 +282,10 @@ class personalEspecialController extends Controller
         /*** directorio contenedor de su información */
         $pathPesonal = str_pad($personal->id, 4, '0', STR_PAD_LEFT);
         // dd($request);
+        // $puestoNivel = puesto::where('id', $personal['puestoId'])->first();
 
+        // $personal['nivelPuestoId'] = $puestoNivel->puestoNivelId;
+        // dd($personal);
         // if ($request->hasFile('foto')) {
         //     $data['foto'] = time() . '_' . 'foto.' . $request->file('foto')->getClientOriginalExtension();
         //     $request->file('foto')->storeAs('/public/personal/' . $pathPesonal, $data['foto']);

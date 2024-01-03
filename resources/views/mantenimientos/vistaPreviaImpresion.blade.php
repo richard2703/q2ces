@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario')])
+@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Mantenimientos')])
 @section('content')
 @section('content')
 <div class="content">
@@ -8,12 +8,12 @@
                 <div class="card" >
                     <div class="card-header bacTituloPrincipal">
                         {{-- <p class="card-category">Usuarios registrados</p> --}}
-                        Vista Previa de Impresion de Mantenimiento
+                        {{ $maquinaria->compania == 'mtq' ? 'MTQ' : '' }} Vista Previa de Impresion de Mantenimiento
                     </div>
                     <div class="card-body">
                         <div class="row divBorder">
                             <div class="col-6 text-right">
-                                <a href="{{ route('mantenimientos.index') }}">
+                                <a href="{{ $maquinaria->compania == 'mtq' ? route('mantenimientos.indexMtq'):  route('mantenimientos.index') }}">
                                     <button class="btn regresar">
                                         <span class="material-icons">
                                             reply
@@ -33,7 +33,7 @@
                     <div id="print-content" class="print-content d-flex align-items-center">
                         <div class="row">
                             <div class="col-2 text-start">
-                                <img src="{{ asset('/img/maquinariaPrint/Logo q2cem.svg') }}" alt="" width="95px;" class="mt-1" style="margin-left: 95px">    
+                                <img src="{{ asset('/img/maquinariaPrint/Logo q2cem.svg') }}" alt="" width="95px;" class="mt-1" style="margin-left: 95px">
                             </div>
                             <div class="col-8 mr-3" style="margin-left: -10px">
                                 <div class="row">
@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-2 text-end mt-2" style="margin-left: -40px">
                                 <div class="d-flex align-items-center p-2 justify-content-center" style="font-weight: 500 !important; font-size: 20px !important; background-color: #727176; color: black; height: 25px !important; width: 120px !important;">
                                     <b>FOLIO</b>
@@ -70,14 +70,14 @@
                                 </div>
                             </div>
 
-                        </div>   
+                        </div>
                         <div class="col-12" style="margin-top: 5px; margin-right: 10px;">
                             <div class="d-flex align-items-center p-1 justify-content-center" style="font-weight: 500 !important; font-size: 8px !important; border-radius: 2em;border-width: 1px; border-style: solid; border-color: #727176; background-color: white; color: black; height: 45px !important;">
                                 <div class="d-flex align-items-center justify-content-center custom-section grey-section" style="margin-left: -5px;">
                                     <b>Equipo:</b>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center custom-section white-section" style="border: none">
-                                    
+
                                     <b style="{{ strlen(trans($maquinaria->nombre)) > 16 ? 'font-size: 7px;' : '' }}">{{ $maquinaria->nombre }}</b>
                                 </div>
 
@@ -124,9 +124,9 @@
                                 </div>
 
                             </div>
-                            
-                        </div>  
-                        
+
+                        </div>
+
                         <div class="col-12 " style="margin-top: 5px; margin-right: 10px;">
                             <table class="d-flex align-items-center justify-content-center"  style="font-size: 12px; width: auto; height: auto; border-spacing: 0px !important;">
                                 <tbody>
@@ -140,7 +140,7 @@
                                             <th scope="col" style="width: 500px; font-weight: 600 !important;">MATERIAL y/o MANO DE OBRA</th>
                                             <th scope="col" class="text-white" style="background-color: #727176; height: 10px !important; font-weight: 500 !important;"><b> CANTIDAD</b></th>
                                             <th scope="col" style="width: 15px !important; font-weight: 600 !important;">COSTO</th>
-                                            <th scope="col" class="text-white" style="  background-color: #727176; height: 10px !important; font-weight: 500 !important;"><b>IMPORTE</b></th>    
+                                            <th scope="col" class="text-white" style="  background-color: #727176; height: 10px !important; font-weight: 500 !important;"><b>IMPORTE</b></th>
                                         @else
                                             <th scope="col" style="width: 700px; font-weight: 600 !important;" >MATERIAL y/o MANO DE OBRA</th>
                                             <th scope="col" class="text-white" style="   background-color: #727176; height: 10px !important; font-weight: 500 !important;"><b> CANTIDAD</b></th>
@@ -154,7 +154,7 @@
 
                                         <th rowspan="{{$gastosCount > 0 ? 20 : 21}}" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$fechaInicioFormateada}}</th>
                                         <th rowspan="{{$gastosCount > 0 ? 20 : 21}}" scope="rowgroup" style="vertical-align: middle; border: 1px solid #727176; font-weight: 600 !important;">{{$maquinaria->kilometraje}}</th>
-                                        
+
                                         @if ($gastos->isNotEmpty())
                                             @if ($mecanico == "false")
                                                 <td style="border: 1px solid #727176; font-weight: 600 !important;">{{$gastos[0]->concepto}}, Modelo: {{$gastos[0]->modelo}}, Marca: {{$gastos[0]->marca}}</td>
@@ -205,12 +205,12 @@
                                         @if ($mecanico == "false")
                                         <th scope="col" colspan="3" style="border-right: 1px solid black; font-weight: 500"> {{ $mantenimiento->comentario }}</th>
                                         <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important; border-right: 1px solid black;">
-                                            SUB-TOTAL <br> 
+                                            SUB-TOTAL <br>
                                             <span style="border-top: 1px solid black; display: block; padding-top: 5px;">I.V.A.</span>
                                             <span style="border-top: 1px solid black; display: block; padding-top: 5px;">TOTAL</span>
                                         </td>
                                         <td class="text-white" style="background-color: #727176; border: 1px solid black; padding: 5px; font-weight: bold !important;">
-                                            <br> 
+                                            <br>
                                             <span style="border-top: 1px solid black; display: block; border-bottom: 1px solid black; display: block; padding-top: 5px;">{{ $mantenimiento->iva }}%</span>
                                             <br>
                                         </td>
@@ -259,7 +259,7 @@
                                         </div>
                                     @endfor
                                 </div>
-                                
+
                                 <!-- Segunda sección de imágenes -->
                                 <div style="display: flex; justify-content: space-between;">
                                     @php
@@ -282,7 +282,7 @@
 
 
                                 <!-- Tercera sección de imágenes -->
-                                <div class="mt-1" style="display: flex; justify-content: space-between;">      
+                                <div class="mt-1" style="display: flex; justify-content: space-between;">
                                     <!-- Imagen 9 -->
                                     <div style="margin-top: 3px; width: 30%; height: 201px; border: 1px solid #727176; text-align: center; font-size:8px">
                                         <div class="mt-1"><b>SELLO DE TALLER</b></div>
@@ -290,17 +290,17 @@
                                     <div style="width: 403px; height: 201px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                         <img class="img-fluid" src="{{ empty($fotos[8]['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[8]['ruta']) }}" style="height: 100%; object-fit: cover;">
                                     </div>
-                                    
+
                                     <!-- Imagen 10 -->
                                     <div style="width: 403px; height: 201px; margin: 3px; border: 1px solid #727176; padding: 3px; overflow: hidden;">
                                         <img class="img-fluid" src="{{ empty($fotos[9]['ruta']) ? '/img/general/default.jpg' : asset('/storage/maquinaria/' . str_pad($maquinaria->identificador, 4, '0', STR_PAD_LEFT) . '/mantenimientos/' . $mantenimiento->codigo . '/' . $fotos[9]['ruta']) }}" style="height: 100%; object-fit: cover;">
-                                    </div>      
+                                    </div>
                                     <div style="margin-top: 3px; width: 30%; height: 201px; border: 1px solid #727176; text-align: center; font-size:8px">
                                         <div class="mt-1"><b>SELLO DE OFICINA</b></div>
                                     </div>
                                 </div>
 
-                                
+
                             </div>
 
                         <div class="row d-flex align-items-center justify-content-center" style="margin-top: -20px">
@@ -312,12 +312,12 @@
                                             _____________________________________________<br>
                                             COORDINADOR TALLER<br>
                                     </b>
-                                    
-                                        <div style="font-size: 14px"> 
+
+                                        <div style="font-size: 14px">
                                             @if ($mantenimiento->coordTaller)
-                                                {{ $mantenimiento->coordTaller }}    
+                                                {{ $mantenimiento->coordTaller }}
                                             @else
-                                                No Seleccionado    
+                                                No Seleccionado
                                             @endif
                                             </div>
                                     </div>
@@ -331,10 +331,10 @@
                                             _____________________________________________<br>
                                             COORDINADOR OPERACIONES<br>
                                     </b>
-                                    
-                                        <div style="font-size: 14px"> 
+
+                                        <div style="font-size: 14px">
                                             @if ($mantenimiento->coordOperaciones)
-                                                {{ $mantenimiento->coordOperaciones }}     
+                                                {{ $mantenimiento->coordOperaciones }}
                                             @else
                                                 No Seleccionado
                                             @endif
@@ -350,14 +350,14 @@
                                             _____________________________________________<br>
                                             MECÁNICO<br>
                                     </b>
-                                    
-                                        <div style="font-size: 14px"> 
+
+                                        <div style="font-size: 14px">
                                             @if ($mantenimiento->mecanico)
-                                                {{ $mantenimiento->mecanico }}     
+                                                {{ $mantenimiento->mecanico }}
                                             @else
                                                 No Seleccionado
                                             @endif
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -370,9 +370,9 @@
                                             _____________________________________________<br>
                                             RESPONSABLE DEL EQUIPO<br>
                                     </b>
-                                        <div style="font-size: 14px"> 
+                                        <div style="font-size: 14px">
                                             @if ($mantenimiento->responsable)
-                                                {{ $mantenimiento->responsable }} 
+                                                {{ $mantenimiento->responsable }}
                                             @else
                                                 No Seleccionado
                                             @endif
@@ -435,7 +435,7 @@ print(){
         margin-right: -10mm;
         margin-top: -68mm !important;
     }
-    
+
     body {
         {{--  margin-top: -63mm !important;  --}}
         padding: 0 !important;
