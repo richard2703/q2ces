@@ -32,23 +32,23 @@
 --select: #727176;
 --iconos: #8caf48;
   }
-  
+
   body {
 	/* font-family: "Open Sans", sans-serif; */
 	background: var(--fondo);
 	color: var(--text);
   }
-  
+
   a {
 	color: var(--texto);
 	text-decoration: none;
   }
-  
+
   a:hover {
 	color: var(--texto);
 	text-decoration: none;
   }
-  
+
   h1,
   h2,
   h3,
@@ -67,21 +67,21 @@
 	padding: 20px 30px;
 	transition: all 0.3s;
   }
-  
+
   @media (max-width: 1199px) {
 	#main {
 	  padding: 20px;
 	}
-  
+
   }
-  
+
   /*--------------------------------------------------------------
   # Page Title
   --------------------------------------------------------------*/
   .pagetitle {
 	margin-bottom: 10px;
   }
-  
+
   .pagetitle h1 {
 	font-size: 24px;
 	margin-bottom: 0;
@@ -105,7 +105,7 @@
 	border-radius: 4px;
 	transition: all 0.4s;
   }
-  
+
   .back-to-top i {
 	font-size: 24px;
 	color: var(--dash);
@@ -116,13 +116,13 @@
 	background: #6776f4;
 	color: var(--dash);
   }
-  
+
   .back-to-top.active {
 	visibility: visible;
 	opacity: 1;
   }
 
-  
+
 /*--------------------------------------------------------------
 # Override some default Bootstrap stylings
 --------------------------------------------------------------*/
@@ -139,45 +139,45 @@
 	border: 0;
 	box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
   }
-  
+
   .dropdown-menu .dropdown-header,
   .dropdown-menu .dropdown-footer {
 	text-align: center;
 	font-size: 15px;
 	padding: 10px 25px;
   }
-  
+
   .dropdown-menu .dropdown-footer a {
 	color: var(--text);
 	text-decoration: underline;
   }
-  
+
   .dropdown-menu .dropdown-footer a:hover {
 	text-decoration: none;
   }
-  
+
   .dropdown-menu .dropdown-divider {
 	color: #a5c5fe;
 	margin: 0;
   }
-  
+
   .dropdown-menu .dropdown-item {
 	font-size: 14px;
 	padding: 10px 15px;
 	transition: 0.3s;
   }
-  
+
   .dropdown-menu .dropdown-item i {
 	margin-right: 10px;
 	font-size: 18px;
 	line-height: 0;
   }
-  
+
   .dropdown-menu .dropdown-item:hover {
 	background-color: var(--select);
   color: var(--active);
   }
-  
+
   @media (min-width: 768px) {
 	.dropdown-menu-arrow::before {
 	  content: "";
@@ -192,30 +192,30 @@
 	  border-left: 1px solid #eaedf1;
 	}
   }
-  
+
   @-webkit-keyframes dropdown-animate {
 	0% {
 	  opacity: 0;
 	}
-  
+
 	100% {
 	  opacity: 1;
 	}
-  
+
 	0% {
 	  opacity: 0;
 	}
   }
-  
+
   @keyframes dropdown-animate {
 	0% {
 	  opacity: 0;
 	}
-  
+
 	100% {
 	  opacity: 1;
 	}
-  
+
 	0% {
 	  opacity: 0;
 	}
@@ -231,7 +231,7 @@
   padding: 15px 0px;
   background-color: var(--fondo);
   }
-  
+
   @media (min-width: 1200px) {
 	.logo {
 	  width: 260px;
@@ -241,20 +241,20 @@
     margin-bottom: 88px;
 } */
   }
-  
+
   .logo img {
 
 	/* max-height: 26px; */
 	/* margin-right: 6px; */
   }
-  
+
   .logo span {
 	font-size: 26px;
 	font-weight: 700;
 	color: var(--texto);
 	font-family: "Nunito", sans-serif;
   }
-  
+
   .header {
 	transition: all 0.5s;
 	z-index: 997;
@@ -265,19 +265,19 @@
 	/* Toggle Sidebar Button */
 	/* Search Bar */
   }
-  
+
   .header .toggle-sidebar-btn {
 	font-size: 32px;
 	padding-left: 10px;
 	cursor: pointer;
 	color: var(--texto);
   }
-  
+
   .header .search-bar {
 	min-width: 360px;
 	padding: 0 20px;
   }
-  
+
   @media (max-width: 1199px) {
 	.header .search-bar {
 	  position: fixed;
@@ -292,18 +292,18 @@
 	  visibility: hidden;
 	  opacity: 0;
 	}
-  
+
 	.header .search-bar-show {
 	  top: 60px;
 	  visibility: visible;
 	  opacity: 1;
 	}
   }
-  
+
   .header .search-form {
 	width: 100%;
   }
-  
+
   .header .search-form input {
 	border: 0;
 	font-size: 14px;
@@ -314,21 +314,21 @@
 	transition: 0.3s;
 	width: 100%;
   }
-  
+
   .header .search-form input:focus,
   .header .search-form input:hover {
 	outline: none;
 	box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
 	border: 1px solid rgba(1, 41, 112, 0.3);
   }
-  
+
   .header .search-form button {
 	border: 0;
 	padding: 0;
 	margin-left: -30px;
 	background: none;
   }
-  
+
   .header .search-form button i {
 	color: var(--texto);
   }
@@ -339,32 +339,32 @@
 .header-nav ul {
 	list-style: none;
   }
-  
+
   .header-nav>ul {
 	margin: 0;
 	padding: 0;
   }
-  
+
   .header-nav .nav-icon {
 	font-size: 22px;
 	color: var(--texto);
 	margin-right: 25px;
 	position: relative;
   }
-  
+
   .header-nav .nav-profile {
 	color: var(--select);
   }
-  
+
   .header-nav .nav-profile img {
 	max-height: 36px;
   }
-  
+
   .header-nav .nav-profile span {
 	font-size: 14px;
 	font-weight: 600;
   }
-  
+
   .header-nav .badge-number {
 	position: absolute;
 	inset: -2px -5px auto auto;
@@ -372,107 +372,107 @@
 	font-size: 12px;
 	padding: 3px 6px;
   }
-  
+
   .header-nav .notifications {
 	inset: 8px -15px auto auto !important;
   }
-  
+
   .header-nav .notifications .notification-item {
 	display: flex;
 	align-items: center;
 	padding: 15px 10px;
 	transition: 0.3s;
   }
-  
+
   .header-nav .notifications .notification-item i {
 	margin: 0 20px 0 10px;
 	font-size: 24px;
   }
-  
+
   .header-nav .notifications .notification-item h4 {
 	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 5px;
   }
-  
+
   .header-nav .notifications .notification-item p {
 	font-size: 13px;
 	margin-bottom: 3px;
 	color: #919191;
   }
-  
+
   .header-nav .notifications .notification-item:hover {
 	background-color:  var(--select);
   }
-  
+
   .header-nav .messages {
 	inset: 8px -15px auto auto !important;
   }
-  
+
   .header-nav .messages .message-item {
 	padding: 15px 10px;
 	transition: 0.3s;
   }
-  
+
   .header-nav .messages .message-item a {
 	display: flex;
   }
-  
+
   .header-nav .messages .message-item img {
 	margin: 0 20px 0 10px;
 	max-height: 40px;
   }
-  
+
   .header-nav .messages .message-item h4 {
 	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 5px;
 	color: var(--text);
   }
-  
+
   .header-nav .messages .message-item p {
 	font-size: 13px;
 	margin-bottom: 3px;
 	color: #919191;
   }
-  
+
   .header-nav .messages .message-item:hover {
 	background-color:  var(--select);
   }
-  
+
   .header-nav .profile {
 	min-width: 240px;
 	padding-bottom: 0;
 	top: 8px !important;
   }
-  
+
   .header-nav .profile .dropdown-header h6 {
 	font-size: 18px;
 	margin-bottom: 0;
 	font-weight: 600;
 	color: var(--text);
   }
-  
+
   .header-nav .profile .dropdown-header span {
 	font-size: 14px;
   }
-  
+
   .header-nav .profile .dropdown-item {
 	font-size: 14px;
 	padding: 10px 15px;
 	transition: 0.3s;
   }
-  
+
   .header-nav .profile .dropdown-item i {
 	margin-right: 10px;
 	font-size: 18px;
 	line-height: 0;
   }
-  
+
   .header-nav .profile .dropdown-item:hover {
 	background-color:  var(--select);
   }
-  
+
   /*--------------------------------------------------------------
   # Sidebar
   --------------------------------------------------------------*/
@@ -581,7 +581,7 @@
 .sidebar-nav .nav-link.collapsed {
   color: var(--select);
   background: var(--verde);
-  font-weight: bold; 
+  font-weight: bold;
   /* color: var(--texto); */
 }
 
@@ -653,12 +653,12 @@
 	transition: all 0.3s;
 	border-top: 1px solid #cddfff;
   }
-  
+
   .footer .copyright {
 	text-align: center;
 	color: var(--select);
   }
-  
+
   .footer .credits {
 	padding-top: 5px;
 	text-align: center;
@@ -823,7 +823,7 @@ a.regresar:hover{
 @media only screen and (min-width: 1200px){
   .inputKilometraje{
     margin-left: -12px;
-  }  
+  }
   .buttonImage {
     margin-left: -38px !important;
     width: 2.4em;
@@ -851,7 +851,7 @@ a.regresar:hover{
     font-size: 18px !important;
   }
   .btnViewDelete {
-    width: 2.8em !important; 
+    width: 2.8em !important;
     height: 2.8em !important;
     margin-left: 15px !important;
   }
@@ -875,7 +875,7 @@ a.regresar:hover{
     font-size: 18px !important;
   }
   .btnViewDelete {
-    width: 2.8em !important; 
+    width: 2.8em !important;
     height: 2.8em !important;
     margin-left: 15px !important;
   }
@@ -897,7 +897,7 @@ Alta de maquinaria
 .btnView:hover{
   background-color: #cee8a1 !important;
   color: red !important;
-  
+
 }
 .divAñadir{
   text-align: end !important;
@@ -913,6 +913,9 @@ Alta de maquinaria
     font-size: 10px !important;
     margin-top: 2px !important;
   }
+  .screenChecklists{
+    font-size: 12px !important;
+  }
 
   /*Este button es de editar la maquinaria*/
   .buttonImage {
@@ -920,7 +923,7 @@ Alta de maquinaria
     width: 2.2em;
     height: 2.2em;
   }
-  
+
   .spinner {
     top: -380px;
     position: absolute;
@@ -936,7 +939,7 @@ Alta de maquinaria
     margin-left: 31px;
   }
   .small-card-group .card {
-    height: 200px !important; 
+    height: 200px !important;
   }
   .btnViewDescargar {
     padding: 6px 12px !important;
@@ -955,11 +958,11 @@ Alta de maquinaria
   }
 
   .btnViewDelete {
-    width: 2.8em !important; 
+    width: 2.8em !important;
     height: 2.8em !important;
     margin-left: 25px !important;
   }
-  
+
 }
 
 /* Escritorio pequeño / tablet */
@@ -982,7 +985,7 @@ Alta de maquinaria
     margin-left: 49px;
   }
   .small-card-group .card {
-    height: 200px !important; 
+    height: 200px !important;
   }
   .btnViewDescargar {
     padding: 6px 12px !important;
@@ -1001,12 +1004,12 @@ Alta de maquinaria
   }
 
   .btnViewDelete {
-    width: 2.8em !important; 
+    width: 2.8em !important;
     height: 2.8em !important;
     margin-left: 25px !important;
   }
-  
-  
+
+
 }
 
 /* Celular grande */
@@ -1047,7 +1050,7 @@ Alta de maquinaria
     font-size: 18px !important;
   }
   .btnViewDelete {
-    width: 2.8em !important; 
+    width: 2.8em !important;
     height: 2.8em !important;
     margin-left: 20px !important;
   }
@@ -1083,9 +1086,9 @@ Alta de maquinaria
   .btnRegresarTop{
     margin-left: 50px;
   }
-  
+
   .small-card-group .card {
-    height: 200px !important; 
+    height: 200px !important;
   }
 
   .btnViewDescargar {
@@ -1104,16 +1107,16 @@ Alta de maquinaria
     font-size: 18px !important;
   }
   .btnViewDelete {
-    width: 2.8em !important; 
+    width: 2.8em !important;
     height: 2.8em !important;
     margin-left: 15px !important;
   }
-  
+
 }
 
 /*Ajuste a las cards en Alta maquina en subida de documentos*/
 .small-card-group .card {
-  height: 170px; 
+  height: 170px;
   margin-bottom: 20px !important;
 }
 
@@ -1152,7 +1155,7 @@ Alta de maquinaria
 /* Estilos para el autocompletado */
 .ui-autocomplete {
   position: absolute !important;
-  z-index: 9999 !important; 
+  z-index: 9999 !important;
   overflow-y: auto !important;
 }
 .ui-menu-item {
@@ -1218,7 +1221,7 @@ table{
   .border-green{
     border: #5C7C26 1px solid!important;
   }
-  
+
   .buttonImage {
     margin-left: -45px;
     margin-top: -0.5px;

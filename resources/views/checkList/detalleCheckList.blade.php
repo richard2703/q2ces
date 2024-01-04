@@ -133,13 +133,12 @@
                                                         <div class="accordion-item" style="margin-top: -20px;"
                                                             id="AccordionPrincipal">
                                                             <h2 class="accordion-header " id="headingOne">
-
-                                                                @php echo $objPresentacion->getImagenGrupoTareasControl($item->grupoId, 32); @endphp
                                                                 <button class="accordion-button bacTituloPrincipal"
                                                                     type="button" data-bs-toggle="collapse"
                                                                     data-bs-target="#{{ str_replace(' ', '_', $item->grupo) }}"
                                                                     aria-expanded="true" aria-controls="collapseOne">
-
+                                                                    @php echo $objPresentacion->getImagenGrupoTareasControl($item->grupoId, 32); @endphp
+                                                                    &nbsp;
                                                                     Sección de {{ $item->grupo }}
                                                                 </button>
                                                             </h2>
@@ -165,11 +164,17 @@
 
                                                                             @forelse ($records as $tarea)
                                                                                 @if ($item->grupoId == $tarea->grupoId)
-                                                                                    <div class="row">
-                                                                                        <div class="col-5">
-                                                                                            {{ $tarea->tarea }}
+                                                                                    <div class="row py-2">
+                                                                                        <div class="col-4">
+                                                                                            <div class="screenChecklists">
+                                                                                                @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 32, false); @endphp
+                                                                                                &nbsp;
+                                                                                                {{ $tarea->tarea }}
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="col-1">
+                                                                                        <div
+                                                                                            class="col-2 td-actions text-center">
+                                                                                            @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tareaTipoValor, 32, false);  @endphp
                                                                                             @php
                                                                                                 if (is_null($tarea->ruta) == false) {
                                                                                                     echo "<a class='img-mouse'><i class='fas fa-camera'> </i></a>";
@@ -177,7 +182,7 @@
                                                                                                 }
                                                                                             @endphp
                                                                                         </div>
-                                                                                        <div class="col-6">
+                                                                                        <div class="col-6 text-left">
                                                                                             {{ $tarea->resultado }}
                                                                                         </div>
                                                                                     </div>
@@ -207,6 +212,8 @@
                                                                     type="button" data-bs-toggle="collapse"
                                                                     data-bs-target="#{{ str_replace(' ', '_', $item->grupo) }}"
                                                                     aria-expanded="true" aria-controls="collapseOne">
+                                                                    @php echo $objPresentacion->getImagenGrupoTareasControl($item->grupoId, 32); @endphp
+                                                                    &nbsp;
                                                                     Sección de {{ $item->grupo }}
                                                                 </button>
                                                             </h2>
@@ -234,11 +241,18 @@
 
                                                                                     @forelse ($records as $tarea)
                                                                                         @if ($item->grupoId == $tarea->grupoId)
-                                                                                            <div class="row">
-                                                                                                <div class="col-5">
-                                                                                                    {{ $tarea->tarea }}
+                                                                                            <div class="row py-2">
+                                                                                                <div class="col-4">
+                                                                                                    <div
+                                                                                                        class="screenChecklists">
+                                                                                                        @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 32, false); @endphp
+                                                                                                        &nbsp;
+                                                                                                        {{ $tarea->tarea }}
+                                                                                                    </div>
                                                                                                 </div>
-                                                                                                <div class="col-1">
+                                                                                                <div
+                                                                                                    class="col-2 td-actions text-center">
+                                                                                                    @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tareaTipoValor, 32, false);  @endphp
                                                                                                     @php
                                                                                                         if (is_null($tarea->ruta) == false) {
                                                                                                             echo "<a class='img-mouse'><i class='fas fa-camera'> </i></a>";
@@ -246,7 +260,8 @@
                                                                                                         }
                                                                                                     @endphp
                                                                                                 </div>
-                                                                                                <div class="col-6">
+                                                                                                <div
+                                                                                                    class="col-6 text-left">
                                                                                                     {{ $tarea->resultado }}
                                                                                                 </div>
                                                                                             </div>
@@ -285,70 +300,7 @@
                                             </div>
                                         </div>
                                     </div>
-<!--
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead class="labelTitulo">
-                                                {{-- <tr>
-                                                    <th class="labelTitulo">Tarea</th>
-                                                    <th class="labelTitulo">Resultado</th>
-                                                </tr> --}}
-                                            </thead>
-                                            <tbody>
 
-                                                @forelse ($records as $item)
-                                                    <?php
-                                                    if ($strNombreGrupo == '') {
-                                                        //*** es la primera vez
-                                                        $strNombreGrupo = $item->grupo;
-                                                        $blnNuevaSeccion = true;
-                                                    } elseif ($strNombreGrupo != $item->grupo) {
-                                                        $strNombreGrupo = $item->grupo;
-                                                        $blnNuevaSeccion = true;
-                                                    } else {
-                                                        $blnNuevaSeccion = false;
-                                                    }
-
-                                                    ?>
-                                                    @if ($blnNuevaSeccion == true)
-                                                        <tr>
-                                                            <th class="labelTitulo" colspan="2">Sección
-                                                                {{ $strNombreGrupo }}</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><strong>Tarea</strong></td>
-                                                            <td><strong>Resultado</strong></td>
-                                                        </tr>
-                                                    @endif
-
-                                                    <tr>
-                                                        <td>{{ $item->tarea }} </td>
-                                                        <td>
-                                                            <p class="text">{{ $item->resultado }} </p>
-                                                            <p>
-                                                                @php
-                                                                    if (is_null($item->ruta) == false) {
-                                                                        echo "<a class='img-mouse'>Imagen</a>";
-                                                                        echo '<input class="img-a-mostrar"  type="image" width="300" id="image' . $item->tareaId . '" alt="Imagen" src="' . asset($pathImagen . '/' . $item->ruta) . '" />';
-                                                                    }
-                                                                @endphp
-
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-
-                                                    <?php
-                                                    $intCont += 1;
-                                                    ?>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="4">Sin registros.</td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                -->
                                 </div>
 
                                 <div class="col-12 text-center m-3 pt-2">
