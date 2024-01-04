@@ -96,13 +96,14 @@ $fechaMinima = Carbon::parse(date('Y-m-d'));
                                             </div>
 
                                             <div class="col-8 text-end">
-                                                @can('asistencia_create')
+                                                @can('asistencia_registro_individual')
                                                     <a href="{{ route('asistencia.registroIndividual') }}"
                                                         data-bs-toggle="modal" data-bs-target="#modal-registro"
                                                         title="Click para registrar la asistencia individual de una persona">
                                                         <button type="button" class="btn botonGral">Agregar Asistencia</button>
                                                     </a>
                                                 @endcan
+
                                                 @can('asistencia_create')
                                                     <a href="{{ route('asistencia.create') }}"
                                                         title="Click para registrar la asistencia del personal">

@@ -229,6 +229,8 @@ class asistenciaController extends Controller {
     }
 
     public function registroIndividual( Request $request ) {
+        abort_if ( Gate::denies( 'asistencia_registro_individual' ), '403' );
+
         $objAsistencia = new asistencia();
         $objAsistencia->personalId = $request[ 'personalId' ];
         $objAsistencia->asistenciaId = 1;
