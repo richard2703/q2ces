@@ -91,7 +91,7 @@
                                                     <div class="input-group">
                                                         <label class="labelTitulo p-2">Marcas: </label>
                                                         <select name="marca" id="marca" style="background: #727176; color: white; font-weight: bold;" class="form-control">
-                                                            <option value="" style="font-weight: bold;">Sin Filtro</option>
+                                                            <option value="" style="font-weight: bold;">Todas</option>
                                                             @foreach($marcas as $id => $nombre)
                                                                 <option value="{{ $id }}" style="font-weight: bold;" {{ request('marca') == $id ? 'selected' : '' }}>{{ $nombre }}</option>
                                                             @endforeach
