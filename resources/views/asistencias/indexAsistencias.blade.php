@@ -1,5 +1,6 @@
 @extends('layouts.main', ['activePage' => 'asistencia', 'titlePage' => __('Asistencia')])
 <?php
+use Carbon\Carbon;
 $objCalendar = new Calendario();
 $mesAnterior = $objCalendar->getMesAnterior($intMes, $intAnio);
 $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
@@ -7,6 +8,9 @@ $mesSiguiente = $objCalendar->getMesSiguiente($intMes, $intAnio);
 //*** el mes seleccionado
 $mesSeleccionado = $intMes;
 $anioSeleccionado = $intAnio;
+$dtToday = date('Y-m-d');
+$objValida = new Validaciones();
+$fechaMinima = Carbon::parse(date('Y-m-d'));
 ?>
 @section('content')
     <div class="content">
@@ -93,12 +97,21 @@ $anioSeleccionado = $intAnio;
 
                                             <div class="col-8 text-end">
                                                 @can('asistencia_create')
-                                                    <a href="{{ route('asistencia.create') }}" title="Click para registrar la asistencia del personal">
+                                                    <a href="{{ route('asistencia.registroIndividual') }}"
+                                                        data-bs-toggle="modal" data-bs-target="#modal-registro"
+                                                        title="Click para registrar la asistencia individual de una persona">
+                                                        <button type="button" class="btn botonGral">Agregar Asistencia</button>
+                                                    </a>
+                                                @endcan
+                                                @can('asistencia_create')
+                                                    <a href="{{ route('asistencia.create') }}"
+                                                        title="Click para registrar la asistencia del personal">
                                                         <button type="button" class="btn botonGral">Asistencia</button>
                                                     </a>
                                                 @endcan
                                                 @can('asistencia_edit')
-                                                    <a href="{{ route('asistencia.horasExtra') }}" title="Click para registrar la salida del personal">
+                                                    <a href="{{ route('asistencia.horasExtra') }}"
+                                                        title="Click para registrar la salida del personal">
                                                         <button type="button" class="btn botonGral">Tiempo Extra</button>
                                                     </a>
                                                 @endcan
@@ -244,6 +257,60 @@ $anioSeleccionado = $intAnio;
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modal-registro" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="modal-registro" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="col-12">
+                    <div class="card ">
+                        <form action="{{ route('asistencia.registroIndividual', 0) }}" method="post">
+                            {{-- <form class="row d-flex" action="{{ route('lugares.update', 0) }}" method="post"> --}}
+                            @csrf
+                            <div class="card-header bacTituloPrincipal ">
+                                <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <span class="nav-tabs-title">
+                                            <h2 class="titulos">Registro Individual de Asistencia</h2>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row  card-body">
+                                <div class="row card-body" style=" text-align: letf;">
+
+                                    <div class="col-12">
+                                        <label class="labelTitulo">Fecha: <span>*</span></label></br>
+                                        <input type="date" class="inputCaja" id="fechaRegistrar" required
+                                            max="{{ $dtToday }}" placeholder="Ej.: 2023-01-01" min={{ $fechaMinima->addDay(-7)}}
+                                            name="fechaRegistrar" onchange="cargar('fechaRegistrar','personalId')"
+                                            oninput="cargar('fechaRegistrar','personalId')"
+                                            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value=""></br>
+                                    </div>
+                                    <div class="col-12 ">
+                                        <label class="labelTitulo">Personal: <span>*</span></label></br>
+                                        <select id="personalId" name="personalId" class="form-select" required
+                                            aria-label="Default select example">
+                                            {{-- @foreach ($listaAsistencia as $item)
+                                                <option value="{{ $item->id }}">
+                                                    {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
+                                                </option>
+                                            @endforeach --}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button class="btn botonGral ">Registrar</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <style>
         table {
             table-layout: fixed;
@@ -256,6 +323,33 @@ $anioSeleccionado = $intAnio;
         }
     </style>
 
+    <script>
+        function cargar(ctrlOrigen, ctrlDestino) {
+            const listaSeleccion = document.getElementById(ctrlOrigen);
+            const ListaSeleccionar = document.getElementById(ctrlDestino);
+
+
+            var url = '{{ route('inasistenciaPorFecha.get', ':fecha') }}';
+            url = url.replace(':fecha', listaSeleccion.value.replaceAll("-", ""));
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Actualiza las opciones en el select "item"
+                    console.log(data);
+                    ListaSeleccionar.innerHTML = '';
+                    data.forEach(item => {
+                        console.log(item);
+                        var option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = item.personal + ' [' + item.puesto + ']';
+                        ListaSeleccionar.appendChild(option);
+                    });
+
+                });
+
+        };
+    </script>
     <script>
         function Guardado() {
             // alert('test');

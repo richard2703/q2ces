@@ -381,6 +381,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asistencia', [App\Http\Controllers\asistenciaController::class, 'index'])->name('asistencia.index');
     Route::get('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'create'])->name('asistencia.create');
     Route::post('/asistencia/diaria', [App\Http\Controllers\asistenciaController::class, 'store'])->name('asistencia.store');
+    Route::post('/asistencia/registro', [App\Http\Controllers\asistenciaController::class, 'registroIndividual'])->name('asistencia.registroIndividual');
     Route::post('/asistencia/otrodia', [App\Http\Controllers\asistenciaController::class, 'cambioDiaAsistencia'])->name('asistencia.cambioDiaAsistencia');
     Route::post('/asistencia/otromes', [App\Http\Controllers\asistenciaController::class, 'cambioMesAsistencia'])->name('asistencia.cambioMesAsistencia');
     Route::post('/asistencia/otrodiaextras', [App\Http\Controllers\asistenciaController::class, 'cambioDiaExtras'])->name('asistencia.cambioDiaExtras');
@@ -396,6 +397,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asistencia/personal/{personalId}/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadDetalle'])->name('asistencia.reloadDetalle');
     Route::get('/asistencia/corteSemanal/{anio}/{mes}/{dia}', [App\Http\Controllers\asistenciaController::class, 'reloadcorteSemanal'])->name('asistencia.reloadcorteSemanal');
     Route::post('asistencia/corteSemanal/reporte/exportar/{intAnio}/{intMes}/{intDia}', [App\Http\Controllers\asistenciaController::class, 'reporteExcel'])->name('asistencia.reporteExcel');
+
+    Route::get('/asistencia/busqueda/sinregistrar/{fecha}', [App\Http\Controllers\asistenciaController::class, 'inasistenciaPorFecha'])->name('inasistenciaPorFecha.get');
 
     // Route::post('/asistencia', [App\Http\Controllers\personalController::class, 'store'])->name('personal.store');
     // Route::get('/asistencia', [App\Http\Controllers\personalController::class, 'index'])->name('personal.indexPersonal');

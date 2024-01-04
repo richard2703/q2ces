@@ -21,6 +21,56 @@ use stdClass;
 
 class asistenciaController extends Controller {
 
+    public function inasistenciaPorFecha( $dtFecha ) {
+
+        // dd( substr( $dtFecha, 0, 4 ),  substr( $dtFecha, 4, 2 ),  substr( $dtFecha, 6, 2 ) );
+
+        //*** obtenemos la lista de asistencia de personal */
+        $personal = personal::getListaAsistenciaPersonal( substr( $dtFecha, 0, 4 ),  substr( $dtFecha, 4, 2 ),  substr( $dtFecha, 6, 2 ) );
+
+        //*** obtenemos las asistencias del dia especificado */
+        $asistencias = personal::getAsistenciaDia( substr( $dtFecha, 0, 4 ),  substr( $dtFecha, 4, 2 ),  substr( $dtFecha, 6, 2 ) );
+
+        $empleados = array();
+        $vctDebug = array();
+
+        $vctDebug[] = 'Personal: '  . $personal->count() ;
+        $vctDebug[] = 'Asistencias: ' . $asistencias->count();
+        $vctDebug[] = 'Iniciando...';
+
+        if ( $asistencias->isEmpty() == false ) {
+
+            foreach ( $personal as $empleado ) {
+                $vctDebug[] = '- Empleado: ' . $empleado->id;
+                $blnEncontrado = false;
+                $intCont = 0;
+
+                foreach ( $asistencias as $asistencia ) {
+                    $vctDebug[] = '-- Revisando asistencia: ' . $asistencia->personalId;
+
+                    if ( $empleado->id ==  $asistencia->personalId ) {
+                        $vctDebug[] = '-- Encontre asistencia del empleado ' . $asistencia->personalId;
+                        $blnEncontrado = true;
+                        $vctDebug[] = '- siguiente...';
+                        break;
+                    }
+
+                    $intCont += 1;
+                    if ( $intCont == $asistencias->count() && $blnEncontrado == false ) {
+                        $empleados[] = $empleado;
+                        $vctDebug[] = '-- Sin registro del empleado: '. $empleado->id;
+                    }
+                }
+
+            }
+        }
+        $vctDebug[] = 'Fin...';
+
+        // dd( $vctDebug, $empleados );
+
+        return response()->json( $empleados );
+    }
+
     public function index( $intAnio = null, $intMes = null, $intDia = null ) {
         abort_if ( Gate::denies( 'asistencia_index' ), '403' );
 
@@ -176,6 +226,24 @@ class asistenciaController extends Controller {
     public function reloadLista( $intAnio, $intMes, $intDia ) {
         // dd( $intAnio, $intMes, $intDia );
         return redirect()->action( [ asistenciaController::class, 'create' ], [ 'intAnio' => $intAnio, 'intMes' => $intMes, 'intDia' => $intDia ] );
+    }
+
+    public function registroIndividual( Request $request ) {
+        $objAsistencia = new asistencia();
+        $objAsistencia->personalId = $request[ 'personalId' ];
+        $objAsistencia->asistenciaId = 1;
+        $objAsistencia->fecha = $request[ 'fechaRegistrar' ];
+        $objAsistencia->hEntrada = '08:00:00' ;
+        $objAsistencia->hSalida = '18:00:00';
+        $objAsistencia->horasExtra = 0;
+        $objAsistencia->totalHorasExtra = 0;
+        $objAsistencia->entradaAnticipada = 0;
+        $objAsistencia->horasAnticipada = 0;
+        $objAsistencia->horasRetraso = 0;
+        $objAsistencia->save();
+
+        // dd( $request, $objAsistencia );
+        return redirect()->action( [ asistenciaController::class, 'index' ], [ 'intAnio' => $request[ 'intAnio' ], 'intMes' => $request[ 'intMes' ] ] );
     }
 
     /**
@@ -611,12 +679,12 @@ class asistenciaController extends Controller {
         $intCont = 0;
         foreach ( $asistencias as $key => $item ) {
 
-            $vctDebug[] = 'Analizando el registro ' .  ($intCont + 1) ;
+            $vctDebug[] = 'Analizando el registro ' .  ( $intCont + 1 ) ;
 
             if ( $intCont == 0 ) {
                 $vctDebug[] = '- Creamos el objeto para de ' . $item->personal;
                 $objDia = new stdClass;
-            } else if ( $intCont == ( $intTotalAsistencias   ) ) {
+            } else if ( $intCont == ( $intTotalAsistencias ) ) {
                 $vctDebug[] = 'Ya no hay registros... '  ;
 
             } else {
@@ -686,11 +754,11 @@ class asistenciaController extends Controller {
                 $intDiaTrabajado += 1;
                 $vctDebug[] = $objPagos;
 
-                if (( $intCont + 1) == $intTotalAsistencias ) {
-                    $vctDebug[] = '---- Es el ultimo registro ' . ($intCont + 1);
+                if ( ( $intCont + 1 ) == $intTotalAsistencias ) {
+                    $vctDebug[] = '---- Es el ultimo registro ' . ( $intCont + 1 );
                     $objDia->pagos  = $vctPagos;
                     $vctAsistencias[] =  $objDia;
-                }else{
+                } else {
                     $vctDebug[] = '----- Hay mas registros por trabajar';
                 }
 
@@ -727,11 +795,11 @@ class asistenciaController extends Controller {
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
 
-                if (( $intCont + 1) == $intTotalAsistencias ) {
-                    $vctDebug[] = '---- Es el ultimo registro ' . ($intCont + 1);
+                if ( ( $intCont + 1 ) == $intTotalAsistencias ) {
+                    $vctDebug[] = '---- Es el ultimo registro ' . ( $intCont + 1 );
                     $objDia->pagos  = $vctPagos;
                     $vctAsistencias[] =  $objDia;
-                }else{
+                } else {
                     $vctDebug[] = '----- Hay mas registros por trabajar';
                 }
 
@@ -743,7 +811,7 @@ class asistenciaController extends Controller {
         //  dd( $vctAsistencias, $asistencias, $intAnio, $intMes, $intDia, $strDate, $vctFechas[ 0 ], $vctFechas[ 1 ], );
 
         return view( 'asistencias.corteSemanal',  compact( 'usuario', 'vctAsistencias',   'asistencias', 'listaAsistencia', 'intDia', 'intMes', 'intAnio', 'strFechaInicioPeriodo', 'strFechaFinPeriodo' ) );
-      }
+    }
 
     /**
     * Realiza el calculo del corte semanal a partir de los parametros de la fecha entregada
@@ -1458,12 +1526,12 @@ class asistenciaController extends Controller {
         $intCont = 0;
         foreach ( $asistencias as $key => $item ) {
 
-            $vctDebug[] = 'Analizando el registro ' .  ($intCont + 1) ;
+            $vctDebug[] = 'Analizando el registro ' .  ( $intCont + 1 ) ;
 
             if ( $intCont == 0 ) {
                 $vctDebug[] = '- Creamos el objeto para de ' . $item->personal;
                 $objDia = new stdClass;
-            } else if ( $intCont == ( $intTotalAsistencias   ) ) {
+            } else if ( $intCont == ( $intTotalAsistencias ) ) {
                 $vctDebug[] = 'Ya no hay registros... '  ;
 
             } else {
@@ -1533,11 +1601,11 @@ class asistenciaController extends Controller {
                 $intDiaTrabajado += 1;
                 $vctDebug[] = $objPagos;
 
-                if (( $intCont + 1) == $intTotalAsistencias ) {
-                    $vctDebug[] = '---- Es el ultimo registro ' . ($intCont + 1);
+                if ( ( $intCont + 1 ) == $intTotalAsistencias ) {
+                    $vctDebug[] = '---- Es el ultimo registro ' . ( $intCont + 1 );
                     $objDia->pagos  = $vctPagos;
                     $vctAsistencias[] =  $objDia;
-                }else{
+                } else {
                     $vctDebug[] = '----- Hay mas registros por trabajar';
                 }
 
@@ -1574,11 +1642,11 @@ class asistenciaController extends Controller {
                 $objPagos->tipoAsistenciaNombre = $item->tipoAsistenciaNombre;
                 $vctPagos[] = $objPagos;
 
-                if (( $intCont + 1) == $intTotalAsistencias ) {
-                    $vctDebug[] = '---- Es el ultimo registro ' . ($intCont + 1);
+                if ( ( $intCont + 1 ) == $intTotalAsistencias ) {
+                    $vctDebug[] = '---- Es el ultimo registro ' . ( $intCont + 1 );
                     $objDia->pagos  = $vctPagos;
                     $vctAsistencias[] =  $objDia;
-                }else{
+                } else {
                     $vctDebug[] = '----- Hay mas registros por trabajar';
                 }
 
