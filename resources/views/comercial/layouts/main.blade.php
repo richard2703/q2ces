@@ -34,6 +34,8 @@
         integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+    {{--  Carrusel de cards  --}}
+    <link href="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css" rel="stylesheet">
 
 
 </head>
@@ -252,6 +254,11 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/alertas.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <script src="{{ asset('js/comercial/script.js') }}"></script>
+    {{--  carrusel de cards  --}}
+    {{--  <script src="https://cdn.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.js"></script>  --}}
+
 
     @stack('js')
 </body>

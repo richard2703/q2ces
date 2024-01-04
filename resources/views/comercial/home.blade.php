@@ -64,14 +64,14 @@
             </div>
         </div>
 
-        <div class="d-md-flex marcos">
+        <div class="d-md-flex ">
             {{--  <div
                 style="background-image: url('{{ asset('img/comercial/layout/Q2CES.svg') }}'); width: 100%; height: 80vh; opacity: 50%; ">
             </div>  --}}
-            <div class="col-12 col-md-8 marcos">
+            <div class="col-12 col-md-8 ">
                 <img src="{{ asset('img/comercial/layout/Q2CES.svg') }}" alt="Q2Ces" style="width: 50%;">
             </div>
-            <div class="col-12 col-md-4 marcos">
+            <div class="col-12 col-md-4 ">
                 <h3>¡Cotiza en línea y empieza tu proyecto hoy!</h3>
                 <p>Obtén la renta de maquinaria pesada para construcción
                     más eﬁciente y de excelente rendimiento en Q2CES, donde
@@ -89,20 +89,20 @@
                     </a>
                 </div>
             </div>
-            {{--  <div class="col-12 col-md-6 marcos">
+            {{--  <div class="col-12 col-md-6 ">
                 <img src="{{ asset('img/comercial/layout/whats.svg') }}" style="width: 50%;">
             </div>  --}}
 
         </div>
-        <div class="my-3 marcos">
+        <div class="my-3 ">
             {{--  <div
                 style="background-image: url('{{ asset('img/comercial/layout/Q2CES.svg') }}'); width: 100%; height: 80vh; opacity: 50%; ">
             </div>  --}}
-            <div class="col-12 text-center mb-2 marcos">
+            <div class="col-12 text-center mb-2 ">
                 <h2>Nuestras Marcas</h2>
             </div>
 
-            <div class="slider mb-2 marcos">
+            <div class="slider mb-2 ">
                 <div class="slide-track">
                     <div class="slide">
                         <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
@@ -158,7 +158,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12  marcos">
+            <div class="col-12  ">
                 <div class="text-center">
                     <h3>¡Cotiza en línea y empieza tu proyecto hoy!</h3>
                 </div>
@@ -187,16 +187,78 @@
                             <div class="Row">
                                 <h3>¡Movimiento!</h3>
                             </div>
-                            <p>Obtén la renta de maquinaria pesada para construcción
-                                más eﬁciente y de excelente rendimiento en Q2CES, donde
-                                contamos con una amplia experiencia en el sector de la
-                                renta de este tipo de equipos que te permitirán conseguir
-                                resultados mucho más rápidos en todos tus proyectos de
-                                obra.</p>
 
-                            <p>Manejamos los precios más competitivos y una atención
-                                personalizada desde una óptica de ingeniería civil, además
-                                de que tenemos al personal más capacitado.</p>
+                            {{--  Inicio de CARD  --}}
+                            <section class="product">
+                                <button class="pre-btn">
+                                    <img src="{{ asset('img/comercial/home/arrow.png') }}" alt="">
+                                </button>
+                                <button class="nxt-btn">
+                                    <img src="{{ asset('img/comercial/home/arrow.png') }}" alt="">
+                                </button>
+                                <div class="product-container">
+
+                                    <div class="card product-card" style="margin: 15px">
+                                        <div class="card-body combustibleBorde">
+                                            <div class="bordeTitulo mb-3">
+                                                <h2 class="combustibleTitulo fw-semibold  my-3 text-center"> MAQUINARIA
+                                                </h2>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-12 mb-1">
+                                                    <p class="text-center" style="font-weight: bold">Reserva</p>
+                                                    <p class="combustibleLitros fw-semibold text-center">
+                                                        {{--  {{ number_format($gasolina->cisternaNivel, 2) }} lts.  --}}
+                                                    </p>
+                                                </div>
+
+                                                <div class="col-6" style="width: 150px !important">
+                                                    <p class=" "style="font-weight: bold">Última Carga:</p>
+                                                    <p class="combustiblefecha fw-semibold mb-3">
+                                                        {{--  {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}  --}}
+                                                    </p>
+                                                </div>
+
+                                                <div class="col-5" style="width: 130px !important">
+                                                    <p class="d-flex align-content-end"style="font-weight: bold">Por Litro:
+                                                    </p>
+                                                    <p class="d-flex align-content-end combustibleLitros fw-semibold">
+                                                        {{--  $ {{ number_format($gasolina->precio, 2) }}  --}}
+                                                    </p>
+                                                </div>
+
+                                                <div class="col-12 d-flex justify-content-center">
+                                                    <p class="text-center mt-1"
+                                                        style="font-weight: bold; margin-right:8px; width: 130px !important">
+                                                        Litros Cargados: </p>
+                                                    <div class="combustibleLitros fw-semibold text-center mt-2">
+                                                        {{--  {{ number_format($gasolina->litros, 2) }} lts.  --}}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{--  EJEMPLO DEL TUTO  --}}
+                                    {{--  <div class="product-card">
+                                        <div class="product-image">
+                                            <span class="discount-tag">50% off</span>
+                                            <img src="images/card10.jpg" class="product-thumb" alt="">
+                                            <button class="card-btn">add to wishlist</button>
+                                        </div>
+                                        <div class="product-info">
+                                            <h2 class="product-brand">brand</h2>
+                                            <p class="product-short-description">a short line about the cloth..</p>
+                                            <span class="price">$20</span><span class="actual-price">$40</span>
+                                        </div>
+                                    </div>  --}}
+
+
+                                </div>
+                            </section>
+                            {{--  Fin de CARD  --}}
+
                             <div class="text-center">
                                 <a href="#">
                                     <button class="button">Conoce más</button>
@@ -243,7 +305,7 @@
 
 
             </div>
-            {{--  <div class="col-12 col-md-6 marcos">
+            {{--  <div class="col-12 col-md-6 ">
                 <img src="{{ asset('img/comercial/layout/whats.svg') }}" style="width: 50%;">
             </div>  --}}
 
