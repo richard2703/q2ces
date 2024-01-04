@@ -43,6 +43,7 @@ class inventarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index($tipo)
     {
         abort_if(Gate::denies('inventario_index'), 403);
@@ -170,62 +171,68 @@ class inventarioController extends Controller
 
             return view('inventario.dashCombustible', compact('despachador', 'vctObras', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
         } else {
-
             $estatus = request()->input('estatus');
-            // dd($estatus);
+            $marcaId = request()->input('marca');
+            $search = request()->input('search');
+
+            $query = inventario::where('inventario.tipo', $tipo)
+                ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'inventario.estatusId')
+                ->leftJoin('marca', 'marca.id', '=', 'inventario.marcaId')
+                ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus', 'marca.nombre AS nombre_marca')
+                ->orderBy('created_at', 'desc');
+
+            if ($search != null) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('inventario.nombre', 'LIKE', '%' . $search . '%')
+                        ->orWhere('marca.nombre', 'LIKE', '%' . $search . '%')
+                        ->orWhere('inventario.numparte', 'LIKE', '%' . $search . '%')
+                        ->orWhere('inventario.modelo', 'LIKE', '%' . $search . '%');
+                });
+            }
+
+            // Aplicar filtro por marca si se ha seleccionado alguna
+            if ($marcaId) {
+                $query->where('inventario.marcaId', $marcaId);
+            }
+
+            // Aplicar filtro por estatus
             switch ($estatus) {
-                case '0':
-                    $inventarios = inventario::where('tipo', $tipo)
-                        ->orderBy('created_at', 'desc')
-                        ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'estatusId')
-                        ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus')
-                        ->paginate(15);
-                    break;
                 case '5':
-                    $inventarios = inventario::where('tipo', $tipo)
-                        ->where('cantidad', '>', 0)
-                        ->orderBy('created_at', 'desc')
-                        ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'estatusId')
-                        ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus')
-                        ->paginate(15);
+                    $query->where('cantidad', '>', 0);
                     break;
-
                 case '6':
-                    $inventarios = inventario::where('tipo', $tipo)
-                        ->where('cantidad', '<=', 0)
-                        ->orderBy('created_at', 'desc')
-                        ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'estatusId')
-                        ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus')
-                        ->paginate(15);
+                    $query->where('cantidad', '<=', 0);
                     break;
-
+                case '1':
+                    $query->where('inventario.estatusId', 1);
+                    break;
+                case '2':
+                    $query->where('inventario.estatusId', 2);
+                    break;
+                case '3':
+                    $query->where('inventario.estatusId', 3);
+                    break;
+                case '4':
+                    $query->where('inventario.estatusId', 4);
+                    break;
                 default:
+                    // Si el estatus es null o no está definido, mostrar los activos por defecto
                     if ($estatus == null) {
-
-                        $inventarios = inventario::where('tipo', $tipo)
-                            ->where('cantidad', '>', 0)
-                            ->orderBy('created_at', 'desc')
-                            ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'estatusId')
-                            ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus')
-                            ->paginate(15);
-                    } else {
-                        $inventarios = inventario::where('tipo', $tipo)
-                            ->where('estatusId', $estatus)
-                            ->orderBy('created_at', 'desc')
-                            ->leftJoin('inventarioEstatus', 'inventarioEstatus.id', '=', 'estatusId')
-                            ->select('inventario.*', 'inventarioEstatus.nombre AS nombre_estatus')
-                            ->paginate(15);
-                        break;
+                        $query->where('cantidad', '>', 0);
                     }
+                    break;
             }
 
+            $inventarios = $query->paginate(15);
 
-            if ($inventarios == null) {
-                $inventarios = null;
-            }
-            // dd($inventarios);
-            // dd($estatus, $inventarios, $tipo);
-            return view('inventario.indexInventario', compact('inventarios', 'tipo'));
+            $marcas = DB::table('marca')
+                ->join('marcasTipo', 'marca.id', '=', 'marcasTipo.marca_id')
+                ->join('tiposMarcas', 'marcasTipo.tipos_marcas_id', '=', 'tiposMarcas.id')
+                ->where('tiposMarcas.nombre', '=', $tipo)
+                ->distinct()
+                ->pluck('marca.nombre', 'marca.id');
+            // dd($search);
+            return view('inventario.indexInventario', compact('inventarios', 'tipo', 'marcas', 'search'));
         }
     }
 
