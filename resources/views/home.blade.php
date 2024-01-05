@@ -52,6 +52,15 @@
                                         </a>
                                     </div>
                                 @endcan
+                                @can('inventario_index')
+                                    <div class="col-12 col-md-6 col-lg-3 text-center my-4">
+                                        <a href="{{ url('/combustibleTote') }}" class="">
+                                            <img src="/img/inventario/tote.svg" alt="TOTE" title="TOTE"
+                                                width="30%" class="botonIconoPrincipal">
+                                            <p class="mt-4 texticonos">TOTE</p>
+                                        </a>
+                                    </div>
+                                @endcan
                                 @can('mantenimiento_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ url('/mantenimientos') }}" class="">
