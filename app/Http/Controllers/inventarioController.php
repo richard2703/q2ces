@@ -137,6 +137,7 @@ class inventarioController extends Controller
                 db::raw("CONCAT(m2.identificador,' ',m2.nombre) AS servicio"),
                 DB::raw("CONCAT(p2.nombres,' ',p2.apellidoP) AS receptor"),
                 'descarga.km',
+                'descarga.descargaEnCargaDeToteId',
                 'descarga.odometroNuevo',
                 'descarga.fechaLlegada',
                 'descarga.kilometrajeNuevo',
@@ -154,14 +155,28 @@ class inventarioController extends Controller
                 'descarga.otro',
                 'descarga.direccion',
                 'descarga.otroComment',
+                'carga.created_at AS fechaTote',
+                'carga.maquinariaId AS maquinariaIdTote',
+                'carga.operadorId AS operadorIdTote',
+                'carga.precio AS precioTote',
+                'carga.litros AS litrosTote',
+                'carga.comentario AS comentarioTote',
+                'carga.tipoCisternaId AS tipoCisternaIdTote',
+                'carga.kilometraje AS kilometrajeTote',
+                'carga.horaLlegadaCarga AS horaLlegadaCargaTote',
+                'maq.nombre as maquinariaTote',
+                'operadorTote.nombres as operadorNombreTote',
                 // 'descarga.descargaDetalleId',
                 'detalles.*',
             )
                 ->join('maquinaria', 'maquinaria.id', '=', 'descarga.maquinariaId')
-                ->join('personal', 'personal.id', '=', 'descarga.operadorId')
+                ->leftJoin('personal', 'personal.id', '=', 'descarga.operadorId')
                 ->leftJoin('maquinaria as m2', 'm2.id', '=', 'descarga.servicioId')
-                ->join('personal as p2', 'p2.id', '=', 'descarga.receptorId')
+                ->leftJoin('personal as p2', 'p2.id', '=', 'descarga.receptorId')
                 ->leftJoin('descargaDetalle as detalles', 'descarga.id', '=', 'detalles.descargaId')
+                ->leftJoin('carga', 'carga.id', '=', 'descarga.descargaEnCargaDeToteId')
+                ->leftJoin('maquinaria as maq', 'maq.id', '=', 'carga.maquinariaId')
+                ->leftJoin('personal as operadorTote', 'operadorTote.id', '=', 'carga.operadorId')
                 // ->leftJoin('descargaDetalle as detalles', 'descarga.descargaDetalleId', '=', 'detalles.id')
                 ->whereNull('descarga.tipoCisternaId')
                 ->orderBy('descarga.created_at', 'desc')

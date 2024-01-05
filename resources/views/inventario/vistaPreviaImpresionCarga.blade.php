@@ -14,8 +14,13 @@
                         <div class="row divBorder">
 
                             <div class="col-6 text-right">
-
-                                @if ($carga->tipoCisternaId == null)
+                                <button class="btn regresar" onclick="goBack()">
+                                    <span class="material-icons">
+                                        reply
+                                    </span>
+                                    Regresar
+                                </button>
+                                {{--  @if ($carga->tipoCisternaId == null)
                                 <a href="{{ route('inventario.dashCombustible') }}">
                                     <button class="btn regresar">
                                         <span class="material-icons">
@@ -34,7 +39,7 @@
                                         Regresar
                                     </button>
                                 </a>
-                                @endif
+                                @endif  --}}
                                 
                             </div>
 
@@ -162,4 +167,9 @@
     }
     
 </style>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 @endsection
