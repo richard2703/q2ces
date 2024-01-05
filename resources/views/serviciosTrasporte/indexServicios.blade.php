@@ -33,6 +33,7 @@
                                             {{ session('faild') }}
                                         </div>
                                     @endif
+                                    @if($showEncabezado == 1)
                                     @can('serviciosTrasporte_show')
                                         <div class="row division">
                                             <div class="col-12 col-md-4">
@@ -106,6 +107,7 @@
                                             </div>
                                         </div>
                                     @endcan
+                                    @endif
 
                                     <div class="table-responsive mt-2">
                                         <table class="table tablaCenter">
@@ -167,7 +169,7 @@
 
                                                             @case(2)
                                                                 'green'
-                                                                
+
                                                             @break
 
                                                             @case(3)
