@@ -201,7 +201,7 @@ class CombustibleToteController extends Controller
         //*** guardamos el registro */
         // dd($request);
         //buscamos el equipo para actulizar el nivel de la cisterna
-        $cisterna =   maquinaria::where("id", $request['maquinariaId'])->first();
+        $cisterna = maquinaria::where("id", $request['maquinariaId'])->first();
         $cisterna->cisternaNivel = ($cisterna->cisternaNivel - $request['litros']);
 
         if ($request['kilometraje'] > $cisterna->kilometraje) {
@@ -221,7 +221,16 @@ class CombustibleToteController extends Controller
                 $cisternaTipo->ultimoPrecio = $ultimaCarga->precio;
                 $carga['precio'] = $cisternaTipo->ultimoPrecio;
                 $cisternaTipo->save();
-                carga::create($carga);
+                $newCarga = carga::create($carga);
+
+                $carga['descargaEnCargaDeToteId'] = $newCarga->id;
+                // $carga['horas'] = $newCarga->horaLlegadaCarga;
+                // $carga['kilometrajeNuevo'] = $newCarga->kilometraje;
+                // $carga['otroComment'] = $newCarga->comentario;
+                // $carga['fechaLlegada'] = $newCarga->fecha;
+                $carga['tipoCisternaId'] = null;
+                // dd($carga, $newCarga);
+                descarga::create($carga);
             } else {
                 dd('Este error se debe a que la carga a la kangoo o al equipo en cuestion no existe y al momento de asignar el ultimo precio al tote marca error.');
             }
@@ -305,7 +314,6 @@ class CombustibleToteController extends Controller
         }
 
         //buscamos el equipo para actualizar el nivel de la cisterna
-
         $cisterna =  maquinaria::where("id", $request['maquinariaId'])->first();
         $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $request['litros']);
         $descarga['userId'] = auth()->user()->id;
@@ -333,7 +341,6 @@ class CombustibleToteController extends Controller
             descarga::create($descarga);
             $cisterna->kilometraje = $request['km'];
             $cisterna->update();
-
 
             if ($request['litros'] != null) {
                 $cisternaTipoTote = cisternas::where("nombre", 'Tote')->first();

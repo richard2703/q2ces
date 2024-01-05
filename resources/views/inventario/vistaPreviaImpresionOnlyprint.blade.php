@@ -13,7 +13,13 @@
                     <div class="card-body">
                         <div class="row divBorder">
                             <div class="col-6 text-right">
-                                @if ($descarga->tipoCisternaId == null)
+                                <button class="btn regresar" onclick="goBack()">
+                                    <span class="material-icons">
+                                        reply
+                                    </span>
+                                    Regresar
+                                </button>
+                                {{--  @if ($descarga->tipoCisternaId == null)
                                 <a href="{{ route('inventario.dashCombustible') }}">
                                     <button class="btn regresar">
                                         <span class="material-icons">
@@ -31,7 +37,7 @@
                                         Regresar
                                     </button>
                                 </a>
-                                @endif
+                                @endif  --}}
                             </div>
 
                             <div class="col-6 pb-3 text-end">
@@ -55,7 +61,6 @@
                             <div class="text-center" style="font-weight: 1000; ">FECHA DE IMPRESIÓN:</div>
                             <div class="text-center" id="fecha-hora"></div>
                             <p class="text-center" id="hora"></p>
-                            <br><br>
                             @if ($descarga->tipoCisternaId == null)
                                 @if ($descarga->nombre_cliente)
                                 <h6 class="text-center" style="font-weight: 1000; ">CLIENTE: </h6> <div style="font-size:14px;">{{ $descarga->nombre_cliente }}</div>    
@@ -367,4 +372,9 @@
     }
     
 </style>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 @endsection
