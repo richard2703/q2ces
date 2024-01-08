@@ -17,16 +17,16 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('demo:cron')->everyFiveMinutes();
-        $schedule->command('test:cron')->everyMinute();
-        $schedule->command('cumple:cron')->everyFiveMinutes();
+        // $schedule->command('test:cron')->everyMinute();
+        // $schedule->command('cumple:cron')->everyFiveMinutes();
 
-        // $schedule->command('demo:cron')
-        //  ->yearly()
-        //  ->on('01-01')
-        //  ->at('00:00');
+        $schedule->command('demo:cron')
+            ->yearly()
+            ->on('01-01')
+            ->at('00:00');
 
-        // $schedule->command('cumple:cron')
-        // ->monthlyOn(1, '00:00');
+        $schedule->command('cumple:cron')
+            ->monthlyOn(1, '00:00');
     }
 
     /**

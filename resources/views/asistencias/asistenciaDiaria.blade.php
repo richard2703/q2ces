@@ -26,7 +26,7 @@ $blnEnSemanaEnCurso = $objCalendar->getEnSemanaDeTrabajo($fechaSeleccionada, 3);
 //*** el dia actual en curso
 $blnEsDiaActual = $dtTrabajar == $dtToday ? true : false;
 
-$blnBloquearRegistro = $objCalendar->getEditarAsistencia($fechaSeleccionada,3,3);
+$blnBloquearRegistro = $objCalendar->getEditarAsistencia($fechaSeleccionada, 3, 3);
 
 // dd('Asistencias',$asistencias,
 // 'Dia anterior',$diaAnterior,
@@ -378,8 +378,8 @@ $blnBloquearRegistro = $objCalendar->getEditarAsistencia($fechaSeleccionada,3,3)
                                                                     </td>
                                                                 </tr>
                                                                 @php
-                                                                $intCont += 1;
-                                                            @endphp
+                                                                    $intCont += 1;
+                                                                @endphp
                                                             @empty
                                                                 <tr>
                                                                     <td colspan="2">Sin Registros.</td>
@@ -454,6 +454,45 @@ $blnBloquearRegistro = $objCalendar->getEditarAsistencia($fechaSeleccionada,3,3)
                                 </div>
                                 <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
                                     <button type="submit" class="btn botonGral ">Ir</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Asistencia personal -->
+        <div class="modal fade" id="modal-registro" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modal-registro" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="col-12">
+                        <div class="card ">
+                            <form action="{{ url('asistencia/otromes/') }}" method="post">
+                                @csrf
+                                <div class="card-header bacTituloPrincipal ">
+                                    <div class="nav-tabs-navigation">
+                                        <div class="nav-tabs-wrapper">
+                                            <span class="nav-tabs-title">
+                                                <h2 class="titulos">Registro Individual de Asistencia</h2>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row  card-body">
+                                    <div class="row card-body" style=" text-align: center;">
+
+                                        <div class="col-12 col-lg-6">
+                                            {{-- <input type="date" class="inputCaja" id="fechaAsistencia"
+                                                placeholder="Ej.: 2023-01-01" name="fechaAsistencia"
+                                                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                                                value="{{ $anioSeleccionado . '-' . $mesSeleccionado }}"></br> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12  mb-3 d-flex  justify-content-center align-self-end">
+                                    <button class="btn botonGral ">Registrar</button>
                                 </div>
                             </form>
 

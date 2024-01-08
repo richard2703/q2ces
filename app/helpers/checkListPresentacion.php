@@ -84,7 +84,7 @@ class checkListPresentacion {
         if ( $objTarea ) {
             $strLeyenda = ' title="' . $objTarea->leyenda . '"';
             $strUnidadMedida =  ( $objTarea->requiereUnidadMedida == 1 ? "<label class='labelUnidadMedida'>". $objTarea->unidadMedida .'</label><br>'  : '' ) ;
-            $strImagen =  ( $objTarea->requiereImagen == 1 ?   '<div class="row"><span class="mi-archivo">'.
+            $strImagen =  ( $objTarea->requiereImagen == 1 ?   '<span class="mi-archivo">'.
             '<input class="mb-4 ver" type="file" name="foto'. $intTareaId . '" id="control'. $intConsecutivo . 'Img" accept="image/*">'.
             '</span>'.
             '<label for="control'. $intConsecutivo . 'Img" style="font-size: 24px;
@@ -94,10 +94,10 @@ class checkListPresentacion {
                                                                 display: inline-block;
                                                                 transition: all .5s;
                                                                 cursor: pointer;
-                                                                padding: 10px 10px !important;
+                                                                padding: -10px 10px !important;
                                                                 text-transform: uppercase;
-                                                                width: 10%;
-                                                                text-align: center;"><i class="fas fa-camera"></i></label></div>' : '' ) ;
+                                                                width: 75%;
+                                                                text-align: center;" title="Clic para subir imagen"><i class="fas fa-file-upload"></i></label>' : '' ) ;
 
             switch ( strtolower( $objTarea->controlHtml ) ) {
                 case 'text':
@@ -107,7 +107,10 @@ class checkListPresentacion {
                 $strLeyenda .
                 ' required value="'. $strResultadoControl . '" '.
                 ' placeholder="Ej. Escribe el texto aquí" >';
-                $strCodigoControl .= $strImagen;
+                $strCodigoControl = '<div class="row mb-3">'.
+                '    <div class="col-12 col-sm-12 col-md-10">' . $strCodigoControl . '</div>'.
+                '    <div class="col-12 col-sm-12 col-md-2" >' . $strImagen . '</div>'.
+                '</div>' ;
 
                 $vctDebug[] = $strCodigoControl ;
                 break;
@@ -123,7 +126,12 @@ class checkListPresentacion {
                 $strMaximo .
                 $strStep .
                 $strLeyenda .
-                $strPlaceHolder. ' pattern="\d*"  class="inputCaja text-end" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '">' . $strUnidadMedida . $strImagen;
+                $strPlaceHolder. ' pattern="\d*"  class="inputCaja text-end" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '">' . $strUnidadMedida ;
+                $strCodigoControl = '<div class="row mb-3">'.
+                '    <div class="col-12 col-sm-12 col-md-10">' . $strCodigoControl . '</div>'.
+                '    <div class="col-12 col-sm-12 col-md-2" >' . $strImagen . '</div>'.
+                '</div>' ;
+
                 break;
 
                 case 'date':
@@ -132,8 +140,11 @@ class checkListPresentacion {
                 $strCodigoControl = '<input type="date" class="inputCaja" id="control'. $intConsecutivo . '" name="resultado'. $intTareaId . '" required value="'. $strResultadoControl . '" ' .
                 $strLeyenda .
                 $strMinimo .
-                $strMaximo . ' pattern="\d{4}-\d{2}-\d{2}">' . $strImagen;
-
+                $strMaximo . ' pattern="\d{4}-\d{2}-\d{2}">' ;
+                $strCodigoControl = '<div class="row mb-3">'.
+                '    <div class="col-12 col-sm-12 col-md-10">' . $strCodigoControl . '</div>'.
+                '    <div class="col-12 col-sm-12 col-md-2" >' . $strImagen . '</div>'.
+                '</div>' ;
                 $vctDebug[] = $strCodigoControl ;
                 break;
 
@@ -151,13 +162,16 @@ class checkListPresentacion {
                         ' name="resultado'. $intTareaId . '[]" '.
                         ' value="'. $intOpcion .'" ' .
                         ( $strValorControl == $intOpcion   ? ' checked' : '' ) . '>' .
-                        '<label for="control'. $intConsecutivo . $intOpcion .'" '. $strLeyenda .'>' .  $aValue[ 1 ] . '</label>' .
+                        '<label style="padding-left: 5px;" class="screenChecklists" for="control'. $intConsecutivo . $intOpcion .'" '. $strLeyenda .'>' .  $aValue[ 1 ] . '</label>' .
                         '</div>';
                         $intOpcion += 1;
 
                     }
 
-                    $strCodigoControl .= $strImagen;
+                    $strCodigoControl = '<div class="row mb-3">'.
+                    '    <div class="col-12 col-sm-12 col-md-10">' . $strCodigoControl . '</div>'.
+                    '    <div class="col-12 col-sm-12 col-md-2" >' . $strImagen . '</div>'.
+                    '</div>' ;
                 } else {
                     $strCodigoControl = "<label class='labelTitulo'>Algo salio MAL con la tarea->$objTarea->nombre, favor de revisar!!!</label>";
                 }
@@ -177,7 +191,11 @@ class checkListPresentacion {
                 ' name="resultado'. $intTareaId . '" required>' .
                 '<option value="">Seleccione</option>' .
                 $strItems .
-                '</select>' . $strImagen;
+                '</select>'  ;
+                $strCodigoControl = '<div class="row mb-3">'.
+                    '    <div class="col-12 col-sm-12 col-md-10">' . $strCodigoControl . '</div>'.
+                    '    <div class="col-12 col-sm-12 col-md-2" >' . $strImagen . '</div>'.
+                    '</div>' ;
 
                 $vctDebug[] = $strCodigoControl ;
                 break;
@@ -185,7 +203,10 @@ class checkListPresentacion {
                 case 'label':
                 default:
                 $strCodigoControl = '<label id="control'. $intConsecutivo . '">'. $objTarea->leyenda . '</label>';
-                $strCodigoControl .= $strImagen;
+                $strCodigoControl = '<div class="row mb-3">'.
+                    '    <div class="col-12 col-sm-12 col-md-10">' . $strCodigoControl . '</div>'.
+                    '    <div class="col-12 col-sm-12 col-md-2" >' . $strImagen . '</div>'.
+                    '</div>' ;
 
                 $vctDebug[] = $strCodigoControl ;
                 break;
@@ -200,87 +221,156 @@ class checkListPresentacion {
     }
 
     /**
-     * Obtiene la imagen asociada de una tarea
-     *
-     * @param int $intTareaId El Identificador de la tarea
-     * @param int $intAncho El ancho de la imagen (128px por default)
-     * @return void
-     */
-    public function getImagenTareaControl( $intTareaId, $intAncho = '128' ) {
-        $strControl = null;
+    * Obtiene la imagen asociada de una tarea
+    *
+    * @param int $intTareaId El Identificador de la tarea
+    * @param int $intAncho El ancho de la imagen ( 128px por default )
+    * @param boolean $debug Informacion de depuracion ( False por default )
+    * @return void
+    */
 
-        if( is_numeric ($intAncho) == false){
-            $intAncho=64;
+    public function getImagenTareaControl( $intTareaId, $intAncho = '128', $debug = false ) {
+        $strControl = null;
+        $vctDebug = array();
+
+        if ( is_numeric ( $intAncho ) == false ) {
+            $intAncho = 64;
         }
 
-        if ( $intTareaId>0 ) {
+        $vctDebug[] = 'Tarea: '.  $intTareaId;
+        if ( $intTareaId > 0 ) {
 
             $objRecord =   tarea::where( 'tarea.id', '=', $intTareaId )->first();
-            if($objRecord){
-                $strControl =  ($objRecord->imagen !='' ?
-                '<input class="img-a-mostrar" type="image" width="'. $intAncho . '" id="imagenTarea' . $objRecord->id . '" alt="Imagen" src="'. asset('/storage/interfaz/tareas/' . $objRecord->imagen). '" />'
-                :
-                ""
-            );
+            $vctDebug[] = $objRecord;
+
+            if ( $objRecord && $objRecord->imagen != '' ) {
+
+                $strPath = storage_path( 'app/public/interfaz/tareas/' . $objRecord->imagen );
+                $vctDebug[] = 'Ruta: '.  $strPath;
+                if ( file_exists( $strPath ) == true ) {
+                    $vctDebug[] =  'Existe ' . $strPath ;
+                    $strControl =  '<img style="width: '. $intAncho . 'px; height='. $intAncho . 'px;" id="imagenTarea' . $objRecord->id . '" alt="Imagen'. $objRecord->id .'" src="'. asset( '/storage/interfaz/tareas/' . $objRecord->imagen ). '" />' ;
+                } else {
+                    $strControl = '';
+                    $vctDebug[] =  'No Existe ' . $strPath ;
+                }
+
+            } else {
+                $strControl = '';
+                $vctDebug[] =  'Sin registro '  ;
             }
+        } else {
+            $strControl = '';
+            $vctDebug[] =  'Sin registro '  ;
+        }
+        $vctDebug[] = $strControl;
+
+        if ( $debug == true ) {
+            dd( $vctDebug );
         }
 
         return $strControl;
     }
 
     /**
-     * Obtiene la imagen asociada de un Grupo de Tareas
-     *
-     * @param int $intTareaId El Identificador del Grupo de Tareas
-     * @param int $intAncho El ancho de la imagen (128px por default)
-     * @return void
-     */
-    public function getImagenGrupoTareasControl( $intGrupoId, $intAncho = '128' ) {
-        $strControl = null;
+    * Obtiene la imagen asociada de un Grupo de Tareas
+    *
+    * @param int $intTareaId El Identificador del Grupo de Tareas
+    * @param int $intAncho El ancho de la imagen ( 128px por default )
+    * @param boolean $debug Informacion de depuracion ( False por default )
+    * @return void
+    */
 
-        if( is_numeric ($intAncho) == false){
-            $intAncho=64;
+    public function getImagenGrupoTareasControl( $intGrupoId, $intAncho = '128', $debug = false ) {
+        $strControl = null;
+        $vctDebug = array();
+        if ( is_numeric ( $intAncho ) == false ) {
+            $intAncho = 64;
         }
 
         if ( $intGrupoId > 0 ) {
 
             $objRecord =   grupo::where( 'grupo.id', '=', $intGrupoId )->first();
-            if($objRecord){
-                $strControl =  ($objRecord->imagen !='' ?
-                '<input class="img-a-mostrar" type="image" width="'. $intAncho . '" id="imagenGrupo' . $objRecord->id . '" alt="Imagen" src="'. asset('/storage/interfaz/grupos/' . $objRecord->imagen). '" />'
-                :
-                ""
-            );
+            $vctDebug[] = $objRecord;
+
+            if ( $objRecord && $objRecord->imagen != '' ) {
+                //*** path de la imagen */
+                $strPath = storage_path( 'app/public/interfaz/grupos/' . $objRecord->imagen );
+                $vctDebug[] = 'Ruta: '.  $strPath;
+
+                if ( file_exists( $strPath ) == true ) {
+                    $vctDebug[] =  'Existe ' . $strPath ;
+                    $strControl =  '<img style="width: '. $intAncho . 'px; height='. $intAncho . 'px;" id="imagenGrupo' . $objRecord->id . '" alt="Imagen'. $objRecord->id .'" src="'. asset( '/storage/interfaz/grupos/' . $objRecord->imagen ). '" />' ;
+                } else {
+                    $strControl = '';
+                    $vctDebug[] =  'No Existe ' . $strPath ;
+                }
+            } else {
+                $strControl = '';
+                $vctDebug[] =  'Sin registro '  ;
             }
+        } else {
+            $strControl = '';
+            $vctDebug[] =  'Sin registro '  ;
+        }
+
+        $vctDebug[] = $strControl;
+
+        if ( $debug == true ) {
+            dd( $vctDebug );
         }
 
         return $strControl;
     }
 
     /**
-     * Obtiene la imagen asociada de un Tipo de Tareas
-     *
-     * @param int $intTipoTareaId El Identificador del Tipo de Tarea
-     * @param int $intAncho El ancho de la imagen (128px por default)
-     * @return void
-     */
-    public function getImagenTipoTareaControl( $intTipoTareaId, $intAncho = '128' ) {
-        $strControl = null;
+    * Obtiene la imagen asociada de un Tipo de Tareas
+    *
+    * @param int $intTipoTareaId El Identificador del Tipo de Tarea
+    * @param int $intAncho El ancho de la imagen ( 128px por default )
+    * @param boolean $debug Informacion de depuracion ( False por default )
+    * @return void
+    */
 
-        if( is_numeric ($intAncho) == false){
-            $intAncho=64;
+    public function getImagenTipoTareaControl( $intTipoTareaId, $intAncho = '128', $debug = false ) {
+        $strControl = null;
+        $vctDebug = array();
+
+        if ( is_numeric ( $intAncho ) == false ) {
+            $intAncho = 64;
         }
+
+        $vctDebug[] = 'Tipo Tarea: '.  $intTipoTareaId;
 
         if ( $intTipoTareaId > 0 ) {
 
             $objRecord =   tareaTipo::where( 'tareaTipo.id', '=', $intTipoTareaId )->first();
-            if($objRecord){
-                $strControl =  ($objRecord->imagen !='' ?
-                '<input class="img-a-mostrar" type="image" width="'. $intAncho . '" id="imagenTipoTarea' . $objRecord->id . '" alt="Imagen" src="'. asset('/storage/interfaz/tareas/' . $objRecord->imagen). '" />'
-                :
-                ""
-            );
+            $vctDebug[] = $objRecord;
+
+            if ( $objRecord && $objRecord->imagen != '' ) {
+
+                $strPath = storage_path( 'app/public/interfaz/tareas/' . $objRecord->imagen );
+                $vctDebug[] = 'Ruta: '.  $strPath;
+                if ( file_exists( $strPath ) == true ) {
+                    $vctDebug[] =  'Existe ' . $strPath ;
+                    $strControl =  '<img style="width: '. $intAncho . 'px; height='. $intAncho . 'px;" id="imagenTipoTarea' . $objRecord->id . '" alt="Imagen'. $objRecord->id .'"  title="'. $objRecord->nombre .': ' . $objRecord->comentario  .'" src="'. asset( '/storage/interfaz/tareas/' . $objRecord->imagen ). '" />' ;
+                } else {
+                    $strControl = '';
+                    $vctDebug[] =  'No Existe ' . $strPath ;
+                }
+
+            } else {
+                $strControl = '';
+                $vctDebug[] =  'Sin registro '  ;
             }
+        } else {
+            $strControl = '';
+            $vctDebug[] =  'Sin registro '  ;
+        }
+        $vctDebug[] = $strControl;
+
+        if ( $debug == true ) {
+            dd( $vctDebug );
         }
 
         return $strControl;
@@ -382,5 +472,6 @@ class checkListPresentacion {
 
         return $strInput;
     }
+
 
 }

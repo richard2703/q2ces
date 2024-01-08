@@ -77,6 +77,7 @@
                                         <th class="labelTitulo text-center">Placas</th>
                                         <th class="labelTitulo text-center">Km. Actual</th>
                                         <th class="labelTitulo text-center">Último</th>
+                                        <th class="labelTitulo text-center">Tipo</th>
                                         <th class="labelTitulo text-center no-wrap">Km para Mantenimiento</th>
                                         <th class="labelTitulo text-center no-wrap">Próximo Mantenimiento</th>
                                         <th class="labelTitulo text-center" style="width:120px">Acciones</th>
@@ -113,6 +114,9 @@
                                                             {{ $strSinUso }}
                                                         @endif
 
+                                                    </td>
+                                                    <td class="text-center">
+                                                        ???
                                                     </td>
                                                     <td class="text-center">
                                                         @if ($maquina->mantenimiento != 0)
@@ -171,7 +175,9 @@
                                                             {{ $strSinUso }}
                                                         @endif
                                                     </td>
-
+                                                    <td>
+                                                        ???
+                                                    </td>
                                                     <td class="text-center">
                                                         @if ($maquina->mantenimiento != 0)
                                                             {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
@@ -279,7 +285,7 @@
                             <input type="text" class="inputCaja" name="km" value="" readonly
                                 id="km">
                         </div>
-                    
+
                         <div class=" col-12 col-sm-6  mb-3 ">
                             <label class="labelTitulo">Edicion de Uso:</label></br>
                             <input type="hidden" name="id[]" id="id" value="" id="idmaq">

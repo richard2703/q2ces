@@ -119,13 +119,12 @@
                                                     <div class="accordion-item" style="margin-top: -20px;"
                                                         id="AccordionPrincipal">
                                                         <h2 class="accordion-header " id="headingOne">
-
                                                             <button class="accordion-button bacTituloPrincipal"
                                                                 type="button" data-bs-toggle="collapse"
                                                                 data-bs-target="#{{ str_replace(' ', '_', $item->grupo) }}"
                                                                 aria-expanded="true" aria-controls="collapseOne">
                                                                 @php echo $objPresentacion->getImagenGrupoTareasControl($item->grupoId, 32); @endphp
-
+                                                                &nbsp;
                                                                 Sección de {{ $item->grupo }}
                                                             </button>
                                                         </h2>
@@ -150,9 +149,14 @@
 
                                                                         @forelse ($vctTareas as $tarea)
                                                                             @if ($item->grupoId == $tarea->grupoId)
-                                                                                <div class="row">
-                                                                                    <div class="col-4">
-                                                                                        {{ $tarea->tarea }}
+                                                                                <div class="row py-2">
+                                                                                    <div
+                                                                                        class="col-5 td-actions text-left">
+                                                                                        <div class="screenChecklists">
+                                                                                            @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 32, false); @endphp
+                                                                                            &nbsp;
+                                                                                            {{ $tarea->tarea }}
+                                                                                        </div>
                                                                                         <input type="hidden"
                                                                                             name="tarea[]" id="tarea"
                                                                                             value="{{ $tarea->tarea }}">
@@ -180,11 +184,12 @@
                                                                                             id="controlHtml"
                                                                                             value="{{ $tarea->controlHtml }}">
                                                                                     </div>
-                                                                                    <div class="col-2 text-center" >
-                                                                                        @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 48);  @endphp
-                                                                                        @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tipoId, 48);  @endphp
+                                                                                    <div
+                                                                                        class="col-1 td-actions text-center">
+                                                                                        @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tipoId, 32);  @endphp
                                                                                     </div>
-                                                                                    <div class="col-6">
+                                                                                    <div
+                                                                                        class="col-6 td-actions text-left">
                                                                                         @php echo $objPresentacion->getControlByTarea($tarea->tareaId, $tarea->resultado, $tarea->valor, $intCont); @endphp
                                                                                     </div>
                                                                                 </div>
@@ -196,8 +201,8 @@
                                                                         @empty
                                                                             <div class="row">
                                                                                 <div class="col-12 text-center">
-                                                                                  <label  class="labelTitulo">Sin
-                                                                                    registros</label>
+                                                                                    <label class="labelTitulo">Sin
+                                                                                        registros</label>
                                                                                 </div>
                                                                             </div>
                                                                         @endforelse
@@ -215,6 +220,8 @@
                                                                 type="button" data-bs-toggle="collapse"
                                                                 data-bs-target="#{{ str_replace(' ', '_', $item->grupo) }}"
                                                                 aria-expanded="true" aria-controls="collapseOne">
+                                                                @php echo $objPresentacion->getImagenGrupoTareasControl($item->grupoId, 32); @endphp
+                                                                &nbsp;
                                                                 Sección de {{ $item->grupo }}
                                                             </button>
                                                         </h2>
@@ -242,9 +249,14 @@
 
                                                                                 @forelse ($vctTareas as $tarea)
                                                                                     @if ($item->grupoId == $tarea->grupoId)
-                                                                                        <div class="row">
+                                                                                        <div class="row py-2">
                                                                                             <div class="col-5">
-                                                                                                {{ $tarea->tarea }}
+                                                                                                <div
+                                                                                                    class="screenChecklists">
+                                                                                                    @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 32, false); @endphp
+                                                                                                    &nbsp;
+                                                                                                    {{ $tarea->tarea }}
+                                                                                                </div>
                                                                                                 <input type="hidden"
                                                                                                     name="tarea[]"
                                                                                                     id="tarea"
@@ -274,12 +286,13 @@
                                                                                                     id="controlHtml"
                                                                                                     value="{{ $tarea->controlHtml }}">
                                                                                             </div>
-                                                                                            <div class="col-1">
-                                                                                                @php echo $objPresentacion->getImagenTareaControl($tarea->tareaId, 48);  @endphp
-                                                                                                @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tipoId, 48);  @endphp
+                                                                                            <div
+                                                                                                class="col-1 td-actions text-center">
+                                                                                                @php echo $objPresentacion->getImagenTipoTareaControl($tarea->tipoId, 32, false);  @endphp
                                                                                             </div>
 
-                                                                                            <div class="col-6">
+                                                                                            <div
+                                                                                                class="col-6  td-actions text-left">
                                                                                                 @php echo $objPresentacion->getControlByTarea($tarea->tareaId, $tarea->resultado, $tarea->valor, $intCont); @endphp
                                                                                             </div>
                                                                                         </div>
@@ -290,10 +303,12 @@
                                                                                 @empty
                                                                                     <div class="row">
                                                                                         <div class="col-12">
-                                                                                            <div class="col-12 text-center">
-                                                                                                <label  class="labelTitulo">Sin
-                                                                                                  registros</label>
-                                                                                              </div>
+                                                                                            <div
+                                                                                                class="col-12 text-center">
+                                                                                                <label
+                                                                                                    class="labelTitulo">Sin
+                                                                                                    registros</label>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 @endforelse

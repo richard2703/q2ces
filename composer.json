@@ -36,7 +36,8 @@
             "app/Helpers/Calculos.php",
             "app/Helpers/Calendario.php",
             "app/Helpers/Validaciones.php",
-            "app/Helpers/checkListPresentacion.php"
+            "app/Helpers/checkListPresentacion.php",
+            "app/Helpers/notificaciones.php"
         ]
     },
     "autoload-dev": {
