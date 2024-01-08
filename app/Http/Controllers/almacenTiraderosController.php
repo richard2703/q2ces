@@ -121,6 +121,7 @@ class almacenTiraderosController extends Controller
         //dd($data);
         $almacenTiradero->update($data);
 
+
         $nuevaLista = collect();
         // dd($request);
 
@@ -131,14 +132,14 @@ class almacenTiraderosController extends Controller
 
                 $array = [
                     'id' => $request->Idser[$i],
-                    'almacenId' => $almacenTiradero->id,
+                    'almacenId' => $request->tipoAlmacenId,
                     'conceptoId' => $request->servicioId[$i],
                     'precio' => $request->precio[$i],
                 ];
                 $objRelacion = almacenServicios::updateOrCreate(['id' => $array['id']], $array);
                 $nuevaLista->push($objRelacion->id);
             }
-            $test = almacenServicios::where('almacenId', $request->obraId)->whereNotIn('id', $nuevaLista)->delete();
+            $test = almacenServicios::where('almacenId', $request->tipoAlmacenId)->whereNotIn('id', $nuevaLista)->delete();
         }
         Session::flash('message', 1);
         return redirect()->action([almacenTiraderosController::class, 'index']);

@@ -44,7 +44,7 @@
                                         <th class="labelTitulo text-center">Marca</th>
                                         <th class="labelTitulo text-center">Modelo</th>
                                         <th class="labelTitulo text-center">Placas</th>
-                                        <th class="labelTitulo text-center">Último</th>
+                                        <th class="labelTitulo text-center">Ultimo</th>
                                         <th class="labelTitulo text-center">Tipo</th>
                                         <th class="labelTitulo text-center">Uso Actual</th>
                                         <th class="labelTitulo text-center no-wrap">Km para Mantenimiento</th>
@@ -63,35 +63,12 @@
                                                 <td class="text-center">{{ $maquina->nombre_marca }}</td>
                                                 <td class="text-center">{{ $maquina->modelo }}</td>
                                                 <td class="text-center">{{ $maquina->placas }}</td>
-                                                <td class="text-center">
-                                                    @php
-                                                    $blnExiste = false;
-                                                @endphp
-                                                @foreach ($vctUsos as $item)
-                                                    @if ($item->maquinariaId == $maquina->id)
-                                                        {{ $item->usoMantenimiento }}
-                                                        @php
-                                                            $blnExiste = true;
-                                                        @endphp
-                                                    @endif
-                                                @endforeach
-
-                                                @if ($blnExiste == false)
-                                                    {{ $strSinUso }}
-                                                @endif
-
-                                                </td>
-                                                <td class="text-center">{{ $maquina->kom }}???</td>
+                                                <td class="text-center">{{ $maquina->ultima_fecha_mantenimiento }}</td>
+                                                <td class="text-center">{{ $maquina->tipoMantenimiento }}</td>
                                                 <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
-
                                                 <td class="text-center">
-                                                    @if ($maquina->mantenimiento != 0)
-                                                        {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
-                                                    @else
-                                                        0
-                                                    @endif
+                                                    {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
                                                 </td>
-
                                                 <td class="text-center">{{ number_format($maquina->mantenimiento) }}</td>
 
                                                 <td class="td-actions text-center ">

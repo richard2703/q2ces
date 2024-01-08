@@ -319,6 +319,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/inventario/{tipo}', [App\Http\Controllers\inventarioController::class, 'index'])->name('inventario.index');
     Route::get('/inventario/producto/nuevo/{tipo}', [App\Http\Controllers\inventarioController::class, 'create'])->name('inventario.create');
     Route::post('/inventario', [App\Http\Controllers\inventarioController::class, 'store'])->name('inventario.store');
+    Route::delete('/inventario/{id}', [App\Http\Controllers\inventarioController::class, 'destroy'])->name('inventario.destroy');
     Route::put('/inventario/{producto}/restock', [App\Http\Controllers\inventarioController::class, 'restock'])->name('inventario.restock');
     Route::put('/inventario/{producto}/mover', [App\Http\Controllers\inventarioController::class, 'mover'])->name('inventario.mover');
     Route::post('/inventario/movimiento/{producto}', [App\Http\Controllers\inventarioController::class, 'movimiento'])->name('inventario.movimiento');
@@ -563,6 +564,10 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('/import-excel', 'App\Http\Controllers\ImportExcelController@import')->name('importExcel.post');
 
     Route::resource('combustibleTote', App\Http\Controllers\CombustibleToteController::class);
+    Route::put('/combustibleTote/combustible/carga/edit', [App\Http\Controllers\CombustibleToteController::class, 'updateCarga'])->name('combustibleTote.updateCarga');
+    Route::put('/combustibleTote/combustible/descarga/edit', [App\Http\Controllers\CombustibleToteController::class, 'updateDescarga'])->name('combustibleTote.updateDescarga');
+    Route::post('/combustible/reserva/descarga/edit', [App\Http\Controllers\inventarioController::class, 'updateReservaEquipo'])->name('inventario.updateReservaEquipo');
+    Route::post('/combustibleTote/reserva/descarga/edit', [App\Http\Controllers\CombustibleToteController::class, 'updateReserva'])->name('combustibleTote.updateReserva');
     Route::post('/combustibleToteDescarga/', [App\Http\Controllers\CombustibleToteController::class, 'storeDescarga'])->name('descarga.post');
 
     // Crud facturaCliente

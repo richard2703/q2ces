@@ -479,7 +479,62 @@
                             @endforeach
 
                         </div>
-                        {{--  GRAFICO CARGAS  --}}
+                        <div class="row" style="padding: 0 10px;">
+                            @csrf
+                            <div class="col-12 text-center mb-3 ">
+                                <button type="button" class="btn botonGral" data-bs-toggle="modal" data-bs-target="#myModal">
+                                    Realizar Ajuste en Reserva
+                                </button>                                
+                            </div>
+                        </div>
+                        {{--  <form action="{{ route('inventario.updateReservaEquipo') }}" method="post">
+                            <div class="row" style="padding: 0 10px;">
+                                @csrf
+                                <div class="col-4 d-flex mb-4">
+                                    <div class="me-2">
+                                        <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                            alt="" style="width:40px;">
+                                    </div>
+                                    <div style="width: 90%! important;">
+                                        <label class="labelTitulo">Reserva:
+                                            <span>*</span></label></br>
+                                        <input type="number" step="0.01" min="0.01"
+                                            required class="inputCaja" id="litros"
+                                            name="contenido" value="">
+                                    </div>
+                                </div>
+                                <div class="col-4 d-flex mb-4">
+                                    <div class="me-2">
+                                        <img src="{{ asset('/img/inventario/precio.svg') }}"
+                                            alt="" style="width:40px;">
+                                    </div>
+                                    <div style="width: 90%! important;">
+                                        <label class="labelTitulo">Último Precio:
+                                            <span>*</span></label></br>
+                                        <input type="number" step="0.01" min="0.01"
+                                            required class="inputCaja" id="precio"
+                                            name="ultimoPrecio" value="">
+                                    </div>
+                                </div>
+                                <div class="col-4 d-flex mb-4">
+                                    <div class="me-2">
+                                        <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                            alt="" style="width:40px;">
+                                    </div>
+                                    <div style="width: 90%! important;">
+                                        <label class="labelTitulo">Última Carga:
+                                            <span>*</span></label></br>
+                                            <input type="number" name="ultimaCarga" value="" class="inputCaja" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center mb-3 ">
+                                    <button type="submit" class="btn botonGral"
+                                        onclick="test()">Guardar</button>
+                                </div>
+                            </div>
+                            </form>
+                            
+                        GRAFICO CARGAS  --}}
                         <div class="row">
                             <div class="col-12">
 
@@ -692,43 +747,101 @@
                                                                             <th class="fw-bolder">Hora Descarga</th>
                                                                             <th class="fw-bolder">Litros</th>
                                                                             <th class="fw-bolder">Fecha</th>
+                                                                            {{--  <th class="fw-bolder">Ticket ID TOTE</th>  --}}
                                                                             <th class="fw-bolder text-center">Imprimir</th>
                                                                             <th class="fw-bolder text-right">Acciones</th>
                                                                         </thead>
                                                                         <tbody>
                                                                             @forelse ($descargas as $descarga)
                                                                                 <tr>
-                                                                                    <td>@if($descarga->id != null)
-                                                                                        <div style="margin-left: 15px;">{{ $descarga->descargaIdTote }}</div>
-                                                                                        <span class="material-icons"
-                                                                                    style="font-size:40px; color: green">
-                                                                                    receipt_long
-                                                                                </span>
+                                                                                    <td>
+                                                                                        @if ($descarga->descargaEnCargaDeToteId != null)
+                                                                                        <div style="margin-left: 15px;">{{ $descarga->descargaEnCargaDeToteId }}</div>
+                                                                                            <span class="material-icons"
+                                                                                            style="font-size:40px; color: green">
+                                                                                            receipt_long
+                                                                                            <img src="{{ asset('/img/inventario/CISTERNA-01.svg') }}"
+                                                                                            alt="" style="width:40px;">
+                                                                                            </span>
+                                                                                        @elseif($descarga->id != null)
+                                                                                            <div style="margin-left: 15px;">{{ $descarga->descargaIdTote }}</div>
+                                                                                            <span class="material-icons"
+                                                                                                style="font-size:40px; color: green">
+                                                                                                receipt_long
+                                                                                            </span>
+                                                                                        @else
+                                                                                            <span class="material-icons"
+                                                                                            style="font-size:40px; color: red">
+                                                                                            receipt_long
+                                                                                            </span>
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    
+                                                                                    <td>
+                                                                                    @if ($descarga->descargaEnCargaDeToteId != null)
+                                                                                    {{ $descarga->maquinariaTote }}
                                                                                     @else
-                                                                                    <span class="material-icons"
-                                                                                    style="font-size:40px; color: red">
-                                                                                    receipt_long
-                                                                                </span>
-                                                                                    @endif</td>
-                                                                                    <td>{{ $descarga->maquinaria }}</td>
-                                                                                    <td>{{ $descarga->operador }}</td>
+                                                                                    {{ $descarga->maquinaria }}
+                                                                                    @endif
+                                                                                    </td>
+                                                                                <td>
+                                                                                    @if ($descarga->descargaEnCargaDeToteId != null)
+                                                                                    {{ $descarga->operadorNombreTote }}
+                                                                                    @else
+                                                                                    {{ $descarga->operador }}
+                                                                                    @endif
+                                                                                </td>
+                                                                                    
                                                                                     <td>{{ $descarga->servicio }}</td>
                                                                                     <td>{{ $descarga->receptor }}</td>
                                                                                     <td>{{ $descarga->kilometrajeNuevo }}</td>
-                                                                                    <td>{{ $descarga->odometroNuevo }}</td>
+                                                                                <td>
+                                                                                    @if ($descarga->descargaEnCargaDeToteId != null)
+                                                                                    {{ $descarga->kilometrajeTote }}
+                                                                                    @else
+                                                                                    {{ $descarga->odometroNuevo }}
+                                                                                    @endif
+                                                                                </td>
                                                                                     
                                                                                     {{--  <td>{{ $descarga->horas }}</td>  --}}
-                                                                                    
-                                                                                    <td>
+                                                                                <td>
+                                                                                    @if ($descarga->descargaEnCargaDeToteId != null)    
+                                                                                        {{ substr($descarga->horaLlegadaCargaTote, 0, 5) }}
+                                                                                    @else
                                                                                         {{ substr($descarga->horas, 0, 5) }}
-                                                                                    </td>
-                                                                                    <td>
+                                                                                    @endif
+                                                                                </td>
+                                                                                <td>
+                                                                                    @if ($descarga->descargaEnCargaDeToteId != null)
+                                                                                        {{ number_format($descarga->litrosTote, 2, '.', ',') }}
+                                                                                    @else
                                                                                         {{ number_format($descarga->litros, 2, '.', ',') }}
-                                                                                    </td>
-                                                                                    <td>
+                                                                                    @endif
+                                                                                </td>
+                                                                                <td>
+                                                                                    @if ($descarga->descargaEnCargaDeToteId != null)
+                                                                                        {{ \Carbon\Carbon::parse($descarga->fechaTote)->format('Y-m-d') }}
+                                                                                    @else
                                                                                         {{ $descarga->fechaLlegada }}
-                                                                                    </td>
-                                                                                    @if ($descarga->ticket == 0)
+                                                                                    @endif
+                                                                                </td>
+                                                                                    
+                                                                                    {{--  <td>
+                                                                                        {{$descarga->descargaEnCargaDeToteId}}
+                                                                                    </td>  --}}
+                                                                                    @if ($descarga->descargaEnCargaDeToteId != null)
+                                                                                        <td class="td-actions d-flex justify-content-center">
+                                                                                            <form action="{{route('printCarga.post', 0)}}" method="POST" style="display: inline-block;">
+                                                                                                @csrf
+                                                                                                @method('POST')
+                                                                                                <input type="hidden" name="id" value="{{$descarga->descargaEnCargaDeToteId}}" id="id">
+                                                                                                <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                                                    <span class="material-icons mt-3" style="font-size:35px; color: green;">print</span>
+                                                                                                </button>
+                                                                                            </form>
+                                                                                        </td>
+                                                                                    
+                                                                                    @elseif ($descarga->ticket == 0)
                                                                                     <td class="td-actions d-flex justify-content-center">
                                                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#printFormDescargaD"
                                                                                             onclick="cargaItem('{{ $descarga->descargaIdTote }}', '{{ $descarga->servicioId }}')">
@@ -764,6 +877,60 @@
                                                                                     </td>
                                                                                     
                                                                                     @endif
+                                                                                    @if ($descarga->descargaEnCargaDeToteId != null)
+                                                                                    <td style="width: 400px"
+                                                                                    class="td-actions justify-content-end">
+                                                                                    
+                                                                                    @can('combustible_edit')
+                                                                                        <a href="#" class=""
+                                                                                            data-bs-toggle="modal"
+                                                                                            data-bs-target="#cargaCombustible"
+                                                                                            onclick="loadCarga('{{ $descarga->descargaEnCargaDeToteId }}','{{ $descarga->maquinariaIdTote }}','{{ $descarga->operadorIdTote }}'
+                                                                                    ,'{{ $descarga->litrosTote }}','{{ $descarga->precioTote }}'
+                                                                                    ,'{{ \Carbon\Carbon::parse($descarga->fechaTote)->format('Y-m-d') }}','{{ $descarga->horaLlegadaCargaTote }}','{{ $descarga->comentarioTote }}')">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg "
+                                                                                                width="28"
+                                                                                                height="28"
+                                                                                                fill="currentColor"
+                                                                                                class="bi bi-pencil accionesIconos"
+                                                                                                viewBox="0 0 16 16">
+                                                                                                <path
+                                                                                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                            </svg>
+                                                                                        </a>
+                                                                                    @endcan
+                                                                                    
+
+                                                                                    <form
+                                                                                        action="{{ route('inventario.deleteCarga', $carga->id) }}"
+                                                                                        method="POST"
+                                                                                        style="display: inline-block;"
+                                                                                        onsubmit="return confirm('¿Estás seguro?')">
+                                                                                        @csrf
+                                                                                        @method('DELETE')
+
+                                                                                        @can('combustible_destroy')
+                                                                                            <button class=" btnSinFondo"
+                                                                                                type="submit"
+                                                                                                rel="tooltip">
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                    width="28"
+                                                                                                    height="28"
+                                                                                                    fill="currentColor"
+                                                                                                    class="bi bi-x-circle"
+                                                                                                    viewBox="0 0 16 16">
+                                                                                                    <path
+                                                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                                    <path
+                                                                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                                </svg>
+                                                                                            </button>
+                                                                                        @endcan
+
+
+                                                                                    </form>
+                                                                                </td>
+                                                                                    @else
                                                                                     <td class="td-actions justify-content-end">
                                                                                         @can('combustible_edit')
                                                                                             <a href="#" class=""
@@ -813,6 +980,8 @@
 
                                                                                         </form>
                                                                                     </td>
+                                                                                    @endif
+                                                                                    
                                                                                 </tr>
                                                                             @empty
                                                                                 <tr>
@@ -1271,6 +1440,72 @@
                         <button type="submit" class="btn botonGral">Imprimir</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Reserva</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('inventario.updateReservaEquipo') }}" method="post">
+                        <div class="row" style="padding: 0 10px;">
+                            @csrf
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/equipo_1.svg') }}" alt="" style="width:40px;">
+                                </div>
+                                
+                                    <div style="width: 90%! important;">
+                                        <label class="labelTitulo">Equipo:</label></br>
+                                        <select id="maquinariaIdReserva" name="maquinariaId"
+                                            class="form-select"
+                                            aria-label="Default select example" required>
+                                            <option value="">Seleccione</option>
+                                            @foreach ($cisternas as $maquina)
+                                                <option value="{{ $maquina->id }}" data-cisterna="{{ $maquina->cisternaNivel }}">
+                                                    {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                
+                            </div>
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Reserva Teorica:
+                                        <span></span></label></br>
+                                    <input type="number" step="0.01" min="0.01"
+                                        required class="inputCaja" id="reservaTeorica"
+                                        readonly value="">
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Reserva Real:
+                                        <span>*</span></label></br>
+                                        <input type="number" name="contenido" class="inputCaja" required>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mb-3 ">
+                                <button type="submit" class="btn botonGral"
+                                    onclick="test()">Guardar</button>
+                            </div>
+                        </div>
+                        </form> 
+                </div>
             </div>
         </div>
     </div>
@@ -1815,6 +2050,20 @@
                 
                 // Actualiza el valor del input 'horometro'
                 $('#kilometrajeCarga').val(kmValue);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Captura el evento de cambio en el select
+            $('#maquinariaIdReserva').on('change', function () {
+                // Obtiene el valor del atributo 'data-odometro' de la opción seleccionada
+                var selectedOption = $(this).find(':selected');
+                var kmValue = selectedOption.data('cisterna');
+                
+                // Actualiza el valor del input 'horometro'
+                $('#reservaTeorica').val(kmValue);
             });
         });
     </script>
