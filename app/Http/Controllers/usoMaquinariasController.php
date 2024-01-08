@@ -91,6 +91,7 @@ class usoMaquinariasController extends Controller
             )
             ->leftJoin('tipoMantenimiento', 'ultima_mantenimiento.tipoMantenimientoId', 'tipoMantenimiento.id')
             ->select(
+                'maquinaria.id',
                 'maquinaria.identificador',
                 'maquinaria.nombre as nombre_maquinaria',
                 'maquinaria.modelo',
