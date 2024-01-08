@@ -43,7 +43,7 @@
                                         </a>
                                     </div>
                                 @endcan
-                                @can('inventario_index')
+                                @can('combustible_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('inventario.index', 'combustible') }}" class="">
                                             <img src="/img/inventario/combustible.svg" alt="Combustible" title="Combustible"
@@ -52,7 +52,7 @@
                                         </a>
                                     </div>
                                 @endcan
-                                @can('inventario_index')
+                                @can('combustible_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ url('/combustibleTote') }}" class="">
                                             <img src="/img/inventario/tote.svg" alt="TOTE" title="TOTE"

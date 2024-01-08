@@ -13,13 +13,22 @@
                     <div class="card-body">
                         <div class="row divBorder">
                             <div class="col-6 text-right">
-                                <button class="btn regresar" onclick="goBack()">
+                                {{--  <button class="btn regresar" onclick="goBack()">
                                     <span class="material-icons">
                                         reply
                                     </span>
                                     Regresar
-                                </button>
-                                {{--  @if ($descarga->tipoCisternaId == null)
+                                </button>  --}}
+                                @if ($descarga->descargaEnCargaDeToteId != null)
+                                <a href="{{ route('combustibleTote.index') }}">
+                                    <button class="btn regresar">
+                                        <span class="material-icons">
+                                            reply
+                                        </span>
+                                        Regresar
+                                    </button>
+                                </a>
+                                @elseif ($descarga->tipoCisternaId == null)
                                 <a href="{{ route('inventario.dashCombustible') }}">
                                     <button class="btn regresar">
                                         <span class="material-icons">
@@ -37,7 +46,7 @@
                                         Regresar
                                     </button>
                                 </a>
-                                @endif  --}}
+                                @endif
                             </div>
 
                             <div class="col-6 pb-3 text-end">
@@ -351,9 +360,4 @@
         align-items: center;
     }
 </style>
-<script>
-    function goBack() {
-        window.history.back();
-    }
-</script>
 @endsection
