@@ -19,8 +19,8 @@
                                 @can('asistencia_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('asistencia.index') }}" class="">
-                                            <img src="/img/equipos/CATEGORÍA DE TAREAS-01.svg" alt="Nómina y Asistencia" title="Nómina y Asistencia"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/equipos/CATEGORÍA DE TAREAS-01.svg" alt="Nómina y Asistencia"
+                                                title="Nómina y Asistencia" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Nómina/Asistencia</p>
                                         </a>
                                     </div>
@@ -37,8 +37,8 @@
                                 @can('cajachica_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('serviciosTrasporte.index') }}" class="">
-                                            <img src="/img/dash/servicios.svg" alt="Servicios" title="Servicios"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/dash/servicios.svg" alt="Servicios" title="Servicios" width="30%"
+                                                class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Servicios</p>
                                         </a>
                                     </div>
@@ -55,8 +55,8 @@
                                 @can('combustible_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ url('/combustibleTote') }}" class="">
-                                            <img src="/img/inventario/tote.svg" alt="TOTE" title="TOTE"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/inventario/tote.svg" alt="TOTE" title="TOTE" width="30%"
+                                                class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">TOTE</p>
                                         </a>
                                     </div>
@@ -64,8 +64,8 @@
                                 @can('mantenimiento_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ url('/mantenimientos') }}" class="">
-                                            <img src="/img/equipos/mantenimientos.svg" alt="Mantenimientos" title="Mantenimientos"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/equipos/mantenimientos.svg" alt="Mantenimientos"
+                                                title="Mantenimientos" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Mantenimientos</p>
                                         </a>
                                     </div>
@@ -91,8 +91,8 @@
                                 @can('checkList_mis_pendientes')
                                     <div class="col-12 col-md-6  col-lg-3 text-center my-4">
                                         <a href="{{ route('checkList.pendientes') }}" class="">
-                                            <img src="/img/equipos/mis-pendientes.svg" alt="Mis Pendientes" title="Mis Pendientes" width="30%"
-                                                class="botonIconoPrincipal">
+                                            <img src="/img/equipos/mis-pendientes.svg" alt="Mis Pendientes"
+                                                title="Mis Pendientes" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Mis Pendientes</p>
                                         </a>
                                     </div>
@@ -154,17 +154,17 @@
                                 @can('calendario_mtq_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('calendarioMtq.index') }}" class="">
-                                            <img src="/img/dash/calendarioMTQ.svg" alt="Calendario MTQ" title="Calendario MTQ"
-                                                width="30%" class="botonIconoPrincipal">
+                                            <img src="/img/dash/calendarioMTQ.svg" alt="Calendario MTQ"
+                                                title="Calendario MTQ" width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Calendario MTQ</p>
                                         </a>
                                     </div>
                                 @endcan
-                                @can('maquinaria_mtq_index')
+                                @can('maquinaria_mtq_edit_uso')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('uso.index') }}" class="">
-                                            <img src="/img/dash/usoMTQ.svg" alt="Uso de Equipo" title="Uso de Equipo" width="30%"
-                                                class="botonIconoPrincipal">
+                                            <img src="/img/dash/usoMTQ.svg" alt="Uso de Equipo" title="Uso de Equipo"
+                                                width="30%" class="botonIconoPrincipal">
                                             <p class="mt-4 texticonos">Uso de Equipo</p>
                                         </a>
                                     </div>
@@ -178,7 +178,7 @@
                                         </a>
                                     </div>
                                 @endcan
-                                @can('maquinaria_mtq_index')
+                                @can('residente_mtq_index')
                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                         <a href="{{ route('residentes.index') }}" class="">
                                             <img src="/img/dash/residente.svg" alt="Residentes" title="Residentes"
