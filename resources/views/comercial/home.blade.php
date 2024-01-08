@@ -200,9 +200,22 @@
 
                                     <div class="card product-card" style="margin: 15px">
                                         <div class="card-body combustibleBorde">
+                                            <div>
+                                                <img class="ImgCard" src="{{ asset('img/general/img4.jpg') }}"
+                                                    alt="">
+                                            </div>
                                             <div class="bordeTitulo mb-3">
-                                                <h2 class="combustibleTitulo fw-semibold  my-3 text-center"> MAQUINARIA
-                                                </h2>
+                                                <h2 class="text-center"> Volteo 7 MTS Internacional</h2>
+                                            </div>
+                                            <div class="bordeTitulo  d-flex">
+                                                <h3 class="text-center pe-2"> Precio de Renta desde: </h3>
+                                                <h3 style="font-weight: 900"> $56,000</h3>
+                                            </div>
+                                            <div>
+                                                <p style="font-size: 8px;">*Aplica restricciones *Precio aproximado</p>
+                                            </div>
+                                            <div class="precios">
+
                                             </div>
                                             <div class="row ">
                                                 <div class="col-12 mb-1">

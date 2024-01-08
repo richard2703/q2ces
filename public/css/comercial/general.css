@@ -315,3 +315,19 @@
   grid-column: span 2;
   margin-bottom: 10px;
 }
+
+.ImgCard{
+  width: -webkit-fill-available;
+}
+.card-body h2 {
+  font-size: large;
+}
+.card-body h3 {
+  font-size: small;
+}
+
+.precios{
+  border-top: #212529 1px solid;
+  border-bottom: #212529 1px solid;
+
+}
