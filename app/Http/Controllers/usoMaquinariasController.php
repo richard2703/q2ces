@@ -80,7 +80,7 @@ class usoMaquinariasController extends Controller
     {
         $marca = marca::all();
         $maquinaria = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
-            ->join('usoMaquinarias', 'usoMaquinarias.maquinariaId', 'maquinaria.id')
+            ->leftjoin('usoMaquinarias', 'usoMaquinarias.maquinariaId', 'maquinaria.id')
             ->leftJoin(
                 DB::raw('(SELECT maquinariaId,tipoMantenimientoId, MAX(fechaReal) as ultima_fecha_mantenimiento 
             FROM mantenimientos 
@@ -106,7 +106,7 @@ class usoMaquinariasController extends Controller
             )
             ->where('compania', null)
             // ->where('maquinaria.id', 1)
-            // ->groupBy('maquinaria.id')
+            ->groupBy('maquinaria.id')
             ->orderBy('identificador', 'asc')
             ->paginate(15);
         // ->get();
