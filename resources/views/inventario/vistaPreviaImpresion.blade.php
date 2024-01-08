@@ -177,8 +177,6 @@
                             @if ($descarga->otro != null)
                                 <h6 style="font-weight: 1000;">OTRO(S) COSTO: </h6> Total: ${{number_format($descarga->otro,2)}}
                                 <h6 style="font-weight: 1000;">OTRO(S) CONCEPTOS: </h6> {{ $descarga->otroComment }}    
-                            @else
-                                
                             @endif
                             
 
@@ -207,7 +205,7 @@
                                     <div class="text-center"><h6 style="font-weight: 1000; ">HOROMETRO ACTUAL: </h6></div>No Habia Un Kilometraje Anterior.
                                 @endif
                                 <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$solicitante['observaciones']}}</div>
-                                  
+                                <br>
                                 <img width="300px;" src="{{ asset('/img/login/Header3DescargaGrande.svg') }}" alt="" class="mb-2">
                                 <div class="text-center"><h6 style="font-weight: 1000;">COSTO DE COMBUSTIBLE:</h6>${{ number_format($ultimaCarga[0]->ultimoPrecio * $descarga->litros, 2) }}</div>
                                 @if ($totalProductos > 0)
@@ -256,6 +254,7 @@
                                 <div class="text-center"><h6 style="font-weight: 1000; ">TOTAL KM/MI: </h6></div>{{$descarga->kilometrajeNuevo-$descarga->kilometrajeAnterior}} {{$descarga->equipo_kom}}
                                 
                                 <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$solicitante['observaciones']}}</div>
+                                <br>
                                 @if ($descarga->tipoCisternaId == null)
                                 <p class="pt-5" style="margin-top: 20px; text-align: center;">
                                     ______________________________________ 
