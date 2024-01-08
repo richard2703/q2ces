@@ -127,7 +127,7 @@ class usoMaquinariasController extends Controller
 
         $servicios = serviciosMtq::all();
 
-        return view('maquinaria.indexUsoMaquinaria', compact('maquinaria', 'servicios', 'marca', 'vctUsos'));
+        return view('maquinaria.indexUsoMaquinaria', compact('maquinaria', 'servicios', 'marca'));
     }
 
     /**
