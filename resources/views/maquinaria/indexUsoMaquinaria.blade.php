@@ -63,8 +63,12 @@
                                                 <td class="text-center">{{ $maquina->nombre_marca }}</td>
                                                 <td class="text-center">{{ $maquina->modelo }}</td>
                                                 <td class="text-center">{{ $maquina->placas }}</td>
-                                                <td class="text-center">{{ $maquina->ultima_fecha_mantenimiento }}</td>
-                                                <td class="text-center">{{ $maquina->tipoMantenimiento }}</td>
+                                                <td class="text-center">
+                                                    {{ $maquina->ultima_fecha_mantenimiento == null ? '---' : $maquina->ultima_fecha_mantenimiento }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ $maquina->tipoMantenimiento == null ? '---' : $maquina->tipoMantenimiento }}
+                                                </td>
                                                 <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
                                                 <td class="text-center">
                                                     {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
