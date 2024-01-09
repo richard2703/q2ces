@@ -329,5 +329,9 @@
 .precios{
   border-top: #212529 1px solid;
   border-bottom: #212529 1px solid;
+}
 
+.precios p{
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

@@ -215,39 +215,44 @@
                                                 <p style="font-size: 8px;">*Aplica restricciones *Precio aproximado</p>
                                             </div>
                                             <div class="precios">
+                                                <p class="text-center">
+                                                    $36,000/dia $44,000/Sem $56,000/Mes
+                                                </p>
+                                            </div>
+
+                                            <div>
 
                                             </div>
-                                            <div class="row ">
-                                                <div class="col-12 mb-1">
-                                                    <p class="text-center" style="font-weight: bold">Reserva</p>
-                                                    <p class="combustibleLitros fw-semibold text-center">
-                                                        {{--  {{ number_format($gasolina->cisternaNivel, 2) }} lts.  --}}
-                                                    </p>
-                                                </div>
 
-                                                <div class="col-6" style="width: 150px !important">
-                                                    <p class=" "style="font-weight: bold">Última Carga:</p>
-                                                    <p class="combustiblefecha fw-semibold mb-3">
-                                                        {{--  {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}  --}}
-                                                    </p>
-                                                </div>
+                                            <div class="col-12 mb-1">
+                                                <p class="text-center" style="font-weight: bold">Reserva</p>
+                                                <p class="combustibleLitros fw-semibold text-center">
+                                                    {{--  {{ number_format($gasolina->cisternaNivel, 2) }} lts.  --}}
+                                                </p>
+                                            </div>
 
-                                                <div class="col-5" style="width: 130px !important">
-                                                    <p class="d-flex align-content-end"style="font-weight: bold">Por Litro:
-                                                    </p>
-                                                    <p class="d-flex align-content-end combustibleLitros fw-semibold">
-                                                        {{--  $ {{ number_format($gasolina->precio, 2) }}  --}}
-                                                    </p>
-                                                </div>
+                                            <div class="col-6" style="width: 150px !important">
+                                                <p class=" "style="font-weight: bold">Última Carga:</p>
+                                                <p class="combustiblefecha fw-semibold mb-3">
+                                                    {{--  {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}  --}}
+                                                </p>
+                                            </div>
 
-                                                <div class="col-12 d-flex justify-content-center">
-                                                    <p class="text-center mt-1"
-                                                        style="font-weight: bold; margin-right:8px; width: 130px !important">
-                                                        Litros Cargados: </p>
-                                                    <div class="combustibleLitros fw-semibold text-center mt-2">
-                                                        {{--  {{ number_format($gasolina->litros, 2) }} lts.  --}}
+                                            <div class="col-5" style="width: 130px !important">
+                                                <p class="d-flex align-content-end"style="font-weight: bold">Por Litro:
+                                                </p>
+                                                <p class="d-flex align-content-end combustibleLitros fw-semibold">
+                                                    {{--  $ {{ number_format($gasolina->precio, 2) }}  --}}
+                                                </p>
+                                            </div>
 
-                                                    </div>
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <p class="text-center mt-1"
+                                                    style="font-weight: bold; margin-right:8px; width: 130px !important">
+                                                    Litros Cargados: </p>
+                                                <div class="combustibleLitros fw-semibold text-center mt-2">
+                                                    {{--  {{ number_format($gasolina->litros, 2) }} lts.  --}}
+
                                                 </div>
                                             </div>
                                         </div>
