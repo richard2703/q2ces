@@ -1280,7 +1280,7 @@ class inventarioController extends Controller
     }
 
 
-    public function movimiento(Request $request, inventario $producto)
+    public function movimiento(Request $request)
     {
         abort_if(Gate::denies('inventario_edit'), 403);
         $movimiento = $request->all();
