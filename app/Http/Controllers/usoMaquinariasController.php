@@ -52,7 +52,7 @@ class usoMaquinariasController extends Controller
                 'tipoMantenimiento.nombre as tipoMantenimiento'
 
             )
-            ->where('compania', null)
+            ->where('compania', 'mtq')
             // ->where('maquinaria.id', 1)
             ->groupBy('maquinaria.id')
             ->orderBy('identificador', 'asc')
@@ -111,11 +111,13 @@ class usoMaquinariasController extends Controller
                     'tipoMantenimiento.nombre as tipoMantenimiento'
 
                 )
-                ->where('maquinaria.compania', 'mtq')
+                ->where('compania', 'mtq')
                 ->whereIn('maquinaria.id', $autoIds)
                 ->groupBy('maquinaria.id')
                 ->orderBy('identificador', 'asc')
                 ->get();
+
+            // dd('empty');
         } else {
             $maquinariaAsignada = null;
         }
@@ -129,7 +131,7 @@ class usoMaquinariasController extends Controller
         //     ->orderBy('usoMaquinarias.maquinariaId', 'asc')
         //     ->orderBy('usoMaquinarias.id', 'asc')
         //     ->get();
-        // dd($residenteAutos);
+        // dd($maquinariaAsignada);
         return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria', 'servicios', 'marca', 'maquinariaAsignada', 'residenteAutos'));
     }
 
