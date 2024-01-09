@@ -1098,16 +1098,20 @@ class inventarioController extends Controller
         Session::flash('message', 1);
         $cisterna = maquinaria::where("id", $maquinariaId)->first();
         if ($descarga->tipoCisternaId != null) {
-            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $descarga->litros);
-            // dd($cisterna->cisternaNivel, $descarga->litros);
-            $cisterna->save();
+            if ($cisterna != null) {
+                $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $descarga->litros);
+                $cisterna->save();
+            }
+
 
             $descarga->delete();
             return redirect()->route('combustibleTote.index');
         } else {
-            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $descarga->litros);
-            // dd($cisterna->cisternaNivel, $descarga->litros);
-            $cisterna->save();
+            if ($cisterna != null) {
+                $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $descarga->litros);
+                $cisterna->save();
+            }
+
             $descarga->delete();
             return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
         }
