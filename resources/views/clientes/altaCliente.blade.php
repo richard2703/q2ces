@@ -79,14 +79,29 @@
                                                 placeholder="Especifique..." value="{{ old('rfc') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                            <label class="labelTitulo">CFDI: </label></br>
+                                            <input type="text" class="inputCaja" id="cfdi" name="cfdi"
+                                                placeholder="Especifique..." value="{{ old('cfdi') }}">
+                                        </div>
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                            <label class="labelTitulo">Medoto de Pago: </label></br>
+                                            <input type="text" class="inputCaja" id="metodo" name="metodo"
+                                                placeholder="Especifique..." value="{{ old('metodo') }}">
+                                        </div>
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                            <label class="labelTitulo">Forma de Pago: </label></br>
+                                            <input type="text" class="inputCaja" id="forma" name="forma"
+                                                placeholder="Especifique..." value="{{ old('forma') }}">
+                                        </div>
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Calle: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="calle" name="calle" required
                                                 placeholder="Especifique..." value="{{ old('calle') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Exterior:</label></br>
-                                            <input type="text" class="inputCaja" id="exterior" name="exterior" required
-                                                value="{{ old('cp') }}">
+                                            <input type="text" class="inputCaja" id="exterior" name="exterior"
+                                                required value="{{ old('cp') }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Interior: <span>*</span></label></br>

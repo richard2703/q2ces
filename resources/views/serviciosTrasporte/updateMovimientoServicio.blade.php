@@ -73,14 +73,21 @@
                                             </div>
                                         @endif
                                         <div class="row pt-3">
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                            <div class=" col-12 col-sm-4 col-md-3 mb-3 ">
                                                 <label class="labelTitulo">Día: <span>*</span></label></br>
                                                 <input type="date" class="inputCaja" id="dia" name="fecha"
                                                     required value="{{ $serviciosTrasporte->fecha }}">
 
                                             </div>
 
-                                            <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
+                                            <div class=" col-12 col-sm-3 col-md-3 mb-3 ">
+                                                <label class="labelTitulo">Cantidad*: </label></br>
+                                                <input type="number" class="inputCaja" id="cantidad" name="cantidad"
+                                                    required onchange="precioAlmacen()"
+                                                    value="{{ $serviciosTrasporte->cantidad == '' ? 1 : $serviciosTrasporte->cantidad }}">
+                                            </div>
+
+                                            <div class=" col-12 col-sm-5 col-md-6 mb-3 ">
                                                 <label class="labelTitulo">Concepto: <span>*</span></label></br>
                                                 <select id="concepto" name="conceptoServicioTrasporteId"
                                                     class="form-select" required aria-label="Default select example"
@@ -202,10 +209,10 @@
 
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Costo Material: <span>*</span></label></br>
-                                                <input type="number" class="inputCaja text-right" id="cantidad"
-                                                    name="cantidad" maxlength="100000" step="0.01" min="0.01"
-                                                    max="99999" placeholder="ej. 100"
-                                                    value="{{ $serviciosTrasporte->cantidad }}">
+                                                <input type="number" class="inputCaja text-right" id="costoMaterial"
+                                                    name="costoMaterial" maxlength="100000" step="0.01"
+                                                    min="0.01" max="99999" placeholder="ej. 100"
+                                                    value="{{ $serviciosTrasporte->costoMaterial }}">
                                             </div>
 
                                             {{--  <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
@@ -361,14 +368,15 @@
                         option.textContent = item.nombre;
                         ListaSeleccionar.appendChild(option);
                     });
-                    precioAlmacen();
+                    precioMaterial();
                 });
         };
 
         function precioAlmacen() {
             const conceptoId = document.getElementById('concepto').value;
             const almacenId = document.getElementById('almacenId').value;
-            const precioAlmacen = document.getElementById('cantidad');
+            const costoMaterial = document.getElementById('costoMaterial');
+            const cantidad = document.getElementById('cantidad');
             //console.log(conceptoId);
             console.log(almacenId);
 
@@ -382,7 +390,7 @@
                 .then(data => {
                     // Actualiza las opciones en el select "item"
                     console.log(data.precio);
-                    precioAlmacen.value = data.precio;
+                    costoMaterial.value = data.precio * cantidad.value;
 
                 });
         };
@@ -392,11 +400,11 @@
         }
 
         if (document.getElementById('almacenId').value == "") {
-            almacenes();
+            //almacenes();
         }
 
-        if (document.getElementById('cantidad').value == "") {
-            precioAlmacen();
+        if (document.getElementById('costoMaterial').value == 0) {
+            // precioAlmacen();
         }
     </script>
 @endsection
