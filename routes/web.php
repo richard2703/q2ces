@@ -477,6 +477,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('mtq', App\Http\Controllers\maquinariaMtqController::class);
     Route::put('asignacion', [App\Http\Controllers\maquinariaMtqController::class, 'asignacion'])->name('mtq.asignacion');
+    Route::post('asignacionCombustible', [App\Http\Controllers\maquinariaMtqController::class, 'asignacionCombustible'])->name('mtq.asignacionCombustible');
 
     // // Crud ServiciosMtq
     // Route::resource('serviciosMtq', App\Http\Controllers\serviciosMtqController::class);
