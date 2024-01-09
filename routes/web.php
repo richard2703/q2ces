@@ -569,6 +569,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/combustible/reserva/descarga/edit', [App\Http\Controllers\inventarioController::class, 'updateReservaEquipo'])->name('inventario.updateReservaEquipo');
     Route::post('/combustibleTote/reserva/descarga/edit', [App\Http\Controllers\CombustibleToteController::class, 'updateReserva'])->name('combustibleTote.updateReserva');
     Route::post('/combustibleToteDescarga/', [App\Http\Controllers\CombustibleToteController::class, 'storeDescarga'])->name('descarga.post');
+    Route::post('/combustibleTote/ajustesCisternas', [App\Http\Controllers\CombustibleToteController::class, 'ajustesCisternas'])->name('combustibleTote.ajustesCisternas');
+    Route::post('/combustibleTote/ajustesCisternasEdit/edit', [App\Http\Controllers\CombustibleToteController::class, 'ajustesCisternasEdit'])->name('combustibleTote.ajustesCisternasEdit');
+    Route::delete('/combustibleTote/ajustesCisternas/{id}', [App\Http\Controllers\CombustibleToteController::class, 'deleteAjusteCisterna'])->name('combustibleTote.deleteAjusteCisterna');
 
     // Crud facturaCliente
     Route::resource('facturaCliente', App\Http\Controllers\facturaClienteController::class);

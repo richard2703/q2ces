@@ -30,6 +30,8 @@ use App\Models\tipoMantenimiento;
 use PDF;
 use stdClass;
 
+use function PHPUnit\Framework\isEmpty;
+
 class printController extends Controller
 {
     /**
@@ -41,7 +43,7 @@ class printController extends Controller
     {
         $solicitante = $request->all();
         // dd($request);
-        $descarga = descarga::join('maquinaria as equipo', 'descarga.maquinariaId', '=', 'equipo.id')
+        $descarga = descarga::leftJoin('maquinaria as equipo', 'descarga.maquinariaId', '=', 'equipo.id')
             ->join('users', 'descarga.userId', '=', 'users.id')
             ->join('personal as operador', 'descarga.operadorId', '=', 'operador.id')
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id')
@@ -61,11 +63,15 @@ class printController extends Controller
             $cliente = true;
         }
 
-        // dd($descarga['maquinariaId']);
-        $ultimaCargaSinTote = carga::where('maquinariaId', $descarga['maquinariaId'])
-            ->whereNull('tipoCisternaId')
-            ->latest()
-            ->first();
+        // dd($descarga);
+        $ultimaCargaSinTote = null;
+        if ($descarga['maquinariaId'] != null) {
+            $ultimaCargaSinTote = carga::where('maquinariaId', $descarga['maquinariaId'])
+                ->whereNull('tipoCisternaId')
+                ->latest()
+                ->first();
+        }
+
         $ultimaCarga = cisternas::where('id', '=', '1')->get('ultimoPrecio');
         $solicitante['descargaId'] = $descarga['id'];
         $solicitante['tipo_solicitud'] = $cliente;
@@ -86,7 +92,10 @@ class printController extends Controller
                 // dd('sfdfd', $ticket);
                 $ticket->obraId = $descarga['obras_Id'];
                 $ticket->clienteId = $descarga['obras_clienteId'];
-                $ticket->precioCarga = $ultimaCargaSinTote->precio;
+                if ($ultimaCargaSinTote != null) {
+                    $ticket->precioCarga = $ultimaCargaSinTote->precio;
+                }
+
                 $ticket->ticket = 1;
                 // $ticket->descargaDetalleId = $nuevoSolicitante['id'];
                 $ticket->save();
@@ -588,7 +597,7 @@ class printController extends Controller
     public function printOnlyTicket(Request $request)
     {
         // dd($request);
-        $descarga = descarga::join('maquinaria as equipo', 'descarga.maquinariaId', '=', 'equipo.id')
+        $descarga = descarga::leftJoin('maquinaria as equipo', 'descarga.maquinariaId', '=', 'equipo.id')
             ->join('users', 'descarga.userId', '=', 'users.id')
             ->join('personal as operador', 'descarga.operadorId', '=', 'operador.id')
             ->join('personal as receptor', 'descarga.receptorId', '=', 'receptor.id')

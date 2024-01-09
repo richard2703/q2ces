@@ -99,15 +99,21 @@
                             <h6 class="text-center" style="font-weight: 1000; ">DESPACHADOR: </h6> <div style="font-size:14px;">{{ $descarga->operador_nombre }}</div>
                             <h6 class="text-center" style="font-weight: 1000; ">OPERADOR: </h6> <div style="font-size:14px;">{{ $descarga->receptor_nombre }}</div>
                             @if ($descarga->tipoCisternaId == null)
-                                <h6 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> 
-                                    @if ($descarga->tipoCisternaId != null)
+                                <h6 style="font-weight: 1000;" class="text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> 
+                                    @if ($descarga->despachado_nombre != null)
                                     {{ $descarga->despachado_nombre }}
                                     @else
                                         BIDÓN
                                     @endif
                                 </div>
                             @else
-                            <h6 style="font-weight: 1000; text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> {{ $descarga->equipo_nombre }}</div>
+                            @if ($descarga->equipo_nombre != null)
+                                <h6 style="font-weight: 1000;" class="text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> {{ $descarga->equipo_nombre }}</div>        
+                            @else
+                                <h6 style="font-weight: 1000;" class="text-center">EQUIPO DESPACHADO:</h6><div class="text-center" style="font-size:14px;"> BIDÓN</div>        
+                                
+                            @endif
+                            
                             @endif
                             
                             @if ($descarga->tipoCisternaId == null)
@@ -209,9 +215,9 @@
                             @if ($descarga->tipoCisternaId != null)
                                 <img width="300px;" src="{{ asset('/img/login/Header2GenericoGrande.svg') }}" alt="" class="mb-2">
                                 @if ($descarga->kilometrajeNuevo != null)
-                                    <div class="text-center"><h6 style="font-weight: 1000; ">HOROMETRO ACTUAL: </h6></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}
+                                    <div class="text-center"><h6 style="font-weight: 1000; ">ODOMETRO ACTUAL: </h6></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}
                                 @else
-                                    <div class="text-center"><h6 style="font-weight: 1000; ">HOROMETRO ACTUAL: </h6></div>No Habia Un Kilometraje Anterior.
+                                    <div class="text-center"><h6 style="font-weight: 1000; ">ODOMETRO ACTUAL: </h6></div>No Había Un Kilometraje Anterior.
                                 @endif
                                 <div class="text-center"><h6 style="font-weight: 1000;  margin-top: 10px;">OBSERVACIONES: </h6>{{$solicitante['observaciones']}}</div>
                                 <br>
@@ -254,11 +260,11 @@
                                 <div class="text-center"><h6 style="font-weight: 1000; ">ODOMETRO LLEGADA: </h6></div>{{$descarga->odometroNuevo}} {{$descarga->despachado_kom}}
                                 @endif
                                  
-                                <div class="text-center"><h6 style="font-weight: 1000; ">HOROMETRO SALIDA: </h6>{{$descarga->kilometrajeAnterior}} {{$descarga->equipo_kom}} </div>
+                                <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE SALIDA: </h6>{{$descarga->kilometrajeAnterior}} {{$descarga->equipo_kom}} </div>
                                 @if ($descarga->kilometrajeAnterior != null)
-                                <div class="text-center"><h6 style="font-weight: 1000; ">HOROMETRO LLEGADA: </h6></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}
+                                <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE LLEGADA: </h6></div>{{$descarga->kilometrajeNuevo}}  {{$descarga->equipo_kom}}
                                 @else
-                                    <div class="text-center"><h6 style="font-weight: 1000; ">HOROMETRO LLEGADA: </h6></div>No Habia Un Kilometraje Anterior.
+                                    <div class="text-center"><h6 style="font-weight: 1000; ">KILOMETRAJE LLEGADA: </h6></div>No Había Un Kilometraje Anterior.
                                 @endif
                                 <div class="text-center"><h6 style="font-weight: 1000; ">TOTAL KM/MI: </h6></div>{{$descarga->kilometrajeNuevo-$descarga->kilometrajeAnterior}} {{$descarga->equipo_kom}}
                                 
