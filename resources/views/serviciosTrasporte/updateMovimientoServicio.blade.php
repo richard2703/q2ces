@@ -400,7 +400,7 @@
         }
 
         if (document.getElementById('almacenId').value == "") {
-            //almacenes();
+            almacenes();
         }
 
         if (document.getElementById('costoMaterial').value == 0) {
