@@ -368,7 +368,7 @@
                         option.textContent = item.nombre;
                         ListaSeleccionar.appendChild(option);
                     });
-                    precioMaterial();
+                    precioAlmacen();
                 });
         };
 
