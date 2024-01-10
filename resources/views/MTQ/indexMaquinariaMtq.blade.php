@@ -105,6 +105,18 @@
                                             <td class="text-center">{{ $maquina->placas }}</td>
                                             <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
                                             <td class="td-actions text-center">
+                                                {{--  @can('maquinaria_mtq_show')  --}}
+                                                @if ($maquina->cisterna === 0)
+                                                <button class="btnSinFondo" type="button" onclick="deshabilitarCombustible('{{ $maquina->id }}')">
+                                                    <i class="fas fa-solid fa-gas-pump" style="color: #8caf48; font-size: x-large;"></i>
+                                                </button>   
+                                                @else
+                                                    <button class="btnSinFondo" type="button" onclick="confirmarEnvio('{{ $maquina->id }}')">
+                                                        <i class="fas fa-solid fa-gas-pump" style="color: red; font-size: x-large;"></i>
+                                                    </button>    
+                                                @endif
+                                                
+                                                {{--  @endcan  --}}
                                                 @can('maquinaria_mtq_show')
                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#editarItem"
                                                         onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre }}','{{ $maquina->marcaId }}','{{ $maquina->modelo }}',
@@ -659,6 +671,59 @@
         </div>
     </div>
 
+    <form id="tuFormulario" action="{{ route('mtq.asignacionCombustible') }}" method="post">
+        @csrf
+        @method('post')
+        <input type="hidden" id="maquina_id" name="maquinariaId" value="">
+    </form>
+    
+
+    <script>
+        function confirmarEnvio(id) {
+            Swal.fire({
+                title: 'Habilitar Uso de Combustible',
+                text: '¿Quieres que este equipo reciba descargas de combustible?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, Habilitar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Aquí podrías enviar el formulario con el ID de la máquina
+                    enviarFormulario(id);
+                }
+            });
+        }
+    
+        function enviarFormulario(id) {
+            document.getElementById('maquina_id').value = id;
+            document.getElementById('tuFormulario').submit();
+        }
+
+        function deshabilitarCombustible(id) {
+            Swal.fire({
+                title: 'Deshabilitar el uso del Combustible',
+                text: '¿Quieres que este equipo ya no reciba descargas de combustible?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, Deshabilitar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    envioFormularioDeshabilitar(id);
+                }
+            });
+        }
+        
+        function envioFormularioDeshabilitar(id) {
+            document.getElementById('maquina_id').value = id;
+            document.getElementById('tuFormulario').submit();
+        }
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
@@ -1051,6 +1116,18 @@
         if (slug == 1) {
             Guardado();
 
+        }
+    </script>
+    <script>
+        function alertaGuardarEvent(event, id) {
+
+            if (event) {
+                event.preventDefault(); // Evita que el formulario se envíe automáticamente
+            }
+            // Muestra el modal con los roles
+            $('#rolesModal').modal('show');
+            const txtIdPersonal = document.getElementById('personalIdRoles');
+            txtIdPersonal.value = id;
         }
     </script>
 @endsection

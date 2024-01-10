@@ -43,7 +43,7 @@ class clientesController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request['rEmail']);
+        // dd($request);
         abort_if(Gate::denies('cliente_create'), 403);
 
         $cliente = $request->all();

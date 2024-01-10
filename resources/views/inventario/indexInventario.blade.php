@@ -37,8 +37,10 @@
                                         </div>
 
                                         <div class="col-4 text-center">
-                                            <button type="button" class="btn botonGral text-capitalize" id="toggleButton" data-bs-toggle="collapse" data-bs-target="#searchFilters">
-                                                <i class="fas fa-list"></i> Filtros <i class="fas fa-arrow-down" style="margin-left: 10px"></i>
+                                            <button type="button" class="btn botonGral text-capitalize" id="toggleButton"
+                                                data-bs-toggle="collapse" data-bs-target="#searchFilters">
+                                                <i class="fas fa-list"></i> Filtros <i class="fas fa-arrow-down"
+                                                    style="margin-left: 10px"></i>
                                             </button>
                                         </div>
 
@@ -53,19 +55,27 @@
                                     </div>
                                     <div class="collapse" id="searchFilters">
                                         <h2 class="tituloEncabezado text-center mt-3">Buscador y Filtros Aplicados:</h2>
-                                        <form action="{{ route('inventario.index', $tipo) }}" method="GET" id="filterForm">
+                                        <form action="{{ route('inventario.index', $tipo) }}" method="GET"
+                                            id="filterForm">
                                             <div class="row">
                                                 <div class="col-12 mb-3">
-                                                    <div class="input-group" style="border: none;
+                                                    <div class="input-group"
+                                                        style="border: none;
                                                     box-shadow: none;">
                                                         <div class="input-group-prepend">
-                                                            <button type="submit" class="btn" style="background: #727176; color: white; border-top-right-radius: 0;
-                                                            border-bottom-right-radius: 0;"><i class="fas fa-search"></i></button>
+                                                            <button type="submit" class="btn"
+                                                                style="background: #727176; color: white; border-top-right-radius: 0;
+                                                            border-bottom-right-radius: 0;"><i
+                                                                    class="fas fa-search"></i></button>
                                                         </div>
-                                                        <input type="text" class="form-control border-right-0" name="search" value="{{$search}}" placeholder="Buscar por nombre, marca, modelo o numero de parte...">
+                                                        <input type="text" class="form-control border-right-0"
+                                                            name="search" value="{{ $search }}"
+                                                            placeholder="Buscar por nombre, marca, modelo o numero de parte...">
                                                         <div class="input-group-append">
-                                                            <button class="btn btn-danger clear-input" style="border-top-left-radius: 0;
-                                                            border-bottom-left-radius: 0;" type="submit">
+                                                            <button class="btn btn-danger clear-input"
+                                                                style="border-top-left-radius: 0;
+                                                            border-bottom-left-radius: 0;"
+                                                                type="submit">
                                                                 <i class="fas fa-times"></i>
                                                             </button>
                                                         </div>
@@ -76,38 +86,61 @@
                                                 <div class="col-12 col-sm-6 col-lg-6 text-center">
                                                     <div class="input-group">
                                                         <label class="labelTitulo p-2">Estatus: </label>
-                                                        <select name="estatus" id="estatus" style="background: #727176; color: white; font-weight: bold;" class="form-control">
-                                                            <option value="5" style="font-weight: bold;" {{ request('estatus') == '5' ? 'selected' : '' }}>En Stock</option>
-                                                            <option value="6" style="font-weight: bold;" {{ request('estatus') == '6' ? 'selected' : '' }}>Sin Stock</option>
-                                                            <option value="1" style="font-weight: bold;" {{ request('estatus') == '1' ? 'selected' : '' }}>Activos</option>
-                                                            <option value="2" style="font-weight: bold;" {{ request('estatus') == '2' ? 'selected' : '' }}>Baja</option>
-                                                            <option value="3" style="font-weight: bold;" {{ request('estatus') == '3' ? 'selected' : '' }}>Inactivos</option>
-                                                            <option value="4" style="font-weight: bold;" {{ request('estatus') == '4' ? 'selected' : '' }}>Eliminados</option>
-                                                            <option value="0" style="font-weight: bold;" {{ request('estatus') == '0' ? 'selected' : '' }}>Todos</option>
+                                                        <select name="estatus" id="estatus"
+                                                            style="background: #727176; color: white; font-weight: bold;"
+                                                            class="form-control">
+                                                            <option value="5" style="font-weight: bold;"
+                                                                {{ request('estatus') == '5' ? 'selected' : '' }}>En Stock
+                                                            </option>
+                                                            <option value="6" style="font-weight: bold;"
+                                                                {{ request('estatus') == '6' ? 'selected' : '' }}>Sin Stock
+                                                            </option>
+                                                            <option value="1" style="font-weight: bold;"
+                                                                {{ request('estatus') == '1' ? 'selected' : '' }}>Activos
+                                                            </option>
+                                                            <option value="2" style="font-weight: bold;"
+                                                                {{ request('estatus') == '2' ? 'selected' : '' }}>Baja
+                                                            </option>
+                                                            <option value="3" style="font-weight: bold;"
+                                                                {{ request('estatus') == '3' ? 'selected' : '' }}>Inactivos
+                                                            </option>
+                                                            <option value="4" style="font-weight: bold;"
+                                                                {{ request('estatus') == '4' ? 'selected' : '' }}>
+                                                                Eliminados</option>
+                                                            <option value="0" style="font-weight: bold;"
+                                                                {{ request('estatus') == '0' ? 'selected' : '' }}>Todos
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-6 col-lg-6 text-center">
                                                     <div class="input-group">
                                                         <label class="labelTitulo p-2">Marcas: </label>
-                                                        <select name="marca" id="marca" style="background: #727176; color: white; font-weight: bold;" class="form-control">
+                                                        <select name="marca" id="marca"
+                                                            style="background: #727176; color: white; font-weight: bold;"
+                                                            class="form-control">
                                                             <option value="" style="font-weight: bold;">Todas</option>
-                                                            @foreach($marcas as $id => $nombre)
-                                                                <option value="{{ $id }}" style="font-weight: bold;" {{ request('marca') == $id ? 'selected' : '' }}>{{ $nombre }}</option>
+                                                            @foreach ($marcas as $id => $nombre)
+                                                                <option value="{{ $id }}"
+                                                                    style="font-weight: bold;"
+                                                                    {{ request('marca') == $id ? 'selected' : '' }}>
+                                                                    {{ $nombre }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 text-center mt-5">
-                                                    <button class="btn botonGral text-capitalize" type="submit"> <i class="fas fa-solid fa-upload" style="margin-right: 5px"></i> Aplicar Filtros
+                                                    <button class="btn botonGral text-capitalize" type="submit"> <i
+                                                            class="fas fa-solid fa-upload" style="margin-right: 5px"></i>
+                                                        Aplicar Filtros
                                                     </button>
                                                 </div>
                                             </div>
-                                            
-                                            
+
+
                                         </form>
                                     </div>
-                                    
+
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="labelTitulo">
@@ -130,21 +163,26 @@
                                                                     style="width: 100px;"
                                                                     src="{{ $inventario->imagen == '' ? '/img/general/defaultinventario.jpg' : '/storage/inventario/' . $inventario->tipo . '/' . $inventario->imagen }}">
                                                             </td>
-                                                            <td class="text-center align-middle">{{ $inventario->numparte }}
+                                                            <td class="text-center align-middle">
+                                                                {{ $inventario->numparte }}
                                                             </td>
                                                             <td class="text-center align-middle">{{ $inventario->nombre }}
                                                             </td>
-                                                            <td class="text-center align-middle">{{ $inventario->nombre_marca }}
+                                                            <td class="text-center align-middle">
+                                                                {{ $inventario->nombre_marca }}
                                                             </td>
                                                             <td class="text-center align-middle">{{ $inventario->modelo }}
                                                             </td>
-                                                            <td class="text-center align-middle">{{ $inventario->cantidad }}
+                                                            <td class="text-center align-middle">
+                                                                {{ $inventario->cantidad }}
                                                             </td>
-                                                            <td class="text-center align-middle">{{ $inventario->reorden }}
+                                                            <td class="text-center align-middle">
+                                                                {{ $inventario->reorden }}
                                                             </td>
                                                             <td class="text-center align-middle">{{ $inventario->maximo }}
                                                             </td>
-                                                            <td class="text-center align-middle">{{ $inventario->nombre_estatus }}</td>
+                                                            <td class="text-center align-middle">
+                                                                {{ $inventario->nombre_estatus }}</td>
                                                             <td class="td-actions text-center align-middle">
                                                                 @can('inventario_restock')
                                                                     <a href="#" data-bs-toggle="modal"
@@ -155,8 +193,8 @@
                                                                     </a>
                                                                 @endcan
                                                                 @can('inventario_show')
-                                                                <a href="{{ route('inventario.show', $inventario->id) }}">
-                                                                        
+                                                                    <a href="{{ route('inventario.show', $inventario->id) }}">
+
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                             height="28" fill="currentColor"
                                                                             class="bi bi-card-text accionesIconos"
@@ -166,18 +204,19 @@
                                                                             <path
                                                                                 d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
                                                                         </svg>
-                                                                        
+
                                                                     </a>
                                                                 @endcan
                                                                 @can('inventario_edit')
-                                                                <a href="{{ route('inventario.edit', $inventario->id) }}">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg " width="28"
-                                                                            height="28" fill="currentColor"
-                                                                            class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
+                                                                    <a href="{{ route('inventario.edit', $inventario->id) }}">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg "
+                                                                            width="28" height="28" fill="currentColor"
+                                                                            class="bi bi-pencil accionesIconos"
+                                                                            viewBox="0 0 16 16">
                                                                             <path
                                                                                 d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                                         </svg>
-                                                                        
+
                                                                     </a>
                                                                 @endcan
 
@@ -190,18 +229,25 @@
                                                                     </a>
                                                                 @endcan
                                                                 @can('inventario_destroy')
-                                                                <form action="{{ route('inventario.destroy', $inventario->id) }}"
-                                                                    method="POST" style="display: inline-block;"
-                                                                    onsubmit="return confirm('¿Estás seguro que deseas eliminar este registro?')">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button class="btnSinFondo" type="submit"  rel="tooltip">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"  width="28" height="28"  fill="currentColor"  class="bi bi-x-circle"  viewBox="0 0 16 16">
-                                                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                        </svg>
-                                                                    </button>
-                                                                </form>
+                                                                    <form
+                                                                        action="{{ route('inventario.destroy', $inventario->id) }}"
+                                                                        method="POST" style="display: inline-block;"
+                                                                        onsubmit="return confirm('¿Estás seguro que deseas eliminar este registro?')">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button class="btnSinFondo" type="submit"
+                                                                            rel="tooltip">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="28" height="28"
+                                                                                fill="currentColor" class="bi bi-x-circle"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path
+                                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                <path
+                                                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                            </svg>
+                                                                        </button>
+                                                                    </form>
                                                                 @endcan
                                                             </td>
                                                         </tr>
@@ -220,12 +266,12 @@
                                         </table>
                                         <div id="results">
                                             <!-- Aquí se mostrarán los resultados de la búsqueda -->
-                                        </div>                                        
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-footer mr-auto">
                                     @if (is_null($inventarios) == false)
-                                    {{ $inventarios->links() }}
+                                        {{ $inventarios->links() }}
                                     @endif
                                 </div>
                             </div>
@@ -243,9 +289,9 @@
             <div class="modal-content">
                 <div class="col-12">
                     <div class="card ">
-                        <form action="{{ route('inventario.movimiento', 0) }}" method="post">
+                        <form action="{{ route('inventario.movimiento') }}" method="post">
                             @csrf
-                            {{--  @method('put')  --}}
+                            @method('post')
                             <div class="modal-header bacTituloPrincipal">
                                 <h2 class="titulos text-capitalize"><span id="tituloModal">Editar</span> </h2>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -255,7 +301,8 @@
                                 <div class="row card-body" style="text-align: center;">
                                     {{--  <input type="hidden" name="productoid" id="productoid" value="">  --}}
                                     <input type="hidden" name="inventarioId" id="inventarioId" value="">
-                                    <input type="hidden" name="usuarioId" id="usuarioId" value="{{ auth()->user()->id }}">
+                                    <input type="hidden" name="usuarioId" id="usuarioId"
+                                        value="{{ auth()->user()->id }}">
                                     <input type="hidden" name="movimiento" id="movimientoTipo">
 
                                     <div class="col-12 ">
@@ -385,45 +432,45 @@
         document.addEventListener('DOMContentLoaded', function() {
             const input = document.querySelector('input[name="search"]');
             const clearButton = document.querySelector('.clear-input');
-        
+
             // Limpiar el texto del input al hacer clic en el botón de limpiar
             clearButton.addEventListener('click', function() {
                 input.value = '';
             });
         });
-        </script>
+    </script>
 
     <script>
-       $(document).ready(function() {
+        $(document).ready(function() {
             //var tipo = $('#tipoData').data('tipo'); // Obtener el valor de la variable PHP $tipo
 
             /*var typingTimer;
-            var doneTypingInterval = 1000; // tiempo de espera después de terminar de escribir
-    
-            $('#search').on('keyup', function() {
-                clearTimeout(typingTimer);
-                typingTimer = setTimeout(doneTyping, doneTypingInterval);
-            });
-    
-            function doneTyping() {
-                // Realizar la solicitud AJAX con el valor del campo de búsqueda
-                var searchQuery = $('#search').val();
-    
-                $.ajax({
-                    type: 'GET',
-                    url: '/inventario/' + tipo, // Utiliza el valor de $tipo
-                    data: {
-                        search: searchQuery
-                    },
-                    success: function(response) {
-                        // Actualizar la parte de la página que muestra los resultados
-                        $('#results').html(response);
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-            }*/
+                    var doneTypingInterval = 1000; // tiempo de espera después de terminar de escribir
+            
+                    $('#search').on('keyup', function() {
+                        clearTimeout(typingTimer);
+                        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+                    });
+            
+                    function doneTyping() {
+                        // Realizar la solicitud AJAX con el valor del campo de búsqueda
+                        var searchQuery = $('#search').val();
+            
+                        $.ajax({
+                            type: 'GET',
+                            url: '/inventario/' + tipo, // Utiliza el valor de $tipo
+                            data: {
+                                search: searchQuery
+                            },
+                            success: function(response) {
+                                // Actualizar la parte de la página que muestra los resultados
+                                $('#results').html(response);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                    }*/
         });
     </script>
 
@@ -431,27 +478,29 @@
         document.addEventListener('DOMContentLoaded', function() {
             const toggleButton = document.getElementById('toggleButton');
             const searchFilters = document.getElementById('searchFilters');
-    
+
             // Cambiar icono cuando el colapsable se muestra o se oculta
             searchFilters.addEventListener('shown.bs.collapse', function() {
-                toggleButton.innerHTML = `<i class="fas fa-list"></i> Filtros <i class="fas fa-arrow-up" style="margin-left: 10px"></i>`;
+                toggleButton.innerHTML =
+                    `<i class="fas fa-list"></i> Filtros <i class="fas fa-arrow-up" style="margin-left: 10px"></i>`;
             });
-    
+
             searchFilters.addEventListener('hidden.bs.collapse', function() {
-                toggleButton.innerHTML = `<i class="fas fa-list"></i> Filtros <i class="fas fa-arrow-down" style="margin-left: 10px"></i>`;
+                toggleButton.innerHTML =
+                    `<i class="fas fa-list"></i> Filtros <i class="fas fa-arrow-down" style="margin-left: 10px"></i>`;
             });
         });
     </script>
 
     <style>
-        input{
+        input {
             border: #5C7C26 1px solid !important;
             border-radius: .375rem;
             font-size: 1em !important;
         }
-        
+
         input:active,
-        input:focus{
+        input:focus {
             box-shadow: 2px 2px 10px 2px #F7C90D !important;
         }
     </style>

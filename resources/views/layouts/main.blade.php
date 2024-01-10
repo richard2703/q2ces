@@ -413,11 +413,11 @@
                             </li>
                         @endcan
                         @can('personalEspecial_index')
-                        <li>
-                            <a href="{{ route('personalEspecial.index') }}" class="">
-                                <i class="bi bi-circle"></i><span>Personal Especial</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a href="{{ route('personalEspecial.index') }}" class="">
+                                    <i class="bi bi-circle"></i><span>Personal Especial</span>
+                                </a>
+                            </li>
                         @endcan
                     </ul>
                 </li>
@@ -458,7 +458,7 @@
                             </li>
                         @endcan
 
-                        @can('maquinaria_mtq_index')
+                        @can('maquinaria_mtq_edit_uso')
                             <li>
                                 {{--  <a href="#" class="{{ $activeItem == 'newTicket' ? 'active' : '' }}">  --}}
                                 <a href="{{ route('uso.index') }}" class="">

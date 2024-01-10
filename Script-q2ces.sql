@@ -1839,6 +1839,18 @@ create table cisternas(
     primary key (id)
 );
 
+CREATE TABLE ajustesCisternas(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    tipoCisternaId bigint(20) unsigned NOT NULL,
+    contenidoTeorico float(100, 2) NULL,
+    contenidoReal float(100, 2) NULL,
+    fecha date NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ajustesCisternas_tipoCisternaId foreign key (tipoCisternaId) references cisternas(id)
+);
+
 create table movimientosCisterna(
     id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
     tipo varchar(255) NULL,

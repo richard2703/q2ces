@@ -46,8 +46,9 @@ class inventarioController extends Controller
 
     public function index($tipo)
     {
-        abort_if(Gate::denies('inventario_index'), 403);
+
         if ($tipo == 'combustible') {
+            abort_if(Gate::denies('combustible_index'), 403);
             $usuarios = personal::all()->sortBy('nombres');
             $despachador = personal::join('puesto', 'personal.puestoId', 'puesto.id')
                 ->join('puestoNivel', 'puesto.puestoNivelId', 'puestoNivel.id')
@@ -186,6 +187,7 @@ class inventarioController extends Controller
 
             return view('inventario.dashCombustible', compact('despachador', 'vctObras', 'personal', 'maquinaria', 'cisternas', 'gasolinas', 'suma', 'dia', 'despachadores', 'cargas', 'descargas', 'usuarios'));
         } else {
+            abort_if(Gate::denies('inventario_index'), 403);
             $estatus = request()->input('estatus');
             $marcaId = request()->input('marca');
             $search = request()->input('search');
@@ -1096,16 +1098,20 @@ class inventarioController extends Controller
         Session::flash('message', 1);
         $cisterna = maquinaria::where("id", $maquinariaId)->first();
         if ($descarga->tipoCisternaId != null) {
-            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $descarga->litros);
-            // dd($cisterna->cisternaNivel, $descarga->litros);
-            $cisterna->save();
+            if ($cisterna != null) {
+                $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $descarga->litros);
+                $cisterna->save();
+            }
+
 
             $descarga->delete();
             return redirect()->route('combustibleTote.index');
         } else {
-            $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $descarga->litros);
-            // dd($cisterna->cisternaNivel, $descarga->litros);
-            $cisterna->save();
+            if ($cisterna != null) {
+                $cisterna->cisternaNivel = ($cisterna->cisternaNivel + $descarga->litros);
+                $cisterna->save();
+            }
+
             $descarga->delete();
             return redirect()->action([inventarioController::class, 'index'], ['tipo' => 'combustible']);
         }
@@ -1274,7 +1280,7 @@ class inventarioController extends Controller
     }
 
 
-    public function movimiento(Request $request, inventario $producto)
+    public function movimiento(Request $request)
     {
         abort_if(Gate::denies('inventario_edit'), 403);
         $movimiento = $request->all();
