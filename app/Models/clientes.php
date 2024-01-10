@@ -12,6 +12,6 @@ class clientes extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre', 'razonSocial', 'rfc', 'calle', 'exterior', 'interior', 'colonia', 'estado', 'ciudad', 'cp', 'logo', 'estatus',
+        'nombre', 'razonSocial', 'rfc', 'calle', 'exterior', 'interior', 'colonia', 'estado', 'ciudad', 'cp', 'logo', 'estatus', 'cfdi', 'metodo', 'forma'
     ];
 }

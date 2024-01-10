@@ -27,9 +27,34 @@ class usoMaquinariasController extends Controller
     {
         $marca = marca::all();
         $maquinaria = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
-            // ->join('usoMaquinarias', 'usoMaquinarias.maquinariaId', 'maquinaria.id')
-            ->select('maquinaria.*', 'maquinaria.nombre as nombre_maquinaria', 'marca.nombre as nombre_marca', 'marca.id as id_marca')
+            ->leftjoin('usoMaquinarias', 'usoMaquinarias.maquinariaId', 'maquinaria.id')
+            ->leftJoin(
+                DB::raw('(SELECT maquinariaId,tipoMantenimientoId, MAX(fechaReal) as ultima_fecha_mantenimiento 
+            FROM mantenimientos 
+            GROUP BY maquinariaId) as ultima_mantenimiento'),
+                'ultima_mantenimiento.maquinariaId',
+                '=',
+                'maquinaria.id'
+            )
+            ->leftJoin('tipoMantenimiento', 'ultima_mantenimiento.tipoMantenimientoId', 'tipoMantenimiento.id')
+            ->select(
+                'maquinaria.id',
+                'maquinaria.identificador',
+                'maquinaria.nombre as nombre_maquinaria',
+                'maquinaria.modelo',
+                'maquinaria.placas',
+                'maquinaria.kilometraje',
+                'maquinaria.mantenimiento',
+                'marca.nombre as nombre_marca',
+                'marca.id as id_marca',
+                'ultima_mantenimiento.ultima_fecha_mantenimiento',
+                'ultima_mantenimiento.tipoMantenimientoId',
+                'tipoMantenimiento.nombre as tipoMantenimiento'
+
+            )
             ->where('compania', 'mtq')
+            // ->where('maquinaria.id', 1)
+            ->groupBy('maquinaria.id')
             ->orderBy('identificador', 'asc')
             ->paginate(15);
 
@@ -53,34 +78,68 @@ class usoMaquinariasController extends Controller
         }
 
         if (!empty($autoIds)) {
+            // $maquinariaAsignada = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
+            //     ->select('maquinaria.*', 'maquinaria.nombre as nombre_maquinaria', 'marca.nombre as nombre_marca', 'marca.id as id_marca')
+            //     ->where('maquinaria.compania', 'mtq')
+            //     ->whereIn('maquinaria.id', $autoIds)
+            //     ->orderBy('maquinaria.identificador', 'asc')
+            //     ->get();
+
             $maquinariaAsignada = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
-                ->select('maquinaria.*', 'maquinaria.nombre as nombre_maquinaria', 'marca.nombre as nombre_marca', 'marca.id as id_marca')
-                ->where('maquinaria.compania', 'mtq')
+                ->leftjoin('usoMaquinarias', 'usoMaquinarias.maquinariaId', 'maquinaria.id')
+                ->leftJoin(
+                    DB::raw('(SELECT maquinariaId,tipoMantenimientoId, MAX(fechaReal) as ultima_fecha_mantenimiento 
+                FROM mantenimientos 
+                GROUP BY maquinariaId) as ultima_mantenimiento'),
+                    'ultima_mantenimiento.maquinariaId',
+                    '=',
+                    'maquinaria.id'
+                )
+                ->leftJoin('tipoMantenimiento', 'ultima_mantenimiento.tipoMantenimientoId', 'tipoMantenimiento.id')
+                ->select(
+                    'maquinaria.id',
+                    'maquinaria.identificador',
+                    'maquinaria.nombre as nombre_maquinaria',
+                    'maquinaria.modelo',
+                    'maquinaria.placas',
+                    'maquinaria.kilometraje',
+                    'maquinaria.mantenimiento',
+                    'marca.nombre as nombre_marca',
+                    'marca.id as id_marca',
+                    'ultima_mantenimiento.ultima_fecha_mantenimiento',
+                    'ultima_mantenimiento.tipoMantenimientoId',
+                    'tipoMantenimiento.nombre as tipoMantenimiento'
+
+                )
+                ->where('compania', 'mtq')
                 ->whereIn('maquinaria.id', $autoIds)
-                ->orderBy('maquinaria.identificador', 'asc')
+                ->groupBy('maquinaria.id')
+                ->orderBy('identificador', 'asc')
                 ->get();
+
+            // dd('empty');
         } else {
             $maquinariaAsignada = null;
         }
 
-        $vctUsos = usoMaquinarias::select('usoMaquinarias.*')
-            ->selectRaw('max( usoMaquinarias.uso)  as usoMantenimiento')
-            ->join('maquinaria', 'maquinaria.id', 'usoMaquinarias.maquinariaId')
-            ->where('usoMaquinarias.proviene', '=', 'Mantenimiento')
-            ->where('maquinaria.compania', 'mtq')
-            ->groupBy('usoMaquinarias.maquinariaId')
-            ->orderBy('usoMaquinarias.maquinariaId', 'asc')
-            ->orderBy('usoMaquinarias.id', 'asc')
-            ->get();
-        // dd($residenteAutos);
-        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria', 'servicios', 'marca', 'maquinariaAsignada', 'residenteAutos', 'vctUsos'));
+        // $vctUsos = usoMaquinarias::select('usoMaquinarias.*')
+        //     ->selectRaw('max( usoMaquinarias.uso)  as usoMantenimiento')
+        //     ->join('maquinaria', 'maquinaria.id', 'usoMaquinarias.maquinariaId')
+        //     ->where('usoMaquinarias.proviene', '=', 'Mantenimiento')
+        //     ->where('maquinaria.compania', 'mtq')
+        //     ->groupBy('usoMaquinarias.maquinariaId')
+        //     ->orderBy('usoMaquinarias.maquinariaId', 'asc')
+        //     ->orderBy('usoMaquinarias.id', 'asc')
+        //     ->get();
+        // dd($maquinariaAsignada);
+        return view('MTQ.indexUsoMaquinariaMtq', compact('maquinaria', 'servicios', 'marca', 'maquinariaAsignada', 'residenteAutos'));
     }
 
     public function indexQ2ces()
     {
         $marca = marca::all();
         $maquinaria = maquinaria::join('marca', 'marca.id', 'maquinaria.marcaId')
-            ->join('usoMaquinarias', 'usoMaquinarias.maquinariaId', 'maquinaria.id')
+            ->leftjoin('usoMaquinarias', 'usoMaquinarias.maquinariaId', 'maquinaria.id')
             ->leftJoin(
                 DB::raw('(SELECT maquinariaId,tipoMantenimientoId, MAX(fechaReal) as ultima_fecha_mantenimiento 
             FROM mantenimientos 
@@ -91,6 +150,7 @@ class usoMaquinariasController extends Controller
             )
             ->leftJoin('tipoMantenimiento', 'ultima_mantenimiento.tipoMantenimientoId', 'tipoMantenimiento.id')
             ->select(
+                'maquinaria.id',
                 'maquinaria.identificador',
                 'maquinaria.nombre as nombre_maquinaria',
                 'maquinaria.modelo',
@@ -106,7 +166,7 @@ class usoMaquinariasController extends Controller
             )
             ->where('compania', null)
             // ->where('maquinaria.id', 1)
-            // ->groupBy('maquinaria.id')
+            ->groupBy('maquinaria.id')
             ->orderBy('identificador', 'asc')
             ->paginate(15);
         // ->get();
@@ -127,7 +187,7 @@ class usoMaquinariasController extends Controller
 
         $servicios = serviciosMtq::all();
 
-        return view('maquinaria.indexUsoMaquinaria', compact('maquinaria', 'servicios', 'marca', 'vctUsos'));
+        return view('maquinaria.indexUsoMaquinaria', compact('maquinaria', 'servicios', 'marca'));
     }
 
     /**

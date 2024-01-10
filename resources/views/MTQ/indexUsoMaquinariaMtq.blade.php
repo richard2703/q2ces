@@ -75,9 +75,9 @@
                                         <th class="labelTitulo text-center">Marca</th>
                                         <th class="labelTitulo text-center">Modelo</th>
                                         <th class="labelTitulo text-center">Placas</th>
-                                        <th class="labelTitulo text-center">Km. Actual</th>
-                                        <th class="labelTitulo text-center">Último</th>
+                                        <th class="labelTitulo text-center">Ultimo</th>
                                         <th class="labelTitulo text-center">Tipo</th>
+                                        <th class="labelTitulo text-center">Uso Actual</th>
                                         <th class="labelTitulo text-center no-wrap">Km para Mantenimiento</th>
                                         <th class="labelTitulo text-center no-wrap">Próximo Mantenimiento</th>
                                         <th class="labelTitulo text-center" style="width:120px">Acciones</th>
@@ -96,41 +96,21 @@
                                                     <td class="text-center">{{ $maquina->nombre_marca }}</td>
                                                     <td class="text-center">{{ $maquina->modelo }}</td>
                                                     <td class="text-center">{{ $maquina->placas }}</td>
+                                                    <td class="text-center">
+                                                        {{ $maquina->ultima_fecha_mantenimiento == null ? '---' : $maquina->ultima_fecha_mantenimiento }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $maquina->tipoMantenimiento == null ? '---' : $maquina->tipoMantenimiento }}
+                                                    </td>
                                                     <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
                                                     <td class="text-center">
-                                                        @php
-                                                            $blnExiste = false;
-                                                        @endphp
-                                                        @foreach ($vctUsos as $item)
-                                                            @if ($item->maquinariaId == $maquina->id)
-                                                                {{ $item->usoMantenimiento }}
-                                                                @php
-                                                                    $blnExiste = true;
-                                                                @endphp
-                                                            @endif
-                                                        @endforeach
-
-                                                        @if ($blnExiste == false)
-                                                            {{ $strSinUso }}
-                                                        @endif
-
+                                                        {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
                                                     </td>
-                                                    <td class="text-center">
-                                                        ???
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if ($maquina->mantenimiento != 0)
-                                                            {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
-                                                        @else
-                                                            0
-                                                        @endif
-                                                    </td>
-
                                                     <td class="text-center">{{ number_format($maquina->mantenimiento) }}
                                                     </td>
 
-                                                    <td class="td-actions text-center">
-                                                        @can('maquinaria_mtq_edit')
+                                                    <td class="td-actions text-center ">
+                                                        @can('maquinaria_mtq_edit_uso')
                                                             <a href="#" data-bs-toggle="modal"
                                                                 data-bs-target="#editarItem"
                                                                 onclick="cargaItem('{{ $maquina->id }}','{{ $maquina->identificador }}','{{ $maquina->nombre_maquinaria }}','{{ $maquina->id_marca }}','{{ $maquina->modelo }}','{{ $maquina->kilometraje }}','{{ false }}')">
@@ -157,39 +137,20 @@
                                                     <td class="text-center">{{ $maquina->nombre_marca }}</td>
                                                     <td class="text-center">{{ $maquina->modelo }}</td>
                                                     <td class="text-center">{{ $maquina->placas }}</td>
+                                                    <td class="text-center">
+                                                        {{ $maquina->ultima_fecha_mantenimiento == null ? '---' : $maquina->ultima_fecha_mantenimiento }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $maquina->tipoMantenimiento == null ? '---' : $maquina->tipoMantenimiento }}
+                                                    </td>
                                                     <td class="text-center">{{ number_format($maquina->kilometraje) }}</td>
                                                     <td class="text-center">
-                                                        @php
-                                                            $blnExiste = false;
-                                                        @endphp
-                                                        @foreach ($vctUsos as $item)
-                                                            @if ($item->maquinariaId == $maquina->id)
-                                                                {{ $item->usoMantenimiento }}
-                                                                @php
-                                                                    $blnExiste = true;
-                                                                @endphp
-                                                            @endif
-                                                        @endforeach
-
-                                                        @if ($blnExiste == false)
-                                                            {{ $strSinUso }}
-                                                        @endif
+                                                        {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
                                                     </td>
-                                                    <td>
-                                                        ???
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if ($maquina->mantenimiento != 0)
-                                                            {{ number_format($maquina->mantenimiento - $maquina->kilometraje) }}
-                                                        @else
-                                                            0
-                                                        @endif
-                                                    </td>
-
                                                     <td class="text-center">{{ number_format($maquina->mantenimiento) }}
                                                     </td>
 
-                                                    <td class="td-actions text-center">
+                                                    <td class="td-actions text-center ">
                                                         @can('maquinaria_mtq_edit')
                                                             <a href="#" data-bs-toggle="modal"
                                                                 data-bs-target="#editarItem"
@@ -210,6 +171,7 @@
                                                                     style="color: #8caf48;font-size: x-large;"></i>
                                                             </a>
                                                         @endcan
+
                                                     </td>
                                                 </tr>
                                             @empty

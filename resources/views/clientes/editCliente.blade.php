@@ -79,14 +79,29 @@
                                                 placeholder="Especifique..." value="{{ $cliente->rfc }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                            <label class="labelTitulo">CFDI: </label></br>
+                                            <input type="text" class="inputCaja" id="cfdi" name="cfdi"
+                                                placeholder="Especifique..." value="{{ $cliente->cfdi }}">
+                                        </div>
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                            <label class="labelTitulo">Medoto de Pago: </label></br>
+                                            <input type="text" class="inputCaja" id="metodo" name="metodo"
+                                                placeholder="Especifique..." value="{{ $cliente->metodo }}">
+                                        </div>
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
+                                            <label class="labelTitulo">Forma de Pago: </label></br>
+                                            <input type="text" class="inputCaja" id="forma" name="forma"
+                                                placeholder="Especifique..." value="{{ $cliente->forma }}">
+                                        </div>
+                                        <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Calle: <span>*</span></label></br>
                                             <input type="text" class="inputCaja" id="calle" name="calle" required
                                                 placeholder="Especifique..." value="{{ $cliente->calle }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Exterior:</label></br>
-                                            <input type="text" class="inputCaja" id="exterior" name="exterior" required
-                                                value="{{ $cliente->exterior }}">
+                                            <input type="text" class="inputCaja" id="exterior" name="exterior"
+                                                required value="{{ $cliente->exterior }}">
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">No. Interior: <span>*</span></label></br>
@@ -141,15 +156,15 @@
                                                 <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                                                     <label class="labelTitulo">Correo:</label></br>
                                                     <input type="email" class="inputCaja" id="rEmail"
-                                                    placeholder="ej. elcorreo@delresponsable.com" min="6" name="rEmail[]"
-                                                        value="{{ $residente->email }}">
+                                                        placeholder="ej. elcorreo@delresponsable.com" min="6"
+                                                        name="rEmail[]" value="{{ $residente->email }}">
                                                 </div>
 
                                                 <div class=" col-11 col-sm-5 col-lg-3 my-3 ">
                                                     <label class="labelTitulo">Teléfono:</label></br>
                                                     <input type="tel" class="inputCaja" id="rTelefono"
-                                                    pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
-                                                    placeholder="ej. 00-0000-0000" name="rTelefono[]"
+                                                        pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
+                                                        placeholder="ej. 00-0000-0000" name="rTelefono[]"
                                                         value="{{ $residente->telefono }}">
                                                 </div>
 

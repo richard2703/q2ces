@@ -58,7 +58,7 @@
                                                 <div class="col-12 my-5 ">
                                                     <div class="row mt-5">
                                                         <div class="col-12">
-                                                            <div class="row ">
+                                                            <div class="row">
                                                                 <div class=" col-12 col-md-6 d-flex mb-4">
                                                                     <div class="me-2">
                                                                         <img src="{{ asset('/img/inventario/CISTERNA-01.svg') }}"
@@ -122,7 +122,7 @@
                                                                             alt="" style="width:40px;">
                                                                     </div>
                                                                     <div style="width: 90%! important;">
-                                                                        <label class="labelTitulo">Horometro:
+                                                                        <label class="labelTitulo">Odometro:
                                                                             <span>*</span></label></br>
                                                                             <input type="number" name="kilometraje" class="inputCaja" id="horometroCarga" value="" required>
                                                                     </div>
@@ -261,6 +261,7 @@
                                                                             class="form-select"
                                                                             aria-label="Default select example" required>
                                                                             <option value="">Seleccione</option>
+                                                                            <option value="null">Bidon</option>
                                                                             @foreach ($cisternas as $maquina)
                                                                                 <option value="{{ $maquina->id }}" data-km="{{ $maquina->kilometraje }}">
                                                                                     {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
@@ -512,10 +513,17 @@
                             
                         </div>
                         <div class="row" style="padding: 0 10px;">
+                            
+                            
+                            <div class="col-6 text-center mb-3 ">
+                                <button type="button" class="btn botonGral text-capitalize" id="toggleButton" data-bs-toggle="collapse" data-bs-target="#searchFilters">
+                                    <i class="fas fa-history"></i> Ajustes hechos en la Reserva <i class="fas fa-arrow-down" style="margin-left: 10px"></i>
+                                </button>
+                            </div>
                             @csrf
-                            <div class="col-12 text-center mb-3 ">
+                            <div class="col-6 text-center mb-3 ">
                                 <button type="button" class="btn botonGral" data-bs-toggle="modal" data-bs-target="#myModal">
-                                    Realizar Ajuste en Reserva
+                                    Realizar Ajuste en Reserva <i class="fas fa-plus-circle"></i>
                                 </button>                                
                             </div>
                         </div>
@@ -561,7 +569,107 @@
                                 </div>
                             </div>
                         </div>  --}}
+                        <div class="collapse" id="searchFilters">
+                            <h2 class="tituloEncabezado text-center mt-3">Registros de Ajustes Hechos a las Reservas:</h2>
 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead class="labelTitulo">
+                                                        <th class="fw-bolder">ID</th>
+                                                        <th class="fw-bolder">Cisterna</th>
+                                                        <th class="fw-bolder">Reserva Teórica</th>
+                                                        <th class="fw-bolder">Reserva Real</th>
+                                                        <th class="fw-bolder">Fecha</th>
+                                                        <th class="fw-bolder text-right">Acciones</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        @forelse ($ajustesCisternas as $ajuste)
+                                                            <tr>
+                                                                <td>{{ $ajuste->id }} </td>
+                                                                <td>{{ $ajuste->nombre }} </td>
+                                                                <td>
+                                                                    {{ number_format($ajuste->contenidoTeorico, 2, '.', ',') }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ number_format($ajuste->contenidoReal, 2, '.', ',') }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ \Carbon\Carbon::parse($ajuste->updated_at)->format('Y-m-d') }}
+                                                                </td>
+                                                            
+                                                                <td style="width: 400px"
+                                                                    class="td-actions justify-content-end">
+                                                                    
+                                                                    {{--  @can('combustible_edit')
+                                                                        <a href="#" class=""
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#editReserva"
+                                                                            onclick="loadReserva('{{ $ajuste->id }}','{{ $ajuste->tipoCisternaId }}','{{ $ajuste->contenidoTeorico }}','{{ $ajuste->contenidoReal }}')">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg "
+                                                                                width="28"
+                                                                                height="28"
+                                                                                fill="currentColor"
+                                                                                class="bi bi-pencil accionesIconos"
+                                                                                viewBox="0 0 16 16">
+                                                                                <path
+                                                                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                            </svg>
+                                                                        </a>
+                                                                    @endcan  --}}
+
+                                                                    <form
+                                                                        action="{{ route('combustibleTote.deleteAjusteCisterna', $ajuste->id) }}"
+                                                                        method="POST"
+                                                                        style="display: inline-block;"
+                                                                        onsubmit="return confirm('¿Estás seguro?')">
+                                                                        @csrf
+                                                                        @method('DELETE')
+
+                                                                        @can('combustible_destroy')
+                                                                            <button class=" btnSinFondo"
+                                                                                type="submit"
+                                                                                rel="tooltip">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="28"
+                                                                                    height="28"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-x-circle"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                                    <path
+                                                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                </svg>
+                                                                            </button>
+                                                                        @endcan
+
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="7"
+                                                                    class="text-center">Sin
+                                                                    información registrada.</td>
+                                                            </tr>
+                                                        @endforelse
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-center">
+                                            {{ $ajustesCisternas->links() }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!--Espacio para index carga y descarga-->
                         <div class="row">
                             <div class="col-md-12">
@@ -1125,6 +1233,7 @@
                             <div class="col-6 my-3">
                                 <label for="inputEmail4" class="labelTitulo">Equipo:</label>
                                 <select id="descargaMaquinaria" name="descargaMaquinaria" class="form-select">
+                                    <option value=''>Bidon</option>
                                     @foreach ($cisternas as $maquina)
                                         <option value="{{ $maquina->id }}">
                                             {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
@@ -1285,12 +1394,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('combustibleTote.updateReserva') }}" method="post">
+                    <form action="{{ route('combustibleTote.ajustesCisternas') }}" method="post">
                         <div class="row" style="padding: 0 10px;">
                             @csrf
                             <div class="col-12 d-flex mb-4">
                                 <div class="me-2">
-                                    <img src="http://127.0.0.1:8000/img/inventario/CISTERNA-01.svg" alt="" style="width:40px;">
+                                    <img src="{{ asset('/img/inventario/CISTERNA-01.svg') }}" alt="" style="width:40px;">
                                 </div>
                                 <div style="width: 90%! important;">
                                     <label class="labelTitulo">Cisterna:</label><br>
@@ -1311,7 +1420,7 @@
                                     <label class="labelTitulo">Reserva Teorica:
                                         <span></span></label></br>
                                     <input type="number" step="0.01" min="0.01"
-                                        required class="inputCaja" id="litros"
+                                        required class="inputCaja" id="litros" name="contenidoTeorico"
                                         readonly value="{{$cisternaTipo->contenido}}">
                                 </div>
                             </div>
@@ -1323,7 +1432,68 @@
                                 <div style="width: 90%! important;">
                                     <label class="labelTitulo">Reserva Real:
                                         <span>*</span></label></br>
-                                        <input type="number" name="contenido" class="inputCaja" required>
+                                        <input type="number" name="contenidoReal" class="inputCaja" required>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mb-3 ">
+                                <button type="submit" class="btn botonGral"
+                                    onclick="test()">Guardar</button>
+                            </div>
+                        </div>
+                        </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editReserva" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bacTituloPrincipal">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Reserva</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('combustibleTote.ajustesCisternasEdit') }}" method="post">
+                        <div class="row" style="padding: 0 10px;">
+                            @csrf
+                            <input type="hidden" name="id" id="ajusteReservaId">
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/CISTERNA-01.svg') }}" alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Cisterna:</label><br>
+                                    <select id="cisternaId" name="tipoCisternaIdReserva" class="form-select" aria-label="Default select example" required="">
+                                        
+                                                                                                                        <option value="1">
+                                                Tote
+                                            </option>
+                                                                                                                </select>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Reserva Teorica:
+                                        <span></span></label></br>
+                                    <input type="number" step="0.01" min="0.01"
+                                        required class="inputCaja" id="contenidoTeoricoReserva" name="contenidoTeorico"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex mb-4">
+                                <div class="me-2">
+                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
+                                        alt="" style="width:40px;">
+                                </div>
+                                <div style="width: 90%! important;">
+                                    <label class="labelTitulo">Reserva Real:
+                                        <span>*</span></label></br>
+                                        <input type="number" id="contenidoRealReserva" name="contenidoReal" class="inputCaja" required>
                                 </div>
                             </div>
                             <div class="col-12 text-center mb-3 ">
@@ -1557,7 +1727,6 @@
             image.src = "{{ asset('img/inventario/descargaGris.svg') }}";
         }
 
-
         function changeImage1() {
             var image = document.getElementById('myImage1');
             image.src = "{{ asset('img/inventario/descargaRojo.svg') }}";
@@ -1591,12 +1760,34 @@
     </script>
 
     <script>
+        function loadReserva(id, tipoCisternaId, contenidoTeorico, contenidoReal) {
+            const txtId = document.getElementById('ajusteReservaId');
+            txtId.value = id;
+
+            /*const Tote = document.getElementById('tipoCisternaIdReserva');
+            for (let i = 0; i < Tote.options.length; i++) {
+                if (Tote.options[i].value == tipoCisternaId) {
+                    // Tote.options[i].selected = true;
+                    Tote.selectedIndex = i;
+                }
+            }*/
+
+            const Teorico = document.getElementById('contenidoTeoricoReserva');
+            Teorico.value = contenidoTeorico;
+            
+            const Real = document.getElementById('contenidoRealReserva');
+            Real.value = contenidoReal;
+        }
+    </script>
+
+    <script>
         function loadDescarga(id, maquinariaId, operadorId, receptorId, litros, kms, imagenKms,fecha, horas, grasa, hidraulico, anticongelante, motor, otro, direccion, otroComment) {
 
             const txtId = document.getElementById('descargaId');
             txtId.value = id;
 
-            const lstEquipo = document.getElementById('descargaMaquinaria').value = maquinariaId;
+            const lstEquipo = document.getElementById('descargaMaquinaria');
+            lstEquipo.value = maquinariaId;
 
             const lstOperador = document.getElementById('descargaOperador').value = operadorId;
 
@@ -1607,6 +1798,14 @@
 
             const txtKms = document.getElementById('descargaKms');
             txtKms.value = kms;
+
+            if(maquinariaId == ''){
+                lstEquipo.disabled = true;
+                txtKms.disabled = true;    
+            }else{
+                lstEquipo.disabled = false;
+                txtKms.disabled = false;    
+            }
 
             const txtHoras = document.getElementById('descargaHoras');
             txtHoras.value = horas;
@@ -1638,7 +1837,6 @@
 
             const txtotroCommentLoad = document.getElementById('otroCommentLoad');
             txtotroCommentLoad.value = otroComment;
-
         }
     </script>
 
@@ -1822,7 +2020,13 @@
                 // Obtiene el valor del atributo 'data-odometro' de la opción seleccionada
                 var selectedOption = $(this).find(':selected');
                 var odometroValue = selectedOption.data('km');
-                
+                if (selectedOption.index() === 1) {
+                    $('#kilometrajeDescarga').prop('disabled', true);
+                    $('#kilometrajeDescarga').css('background-color', 'lightgray');
+                } else {
+                    $('#kilometrajeDescarga').prop('disabled', false);
+                    $('#kilometrajeDescarga').css('background-color', '');
+                }
                 // Actualiza el valor del input 'horometro'
                 $('#kilometrajeDescarga').val(odometroValue);
             });
@@ -1849,11 +2053,19 @@
             const printFormDescarga = document.getElementById('printFormDescarga');
         
             confirmImprimir.addEventListener('click', function() {
-                // User clicked "Sí," submit the form
                 printFormDescarga.submit();
             });
         });
     </script>
         
+    <style>
+        select[readonly], input[readonly], textarea[readonly]{
+            color: grey;
+            cursor:no-drop;
+        }
         
+        select[readonly] option{
+            display:none;
+        }
+    </style>
 @endsection

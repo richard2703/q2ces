@@ -33,80 +33,83 @@
                                             {{ session('faild') }}
                                         </div>
                                     @endif
-                                    @if($showEncabezado == 1)
-                                    @can('serviciosTrasporte_show')
-                                        <div class="row division">
-                                            <div class="col-12 col-md-4">
-                                                <p>Periodo del</br> <span
-                                                        class="combustibleLitros">{{ \Carbon\Carbon::parse($quincena)->locale('es')->isoFormat('dddd D MMMM') }}
-                                                        al
-                                                        {{ \Carbon\Carbon::parse($hoy)->locale('es')->isoFormat('dddd D MMMM') }}</span>
-                                                </p>
-                                            </div>
-                                            @can('serviciosTrasporte_cobros')
-                                                <div class="col-3 col-md-2 text-center">
-                                                    <p class="">Pendientes</p>
-                                                    <p class="combustibleLitros fw-semibold text-danger">{{ $totalPendientes }}</p>
-                                                </div>
-                                                <div class="col-3 col-md-2 text-center">
-                                                    <p class="">$ Pendiente</p>
-                                                    <p class="combustibleLitros fw-semibold  text-danger">$
-                                                        {{ number_format($sumaPendientes, 2) }}
+                                    @if ($showEncabezado == 1)
+                                        @can('serviciosTrasporte_show')
+                                            <div class="row division">
+                                                <div class="col-12 col-md-4">
+                                                    <p>Periodo del</br> <span
+                                                            class="combustibleLitros">{{ \Carbon\Carbon::parse($quincena)->locale('es')->isoFormat('dddd D MMMM') }}
+                                                            al
+                                                            {{ \Carbon\Carbon::parse($hoy)->locale('es')->isoFormat('dddd D MMMM') }}</span>
                                                     </p>
                                                 </div>
+                                                @can('serviciosTrasporte_cobros')
+                                                    <div class="col-3 col-md-2 text-center">
+                                                        <p class="">Pendientes</p>
+                                                        <p class="combustibleLitros fw-semibold text-danger">{{ $totalPendientes }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col-md-2 text-center">
+                                                        <p class="">$ Pendiente</p>
+                                                        <p class="combustibleLitros fw-semibold  text-danger">$
+                                                            {{ number_format($sumaPendientes, 2) }}
+                                                        </p>
+                                                    </div>
 
-                                                <div class="col-3 col-md-2 text-center">
-                                                    <p class="">Facturadas</p>
-                                                    <p class="combustibleLitros fw-semibold ">{{ $totalPagados }}
-                                                    <p>
-                                                </div>
+                                                    <div class="col-3 col-md-2 text-center">
+                                                        <p class="">Facturadas</p>
+                                                        <p class="combustibleLitros fw-semibold ">{{ $totalPagados }}
+                                                        <p>
+                                                    </div>
 
-                                                <div class="col-3 col-md-2 text-center">
-                                                    <p class="">$ Facturadas</p>
-                                                    <p class="combustibleLitros fw-semibold ">$ {{ number_format($sumaPagados, 2) }}
-                                                    </p>
-                                                </div>
-                                            @endcan
+                                                    <div class="col-3 col-md-2 text-center">
+                                                        <p class="">$ Facturadas</p>
+                                                        <p class="combustibleLitros fw-semibold ">$
+                                                            {{ number_format($sumaPagados, 2) }}
+                                                        </p>
+                                                    </div>
+                                                @endcan
 
-                                            <div class="row">
-                                                <div class="col-6 d-flex  ">
+                                                <div class="row">
+                                                    <div class="col-6 d-flex  ">
 
-                                                    @can('cajachica_create')
-                                                        <button type="button" class="btn botonGral" data-bs-toggle="modal"
-                                                            data-bs-target="#modal-reporte">
-                                                            Reporte de Movimientos
-                                                        </button>
-                                                    @endcan
-
-                                                </div>
-
-                                                <div class="col-6 d-flex justify-content-end ">
-                                                    @if ($reporte == 0)
-                                                        @can('serviciosTrasporte_create')
-                                                            <a href="{{ route('serviciosTrasporte.create') }}"
-                                                                class="ps-1 align-self-center">
-                                                                <button type="button" class="btn botonGral">Programar
-                                                                    Servicio</button>
-                                                            </a>
-                                                        @endcan
-                                                    @else
                                                         @can('cajachica_create')
-                                                            <form action="{{ route('serviciosTrasporte.impresion') }}"
-                                                                method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="quincena" value={{ $quincena }}>
-                                                                <input type="hidden" name="hoy" value={{ $hoy }}>
-
-
-                                                                <button type="submit" class="btn regresar"
-                                                                    style="margin-right: 5px;">Imprimir</button>
-                                                            </form>
+                                                            <button type="button" class="btn botonGral" data-bs-toggle="modal"
+                                                                data-bs-target="#modal-reporte">
+                                                                Reporte de Movimientos
+                                                            </button>
                                                         @endcan
-                                                    @endif
+
+                                                    </div>
+
+                                                    <div class="col-6 d-flex justify-content-end ">
+                                                        @if ($reporte == 0)
+                                                            @can('serviciosTrasporte_create')
+                                                                <a href="{{ route('serviciosTrasporte.create') }}"
+                                                                    class="ps-1 align-self-center">
+                                                                    <button type="button" class="btn botonGral">Programar
+                                                                        Servicio</button>
+                                                                </a>
+                                                            @endcan
+                                                        @else
+                                                            @can('cajachica_create')
+                                                                <form action="{{ route('serviciosTrasporte.impresion') }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="quincena"
+                                                                        value={{ $quincena }}>
+                                                                    <input type="hidden" name="hoy" value={{ $hoy }}>
+
+
+                                                                    <button type="submit" class="btn regresar"
+                                                                        style="margin-right: 5px;">Imprimir</button>
+                                                                </form>
+                                                            @endcan
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endcan
+                                        @endcan
                                     @endif
 
                                     <div class="table-responsive mt-2">
@@ -152,12 +155,12 @@
                                                         <td>{{ $registro->pnombre }} {{ $registro->papellidoP }}</td>
                                                         {{--  <td>ingreso</td>  --}}
                                                         <td>$
-                                                            {{ number_format($registro->cantidad + $registro->costoMano, 2) }}
+                                                            {{ number_format($registro->costoMaterial + $registro->costoMano, 2) }}
                                                             {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
                                                         </td>
                                                         @can('serviciosTrasporte_cobros')
                                                             <td>$
-                                                                {{ number_format($registro->cantidad + $registro->costoMano + $registro->costoServicio, 2) }}
+                                                                {{ number_format($registro->costoServicio, 2) }}
                                                                 {{--  {{ number_format($registro->cantidad, 2) + number_format($registro->costoServicio, 2) }}  --}}
                                                             </td>
                                                         @endcan

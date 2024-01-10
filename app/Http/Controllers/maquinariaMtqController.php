@@ -345,4 +345,21 @@ class maquinariaMtqController extends Controller
     //     $residenteAutos = residenteAutos::where('autoId', $autoId)->get();
     //     return response()->json($residenteAutos);
     // }
+
+    public function asignacionCombustible(Request $request)
+    {
+        $maquinaria = maquinaria::where('id', $request->maquinariaId)->first();
+
+        if ($maquinaria->cisterna === 0) {
+            // dd($maquinaria->cisterna);
+            $maquinaria->cisterna = null;
+            $maquinaria->save();
+        } else {
+            $maquinaria->cisterna = 0;
+            $maquinaria->save();
+        }
+
+        return redirect()->route('mtq.index');
+        // return response()->json($residenteAutos);
+    }
 }
