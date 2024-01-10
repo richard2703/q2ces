@@ -184,11 +184,11 @@
                     <div class="tab-content " id="myTabContent">
                         <div class="tab-pane fade show active" id="movimiento-tab-pane" role="tabpanel"
                             aria-labelledby="movimiento-tab" tabindex="0">
-                            <div class="Row">
+                            {{--  <div class="Row">
                                 <h3>¡Movimiento!</h3>
-                            </div>
+                            </div>  --}}
 
-                            {{--  Inicio de CARD  --}}
+                            {{--  Inicio de CARRUSEL CARD  --}}
                             <section class="product">
                                 <button class="pre-btn">
                                     <img src="{{ asset('img/comercial/home/arrow.png') }}" alt="">
@@ -198,7 +198,8 @@
                                 </button>
                                 <div class="product-container">
 
-                                    <div class="card product-card" style="margin: 15px">
+                                    {{--  Aqui inicia el elemento --}}
+                                    <div class="card product-card cartaProducto" style="margin: 15px">
                                         <div class="card-body combustibleBorde">
                                             <div>
                                                 <img class="ImgCard" src="{{ asset('img/general/img4.jpg') }}"
@@ -214,49 +215,59 @@
                                             <div>
                                                 <p style="font-size: 8px;">*Aplica restricciones *Precio aproximado</p>
                                             </div>
-                                            <div class="precios">
-                                                <p class="text-center">
-                                                    $36,000/dia $44,000/Sem $56,000/Mes
-                                                </p>
+                                            <div class="precios d-flex">
+                                                <div class="col-4">
+                                                    <p class="text-center">
+                                                        $36,000
+                                                    </p>
+                                                    <p class="text-center">
+                                                        Dia
+                                                    </p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="text-center">
+                                                        $44,000
+                                                    </p>
+                                                    <p class="text-center">
+                                                        Semana
+                                                    </p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="text-center">
+                                                        $56,000
+                                                    </p>
+                                                    <p class="text-center">
+                                                        Mes
+                                                    </p>
+                                                </div>
+
                                             </div>
 
                                             <div>
+                                                <ul class="listaCaracteristicas">
+                                                    <li>Alcance Maximo: 2 Metros </li>
+                                                    <li>Alcance Maximo: 2 Metros </li>
+                                                    <li>Alcance Maximo: 2 Metros </li>
+                                                    <li>Alcance Maximo: 2 Metros </li>
+                                                </ul>
 
                                             </div>
 
-                                            <div class="col-12 mb-1">
-                                                <p class="text-center" style="font-weight: bold">Reserva</p>
-                                                <p class="combustibleLitros fw-semibold text-center">
-                                                    {{--  {{ number_format($gasolina->cisternaNivel, 2) }} lts.  --}}
-                                                </p>
+                                            <div class="text-center">
+                                                <a href="#">
+                                                    <button class="button botonesCard">VER FICHA</button>
+                                                </a>
                                             </div>
 
-                                            <div class="col-6" style="width: 150px !important">
-                                                <p class=" "style="font-weight: bold">Última Carga:</p>
-                                                <p class="combustiblefecha fw-semibold mb-3">
-                                                    {{--  {{ \Carbon\Carbon::parse($gasolina->created_at)->format('Y-m-d') }}  --}}
-                                                </p>
-                                            </div>
-
-                                            <div class="col-5" style="width: 130px !important">
-                                                <p class="d-flex align-content-end"style="font-weight: bold">Por Litro:
-                                                </p>
-                                                <p class="d-flex align-content-end combustibleLitros fw-semibold">
-                                                    {{--  $ {{ number_format($gasolina->precio, 2) }}  --}}
-                                                </p>
-                                            </div>
-
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <p class="text-center mt-1"
-                                                    style="font-weight: bold; margin-right:8px; width: 130px !important">
-                                                    Litros Cargados: </p>
-                                                <div class="combustibleLitros fw-semibold text-center mt-2">
-                                                    {{--  {{ number_format($gasolina->litros, 2) }} lts.  --}}
-
-                                                </div>
+                                            <div class="text-center">
+                                                <a href="#">
+                                                    <button class="button botonesCard">RENTAR</button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
+                                    {{--  Aqui terminan el elemento --}}
+
 
                                     {{--  EJEMPLO DEL TUTO  --}}
                                     {{--  <div class="product-card">
@@ -271,17 +282,10 @@
                                             <span class="price">$20</span><span class="actual-price">$40</span>
                                         </div>
                                     </div>  --}}
-
-
                                 </div>
-                            </section>
-                            {{--  Fin de CARD  --}}
 
-                            <div class="text-center">
-                                <a href="#">
-                                    <button class="button">Conoce más</button>
-                                </a>
-                            </div>
+                            </section>
+                            {{--  Fin de CARRUSEL CARD  --}}
 
                         </div>
                     </div>

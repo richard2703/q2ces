@@ -166,6 +166,8 @@
   width: 250px;
   height: 550px;
   margin-right: 40px;
+  border: 2px solid !important;
+  border-color: var(--Topcional);
 }
 
 .product-image {
@@ -334,4 +336,24 @@
 .precios p{
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.listaCaracteristicas{
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 0px;
+}
+
+.listaCaracteristicas li{
+  list-style: circle;
+  font-size: 13px;
+}
+
+.botonesCard{
+  text-align: center;
+  
+  MARGIN: 5px;
+  padding: 0px;
+  height: 40px;
+  width: 200px;
 }
