@@ -21,6 +21,8 @@ Route::get('/', function () {
     return view('comercial.home');
 });
 
+Route::get('/quienesSomos', [App\Http\Controllers\comercial\comercialController::class, 'indexQuienesSomos'])->name('quienesSomos.index');
+
 
 
 Route::group(['middleware' => 'auth'], function () {
