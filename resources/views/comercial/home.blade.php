@@ -64,14 +64,14 @@
             </div>
         </div>
 
-        <div class="d-md-flex marcos">
+        <div class="d-md-flex ">
             {{--  <div
                 style="background-image: url('{{ asset('img/comercial/layout/Q2CES.svg') }}'); width: 100%; height: 80vh; opacity: 50%; ">
             </div>  --}}
-            <div class="col-12 col-md-8 marcos">
+            <div class="col-12 col-md-8 ">
                 <img src="{{ asset('img/comercial/layout/Q2CES.svg') }}" alt="Q2Ces" style="width: 50%;">
             </div>
-            <div class="col-12 col-md-4 marcos">
+            <div class="col-12 col-md-4 ">
                 <h3>¡Cotiza en línea y empieza tu proyecto hoy!</h3>
                 <p>Obtén la renta de maquinaria pesada para construcción
                     más eﬁciente y de excelente rendimiento en Q2CES, donde
@@ -89,70 +89,263 @@
                     </a>
                 </div>
             </div>
-            {{--  <div class="col-12 col-md-6 marcos">
+            {{--  <div class="col-12 col-md-6 ">
                 <img src="{{ asset('img/comercial/layout/whats.svg') }}" style="width: 50%;">
             </div>  --}}
 
         </div>
-        <div class="my-3 marcos">
+        <div class="my-3 ">
             {{--  <div
                 style="background-image: url('{{ asset('img/comercial/layout/Q2CES.svg') }}'); width: 100%; height: 80vh; opacity: 50%; ">
             </div>  --}}
-            <div class="col-12 text-center mb-2 marcos">
+            <div class="col-12 text-center mb-2 ">
                 <h2>Nuestras Marcas</h2>
             </div>
 
-            <div class="slider mb-2 marcos">
+            <div class="slider mb-2 ">
                 <div class="slide-track">
                     <div class="slide">
                         <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
                             alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
+                        <img class="px-1" src="{{ asset('img/comercial/home/GENIE.svg') }}" height="100" width="250"
                             alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
+                        <img class="px-1" src="{{ asset('img/comercial/home/JCB.svg') }}" height="100" width="250"
                             alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
+                        <img class="px-1" src="{{ asset('img/comercial/home/JohnDeere.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/SCHWING.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/YANMAR.svg') }}" height="100" width="250"
                             alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
+                        <img class="px-1" src="{{ asset('img/comercial/home/Ford.svg') }}" height="100" width="250"
                             alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
-                            alt="">
+                        <img class="px-1" src="{{ asset('img/comercial/home/INTERNATIONAL.svg') }}" height="100"
+                            width="250" alt="">
                     </div>
                     <div class="slide">
-                        <img src="{{ asset('img/comercial/home/BOBCAT.svg') }}" height="100" width="250"
-                            alt="">
+                        <img class="px-1" src="{{ asset('img/comercial/home/KENWORTH.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/PLANELEC.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/SCHWING.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/VOLVO.svg') }}" height="100"
+                            width="250" alt="">
+                    </div>
+                    <div class="slide">
+                        <img class="px-1" src="{{ asset('img/comercial/home/WACKER.svg') }}" height="100"
+                            width="250" alt="">
                     </div>
                 </div>
             </div>
-            <div class="col-12  cintaM marcos">
-                <h3>¡Cotiza en línea y empieza tu proyecto hoy!</h3>
-                <p>Obtén la renta de maquinaria pesada para construcción
-                    más eﬁciente y de excelente rendimiento en Q2CES, donde
-                    contamos con una amplia experiencia en el sector de la
-                    renta de este tipo de equipos que te permitirán conseguir
-                    resultados mucho más rápidos en todos tus proyectos de
-                    obra.</p>
-
-                <p>Manejamos los precios más competitivos y una atención
-                    personalizada desde una óptica de ingeniería civil, además
-                    de que tenemos al personal más capacitado.</p>
+            <div class="col-12  ">
                 <div class="text-center">
-                    <a href="#">
-                        <button class="button">Conoce más</button>
-                    </a>
+                    <h3>¡Cotiza en línea y empieza tu proyecto hoy!</h3>
+                </div>
+                <div class="text-center" id="myTab" role="tablist">
+                    <button class="button active" role="presentation" id="movimiento-tab" data-bs-toggle="tab"
+                        data-bs-target="#movimiento-tab-pane" type="button" role="tab"
+                        aria-controls="movimiento-tab-pane" aria-selected="true">
+                        Boton 1 Movimiento
+                    </button>
+                    <button class="button" role="presentation" id="grua-tab" data-bs-toggle="tab"
+                        data-bs-target="#grua-tab-pane" type="button" role="tab" aria-controls="grua-tab-pane"
+                        aria-selected="true">
+                        Boton 2 Grua
+                    </button>
+                    {{--  <button class="button">Boton 3 Maquinaria</button>  --}}
+
+
+
+                </div>
+
+                <div class="tab-content " id="myTabContent">
+
+                    <div class="tab-content " id="myTabContent">
+                        <div class="tab-pane fade show active" id="movimiento-tab-pane" role="tabpanel"
+                            aria-labelledby="movimiento-tab" tabindex="0">
+                            {{--  <div class="Row">
+                                <h3>¡Movimiento!</h3>
+                            </div>  --}}
+
+                            {{--  Inicio de CARRUSEL CARD  --}}
+                            <section class="product">
+                                <button class="pre-btn">
+                                    <img src="{{ asset('img/comercial/home/arrow.png') }}" alt="">
+                                </button>
+                                <button class="nxt-btn">
+                                    <img src="{{ asset('img/comercial/home/arrow.png') }}" alt="">
+                                </button>
+                                <div class="product-container">
+
+                                    {{--  Aqui inicia el elemento --}}
+                                    <div class="card product-card cartaProducto" style="margin: 15px">
+                                        <div class="card-body combustibleBorde">
+                                            <div>
+                                                <img class="ImgCard" src="{{ asset('img/general/img4.jpg') }}"
+                                                    alt="">
+                                            </div>
+                                            <div class="bordeTitulo mb-3">
+                                                <h2 class="text-center"> Volteo 7 MTS Internacional</h2>
+                                            </div>
+                                            <div class="bordeTitulo  d-flex">
+                                                <h3 class="text-center pe-2"> Precio de Renta desde: </h3>
+                                                <h3 style="font-weight: 900"> $56,000</h3>
+                                            </div>
+                                            <div>
+                                                <p style="font-size: 8px;">*Aplica restricciones *Precio aproximado</p>
+                                            </div>
+                                            <div class="precios d-flex">
+                                                <div class="col-4">
+                                                    <p class="text-center">
+                                                        $36,000
+                                                    </p>
+                                                    <p class="text-center">
+                                                        Dia
+                                                    </p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="text-center">
+                                                        $44,000
+                                                    </p>
+                                                    <p class="text-center">
+                                                        Semana
+                                                    </p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="text-center">
+                                                        $56,000
+                                                    </p>
+                                                    <p class="text-center">
+                                                        Mes
+                                                    </p>
+                                                </div>
+
+                                            </div>
+
+                                            <div>
+                                                <ul class="listaCaracteristicas">
+                                                    <li>Alcance Maximo: 2 Metros </li>
+                                                    <li>Alcance Maximo: 2 Metros </li>
+                                                    <li>Alcance Maximo: 2 Metros </li>
+                                                    <li>Alcance Maximo: 2 Metros </li>
+                                                </ul>
+
+                                            </div>
+
+                                            <div class="text-center">
+                                                <a href="#">
+                                                    <button class="button botonesCard">VER FICHA</button>
+                                                </a>
+                                            </div>
+
+                                            <div class="text-center">
+                                                <a href="#">
+                                                    <button class="button botonesCard">RENTAR</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{--  Aqui terminan el elemento --}}
+
+
+                                    {{--  EJEMPLO DEL TUTO  --}}
+                                    {{--  <div class="product-card">
+                                        <div class="product-image">
+                                            <span class="discount-tag">50% off</span>
+                                            <img src="images/card10.jpg" class="product-thumb" alt="">
+                                            <button class="card-btn">add to wishlist</button>
+                                        </div>
+                                        <div class="product-info">
+                                            <h2 class="product-brand">brand</h2>
+                                            <p class="product-short-description">a short line about the cloth..</p>
+                                            <span class="price">$20</span><span class="actual-price">$40</span>
+                                        </div>
+                                    </div>  --}}
+                                </div>
+
+                            </section>
+                            {{--  Fin de CARRUSEL CARD  --}}
+
+                        </div>
+                    </div>
+
+                    <div class="tab-content " id="myTabContent">
+                        <div class="tab-pane fade   " id="grua-tab-pane" role="tabpanel" aria-labelledby="grua-tab"
+                            tabindex="0">
+                            <div class="Row">
+                                <h3>¡Grua!</h3>
+                            </div>
+                            <p>Obtén la renta de maquinaria pesada para construcción
+                                más eﬁciente y de excelente rendimiento en Q2CES, donde
+                                contamos con una amplia experiencia en el sector de la
+                                renta de este tipo de equipos que te permitirán conseguir
+                                resultados mucho más rápidos en todos tus proyectos de
+                                obra.</p>
+
+                            <p>Manejamos los precios más competitivos y una atención
+                                personalizada desde una óptica de ingeniería civil, además
+                                de que tenemos al personal más capacitado.</p>
+                            <div class="text-center">
+                                <a href="#">
+                                    <button class="button">Conoce más</button>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-            {{--  <div class="col-12 col-md-6 marcos">
+
+            <section class="paddindY-5 img-fluid"
+                style="background-image: url('img/comercial/banners/sobreNosotros.png');">
+                <div class=" my-5 ms-2" style="max-width: fit-content;">
+                    <div class="d-flex text-center">
+                        <div class="section px-2 col-12 col-md-6 col-lg-3">
+                            <img src="{{ asset('img/comercial/home/inovacion.svg') }}" />
+                            <p>INOVACÍON <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet
+                                    velit ut enim malesuada porttitor.</span></p>
+                        </div>
+                        <div class="section px-2 col-12 col-md-6 col-lg-3">
+                            <img src="{{ asset('img/comercial/home/calidad.svg') }}" />
+                            <p>CALIDAD <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet
+                                    velit ut enim malesuada porttitor.</span></p>
+                        </div>
+                        <div class="section px-2 col-12 col-md-6 col-lg-3">
+                            <img src="{{ asset('img/comercial/home/experiencia.svg') }}" />
+                            <p>EXPERIENCIA <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit
+                                    amet
+                                    velit ut enim malesuada porttitor.</span></p>
+                        </div>
+                        <div class="section px-2 col-12 col-md-6 col-lg-3">
+                            <img src="{{ asset('img/comercial/home/soporte.svg') }}" />
+                            <p>SOPORTE <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet
+                                    velit ut enim malesuada porttitor.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {{--  <div class="col-12 col-md-6 ">
                 <img src="{{ asset('img/comercial/layout/whats.svg') }}" style="width: 50%;">
             </div>  --}}
 

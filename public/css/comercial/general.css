@@ -1,6 +1,11 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+/* *, div, col {
+    border: #212529 1px solid;
+
+} */
+
 :root {
 /* Nuevos colores */
 --fondo:#ffffff;
@@ -42,7 +47,7 @@
 # Botones
 --------------------------------------------------------------*/
 
-.contenido button{
+.button{
   display: inline-block;
   padding: 1em 2em;
   background: var(--Tsecundario);
@@ -53,10 +58,16 @@
 
 }
 
-.contenido button:hover{
+.button:hover{
   background: var(--verdeB);
   color: var(--Tprincipal);
-  /* border-color: var(--verdeB); */
+  border-color: var(--verdeF);
+}
+
+.button.active{
+  background:var(--verdeB);
+  color: var(--Tprincipal);
+  border-color: var(--verdeB);
 }
 
 /*--------------------------------------------------------------
@@ -91,11 +102,11 @@
   margin: auto;
   overflow: hidden;
   position: relative;
-  width: 95%;
+  /* width: 95%; */
 }
 
 .slider::before, .slider::after {
-  background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
+  /* background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%); */
   content: "";
   height: 100px;
   position: absolute;
@@ -127,123 +138,313 @@
   
 } */
 
+/* Boton Active  - HOME */
+
+/* HEADER */
+
+
+/* PRODUCTS */
+.product {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.product-category {
+  padding: 0 10vw;
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  text-transform: capitalize;
+}
+
+.product-container {
+  padding: 0 10vw;
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.product-container::-webkit-scrollbar {
+  display: none;
+}
+
+.product-card {
+  flex: 0 0 auto;
+  width: 250px;
+  height: 550px;
+  margin-right: 40px;
+  border: 2px solid !important;
+  border-color: var(--Topcional);
+}
+
+.product-image {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+}
+
+.product-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.discount-tag {
+  position: absolute;
+  background: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  color: #ff7d7d;
+  right: 10px;
+  top: 10px;
+  text-transform: capitalize;
+}
+
+.card-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  width: 90%;
+  text-transform: capitalize;
+  border: none;
+  outline: none;
+  background: #fff;
+  border-radius: 5px;
+  transition: 0.5s;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.product-card:hover .card-btn {
+  opacity: 1;
+}
+
+.card-btn:hover {
+  background: #ff7d7d;
+  color: #fff;
+}
+
+.product-info {
+  width: 100%;
+  height: 100px;
+  padding-top: 10px;
+}
+
+.product-brand {
+  text-transform: uppercase;
+}
+
+.product-short-description {
+  width: 100%;
+  height: 20px;
+  line-height: 20px;
+  overflow: hidden;
+  opacity: 0.5;
+  text-transform: capitalize;
+  margin: 5px 0;
+}
+
+.price {
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.actual-price {
+  margin-left: 20px;
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.pre-btn,
+.nxt-btn {
+  border: none;
+  width: 10vw;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
+  cursor: pointer;
+  z-index: 8;
+}
+
+.pre-btn {
+  left: 0;
+  transform: rotate(180deg);
+}
+
+.nxt-btn {
+  right: 0;
+}
+
+.pre-btn img,
+.nxt-btn img {
+  opacity: 0.2;
+}
+
+.pre-btn:hover img,
+.nxt-btn:hover img {
+  opacity: 1;
+}
+
+.collection-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+
+.collection {
+  position: relative;
+}
+
+.collection img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.collection p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  font-size: 50px;
+  text-transform: capitalize;
+}
+
+.collection:nth-child(3) {
+  grid-column: span 2;
+  margin-bottom: 10px;
+}
+
+.ImgCard{
+  width: -webkit-fill-available;
+}
+.card-body h2 {
+  font-size: large;
+}
+.card-body h3 {
+  font-size: small;
+}
+
+.precios{
+  border-top: #212529 1px solid;
+  border-bottom: #212529 1px solid;
+}
+
+.precios p{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.listaCaracteristicas{
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 0px;
+}
+
+.listaCaracteristicas li{
+  list-style: circle;
+  font-size: 13px;
+}
+
+.botonesCard{
+  text-align: center;
+  
+  MARGIN: 5px;
+  padding: 0px;
+  height: 40px;
+  width: 200px;
+}
+
 /*datos de contacto en backgroundImage - Quienes Somos*/
-.bg-image-contactos p{
+
+.paddindY-5 {
+  /* border: #212529 3px solid; */
+  padding-top: 3rem!important;
+  padding-bottom: 3rem!important;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  text-align: -webkit-center;
+}
+.paddindY-5 img{
+  width: 50%;
+}
+
+.paddindY-5 p{
   font-size: 16px;
   color: white;
   font-weight: 900;
   margin-top: 10px;
 }
 
-.d-flex {
-  display: flex;
+.paddindY-5 span{
+  font-size: 12px;
+  color: white;
+  font-weight: 900;
+  margin-top: 10px;
+  font-weight: 500;
 }
-
-.justify-content-between {
-  justify-content: space-between;
-}
-
-.section {
-  flex-basis: 30%;
-  display: flex;
-  align-items: center;
-}
-
-.icon {
-  margin-right: 10px;
-}
-
-.paddindY-5 {
-  padding-top: 3rem!important;
-  padding-bottom: 3rem!important;
-}
-
-/* Estilos generales */
-
-/* ... */
 
 /* Media query para dispositivos móviles */
-@media (max-width: 767px) {
-  .d-flex {
-    flex-direction: column;
-    align-items: center; /* Centra horizontalmente */
-    text-align: center; /* Alinea el texto al centro */
+@media (max-width: 720px) {
+
+  /* .paddindY-5 {
+    display: flex;
+
   }
 
-  .section {
-      flex-basis: auto; /* Reestablece el ancho para ocupar el ancho completo */
-      margin-bottom: 20px; /* Espacio entre cada sección */
+  .paddindY-5 img{
+    width: 10%;
   }
-
-  .icon {
-      margin-right: 10px; /* Elimina el margen entre el icono y el texto */
-      margin-bottom: 10px; /* Espacio entre el icono y el texto en móviles */
-      text-align: center; /* Centra el icono */
+  
+  .paddindY-5 p{
+    font-size: 16px;
+    color: white;
+    font-weight: 900;
+    margin-top: 10px;
   }
+  
+  .paddindY-5 span{
+    font-size: 12px;
+    color: white;
+    font-weight: 900;
+    margin-top: 10px;
+    font-weight: 500;
+  } */
+
+  /* .paddindY-5{
+    display: none;
+  } */
 }
 
-/* Estilo para la sección con imagen de fondo */
-.section-bg-image {
-  position: relative;
-  text-align: center;
-  background-color: #f8f8f8; /* Color de fondo */
-  padding: 100px 0; /* Espaciado vertical */
+
+
+.d-flex1 {
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  text-align: center; /* Alinea el texto al centro */
 }
 
-/* Estilo para la imagen de fondo */
-.q2cesFondo {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.5; /* Opacidad de la imagen de fondo */
-  z-index: -1;
+.section1 {
+    flex-basis: auto; /* Reestablece el ancho para ocupar el ancho completo */
+    margin-bottom: 20px; /* Espacio entre cada sección */
 }
 
-/* Estilos para el contenido dentro de la sección */
-.container {
-  position: relative;
-  z-index: 1;
+.icon1 {
+    margin-right: 10px; /* Elimina el margen entre el icono y el texto */
+    margin-bottom: 10px; /* Espacio entre el icono y el texto en móviles */
+    text-align: center; /* Centra el icono */
 }
 
-/* Estilos para el texto y botones */
-p {
-  font-size: 16px;
-}
-
-.btn-green {
-  background-color: green;
-  color: white;
-}
-
-.parrafoVisionEmpresa{
-  color: black !important;
-  margin-top: 10px;
-  font-size: 17px !important;
-}
-
-.headerButton {
-  margin-right: 5px !important;
-  margin-bottom: 25px;
-  font-size: 24px !important;
-  border-radius: 2em;
-  position: relative; /* Hace que el pseudo-elemento sea relativo a este elemento */
-  color: #fff; /* Color del texto */
-}
-
-/* Pseudo-elemento para colorear el fondo */
-.headerButton::after {
-    content: "";
-    position: absolute;
-    top: 50%; /* Posiciona desde la mitad superior del botón */
-    left: 0;
-    width: 100%; /* Ancho completo del botón */
-    height: 100%; /* Alto completo del botón */
-    transform: translateY(-50%); /* Centra verticalmente el pseudo-elemento */
-    z-index: -1;
-    border-radius: 2em;
-    background-color: var(--verdeF);
-}
 
