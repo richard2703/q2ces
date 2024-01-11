@@ -64,6 +64,9 @@
                                         <th class="labelTitulo">Id</th>
                                         <th class="labelTitulo">Código</th>
                                         <th class="labelTitulo">Nombre</th>
+                                        <th class="labelTitulo">Clave Servicio</th>
+                                        <th class="labelTitulo">Unidad Medición</th>
+                                        <th class="labelTitulo">Unidad SAT</th>
                                         <th class="labelTitulo">Comentario</th>
                                         <th class="labelTitulo text-right">Acciones</th>
                                     </tr>
@@ -74,8 +77,10 @@
                                             <td>{{ $item->id }}</td>
                                             <td class="text-left">{{ $item->codigo }}</td>
                                             <td class="text-left">{{ $item->nombre }}</td>
+                                            <td class="text-left">{{ $item->claveServicio }}</td>
+                                            <td class="text-left">{{ $item->tiposUnidades_nombre }}</td>
+                                            <td class="text-left">{{ $item->unidadesSat_nombre }}</td>
                                             <td class="text-left">{{ $item->comentario }}</td>
-
                                             <td class="td-actions text-right">
                                                 {{-- @can('catalogos_show')
                                                 <a href="#"  class="" data-bs-toggle="modal"
@@ -89,7 +94,7 @@
                                                 @can('catalogos_edit')
                                                     <a href="#" class="" data-bs-toggle="modal"
                                                         data-bs-target="#editarItem"
-                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->tipo }}','{{ $item->codigo }}','{{ $item->comentario }}')">
+                                                        onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->tipo }}','{{ $item->codigo }}','{{ $item->comentario }}','{{ $item->claveServicio }}','{{ $item->unidadesSatId }}','{{ $item->tiposUnidadesId }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg " width="28" height="28"
                                                             fill="currentColor" class="bi bi-pencil accionesIconos"
                                                             viewBox="0 0 16 16">
@@ -125,7 +130,7 @@
 
                                 </tbody>
                             </table>
-                            <div class="card-footer mr-auto d-flex justify-content-center">
+                            <div class="card-footer d-flex justify-content-center">
                                 {{ $records->links() }}
                             </div>
                         </div>
@@ -155,16 +160,48 @@
                         </div>
 
                         <div class=" col-12 col-sm-8 mb-4 ">
-                            <label class="labelTitulo">Nombre:<span>*</span></label></br>
+                            <label class="labelTitulo">Nombre: <span>*</span></label></br>
                             <input type="text" class="inputCaja" id="nombre" name="nombre"
                                 value="{{ old('nombre') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
-                            <label class="labelTitulo">Tipo:</label></br>
+                        {{--  <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                            <label class="labelTitulo">Tipo: <span>*</span></label></br>
                             <select id="tipoId" name="tipo" class="form-select" aria-label="Default select example">
                                 <option value="1">Caja Chica</option>
                                 <option value="2">Servicios</option>
+                            </select>
+                        </div>  --}}
+
+                        <div class=" col-12 col-sm-6 col-lg-8 my-3 ">
+                            <label class="labelTitulo">Clave de Servicio: <span>*</span></label></br>
+                            <input type="number" class="inputCaja" name="claveServicio"
+                                value="{{ old('claveServicio') }}" required placeholder="Especifique...">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                            <label class="labelTitulo">Unidades: <span>*</span></label></br>
+                            <select name="tiposUnidadesId" class="form-select" required
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                @foreach ($vctUnidades as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                            <label class="labelTitulo">Unidades SAT: <span>*</span></label></br>
+                            <select name="unidadesSatId" class="form-select" required
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                @foreach ($vctUnidadesSAT as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -190,9 +227,7 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar
-                            Concepto</label>
-                    </h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar Concepto</label></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -212,12 +247,44 @@
                             <input type="text" class="inputCaja" id="controlNombre" name="nombre" value="">
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
+                        {{--  <div class=" col-12 col-sm-6 col-lg-4 my-3 ">
                             <label class="labelTitulo">Tipo:</label></br>
                             <select id="controlTipo" name="tipo" class="form-select"
                                 aria-label="Default select example">
                                 <option value="1">Caja Chica</option>
                                 <option value="2">Servicios</option>
+                            </select>
+                        </div>  --}}
+
+                        <div class=" col-12 col-sm-6 col-lg-8 my-3 ">
+                            <label class="labelTitulo">Clave de Servicio: <span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="claveServicio" name="claveServicio"
+                                value="{{ old('claveServicio') }}" required placeholder="Especifique...">
+                        </div>
+
+                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                            <label class="labelTitulo">Unidades: <span>*</span></label></br>
+                            <select id="tiposUnidadesId" name="tiposUnidadesId" class="form-select" required
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                @foreach ($vctUnidades as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                            <label class="labelTitulo">Unidades SAT: <span>*</span></label></br>
+                            <select id="unidadesSatId" name="unidadesSatId" class="form-select" required
+                                aria-label="Default select example">
+                                <option value="">Seleccione</option>
+                                @foreach ($vctUnidadesSAT as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->nombre }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -293,7 +360,7 @@
     </script>
 
     <script>
-        function cargaItem(id, nombre, tipo, codigo, comentarios) {
+        function cargaItem(id, nombre, tipo, codigo, comentarios, claveServicio, unidadesSatId, tiposUnidadesId) {
 
             const txtId = document.getElementById('controlId');
             txtId.value = id;
@@ -309,6 +376,23 @@
 
             const txtCodigo = document.getElementById('controlCodigo');
             txtCodigo.value = codigo;
+
+            const txtServicio = document.getElementById('claveServicio');
+            txtServicio.value = claveServicio;
+
+            const txtUnidadesSatId = document.getElementById('unidadesSatId');
+            for (let i = 0; i < txtUnidadesSatId.options.length; i++) {
+                if (txtUnidadesSatId.options[i].value == unidadesSatId) {
+                    txtUnidadesSatId.selectedIndex = i;
+                }
+            }
+
+            const txtTiposUnidadesId = document.getElementById('tiposUnidadesId');
+            for (let i = 0; i < txtTiposUnidadesId.options.length; i++) {
+                if (txtTiposUnidadesId.options[i].value == tiposUnidadesId) {
+                    txtTiposUnidadesId.selectedIndex = i;
+                }
+            }
         }
     </script>
 @endsection
