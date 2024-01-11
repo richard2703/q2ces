@@ -233,7 +233,7 @@ class catalogosController extends Controller
     {
         abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = conceptos::select('conceptos.*', 'unidadesSat.nombre as unidadesSat_nombre', 'tiposUnidades.nombre as tiposUnidades_nombre')
+        $records = conceptos::select('conceptos.*', 'unidadesSat.nombre as unidadesSat_nombre', 'unidadesSat.codigo as unidadesSat_codigo', 'tiposUnidades.nombre as tiposUnidades_nombre', 'tiposUnidades.codigo as tiposUnidades_codigo')
             ->leftJoin('unidadesSat', 'unidadesSat.id', 'conceptos.unidadesSatId')
             ->leftJoin('tiposUnidades', 'tiposUnidades.id', 'conceptos.tiposUnidadesId')
             ->orderBy('nombre', 'asc')->paginate(10);

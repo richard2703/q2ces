@@ -186,7 +186,7 @@
                                 <option value="">Seleccione</option>
                                 @foreach ($vctUnidades as $item)
                                     <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
+                                        {{ $item->codigo }} - {{ $item->nombre }}
                                     </option>
                                 @endforeach
                             </select>
@@ -199,7 +199,7 @@
                                 <option value="">Seleccione</option>
                                 @foreach ($vctUnidadesSAT as $item)
                                     <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
+                                        {{ $item->codigo }} - {{ $item->nombre }}
                                     </option>
                                 @endforeach
                             </select>
@@ -227,7 +227,8 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar Concepto</label></h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar
+                            Concepto</label></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -269,7 +270,7 @@
                                 <option value="">Seleccione</option>
                                 @foreach ($vctUnidades as $item)
                                     <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
+                                        {{ $item->codigo }} - {{ $item->nombre }}
                                     </option>
                                 @endforeach
                             </select>
@@ -282,7 +283,7 @@
                                 <option value="">Seleccione</option>
                                 @foreach ($vctUnidadesSAT as $item)
                                     <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
+                                        {{ $item->codigo }} - {{ $item->nombre }}
                                     </option>
                                 @endforeach
                             </select>
