@@ -91,7 +91,6 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 	Route::get('/catalogos/eventosCalendarioTipos', [App\Http\Controllers\catalogosController::class, 'indexCatalogoEventosCalendarioTipos'])->name('catalogoEventosCalendarioTipos.index');
 	Route::resource('eventosCalendarioTipos', App\Http\Controllers\eventosCalendarioTiposController::class);
 
-
 	//Caja Chica y Servicios
 	Route::get('/catalogos/conceptos', [App\Http\Controllers\catalogosController::class, 'indexCatalogoConceptos'])->name('catalogoConceptos.index');
 	Route::resource('conceptos', App\Http\Controllers\conceptosController::class);
@@ -107,4 +106,11 @@ Route::prefix('catalogos')->middleware('auth')->group(function () {
 
 	Route::get('catalogo/manoDeObra', [App\Http\Controllers\catalogosController::class, 'indexCatalogoManoDeObra'])->name('catalogoManoDeObra.index');
 	Route::resource('manoDeObra', App\Http\Controllers\manoDeObraController::class);
+
+	// tipos Unidades
+	Route::resource('tiposUnidades', App\Http\Controllers\tiposUnidadesController::class);
+
+	// Unidades Sat
+	Route::resource('unidadesSat', App\Http\Controllers\unidadesSatController::class);
+	Route::post('unidadesSat/manoDeObra', [App\Http\Controllers\unidadesSatController::class, 'unidadesSatUpdate'])->name('unidadesSat.update');
 });

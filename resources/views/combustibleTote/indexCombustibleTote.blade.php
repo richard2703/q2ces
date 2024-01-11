@@ -1413,8 +1413,8 @@
                             </div>
                             <div class="col-12 d-flex mb-4">
                                 <div class="me-2">
-                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
-                                        alt="" style="width:40px;">
+                                    <img src="{{ asset('/img/inventario/RESERVA TEORICA-01.svg') }}"
+                                        alt="" style="width:60px;">
                                 </div>
                                 <div style="width: 90%! important;">
                                     <label class="labelTitulo">Reserva Teorica:
@@ -1426,8 +1426,8 @@
                             </div>
                             <div class="col-12 d-flex mb-4">
                                 <div class="me-2">
-                                    <img src="{{ asset('/img/inventario/litros.svg') }}"
-                                        alt="" style="width:40px;">
+                                    <img src="{{ asset('/img/inventario/RESERVA REAL-01.svg') }}"
+                                        alt="" style="width:60px;">
                                 </div>
                                 <div style="width: 90%! important;">
                                     <label class="labelTitulo">Reserva Real:

@@ -33,7 +33,9 @@ use App\Models\tipoEquipo;
 use App\Models\tipoHoraExtra;
 use App\Models\tipoMantenimiento;
 use App\Models\tiposMarcas;
+use App\Models\tiposUnidades;
 use App\Models\tipoValorTarea;
+use App\Models\unidadesSat;
 use Illuminate\Support\Arr;
 
 class catalogosController extends Controller
@@ -231,9 +233,15 @@ class catalogosController extends Controller
     {
         abort_if(Gate::denies('catalogos_index'), 403);
 
-        $records = conceptos::orderBy('nombre', 'asc')->paginate(10);
-        // dd( $records );
-        return view('catalogos.conceptos', compact('records'));
+        $records = conceptos::select('conceptos.*', 'unidadesSat.nombre as unidadesSat_nombre', 'tiposUnidades.nombre as tiposUnidades_nombre')
+            ->leftJoin('unidadesSat', 'unidadesSat.id', 'conceptos.unidadesSatId')
+            ->leftJoin('tiposUnidades', 'tiposUnidades.id', 'conceptos.tiposUnidadesId')
+            ->orderBy('nombre', 'asc')->paginate(10);
+
+        $vctUnidades = tiposUnidades::orderBy('nombre', 'asc')->get();
+        $vctUnidadesSAT = unidadesSat::orderBy('nombre', 'asc')->get();
+        // dd($records);
+        return view('catalogos.conceptos', compact('records', 'vctUnidades', 'vctUnidadesSAT'));
     }
 
     public function indexCatalogoManoDeObra()
