@@ -315,18 +315,36 @@
                         </div>
                     </div>
                 </div>
-                {{--  <div class="tab-content contentCargas" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-                        tabindex="0">
-                        <div class="Row">
-                            <h3>¡Cotiza en línea y empieza tu proyecto hoy!</h3>
-                        </div>
-
-                    </div>
-                </div>  --}}
-
-
             </div>
+
+            <section class="paddindY-5 img-fluid"
+                style="background-image: url('img/comercial/banners/sobreNosotros.png');">
+                <div class=" my-5 ms-2" style="max-width: fit-content;">
+                    <div class="d-flex text-center">
+                        <div class="section px-2 col-12 col-md-6 col-lg-3">
+                            <img src="{{ asset('img/comercial/home/inovacion.svg') }}" />
+                            <p>INOVACÍON <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet
+                                    velit ut enim malesuada porttitor.</span></p>
+                        </div>
+                        <div class="section px-2 col-12 col-md-6 col-lg-3">
+                            <img src="{{ asset('img/comercial/home/calidad.svg') }}" />
+                            <p>CALIDAD <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet
+                                    velit ut enim malesuada porttitor.</span></p>
+                        </div>
+                        <div class="section px-2 col-12 col-md-6 col-lg-3">
+                            <img src="{{ asset('img/comercial/home/experiencia.svg') }}" />
+                            <p>EXPERIENCIA <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit
+                                    amet
+                                    velit ut enim malesuada porttitor.</span></p>
+                        </div>
+                        <div class="section px-2 col-12 col-md-6 col-lg-3">
+                            <img src="{{ asset('img/comercial/home/soporte.svg') }}" />
+                            <p>SOPORTE <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet
+                                    velit ut enim malesuada porttitor.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
             {{--  <div class="col-12 col-md-6 ">
                 <img src="{{ asset('img/comercial/layout/whats.svg') }}" style="width: 50%;">
             </div>  --}}

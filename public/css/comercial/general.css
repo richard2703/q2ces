@@ -357,3 +357,86 @@
   height: 40px;
   width: 200px;
 }
+
+/*datos de contacto en backgroundImage - Quienes Somos*/
+
+.paddindY-5 {
+  /* border: #212529 3px solid; */
+  padding-top: 3rem!important;
+  padding-bottom: 3rem!important;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  text-align: -webkit-center;
+}
+.paddindY-5 img{
+  width: 50%;
+}
+
+.paddindY-5 p{
+  font-size: 16px;
+  color: white;
+  font-weight: 900;
+  margin-top: 10px;
+}
+
+.paddindY-5 span{
+  font-size: 12px;
+  color: white;
+  font-weight: 900;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 720px) {
+
+  /* .paddindY-5 {
+    display: flex;
+
+  }
+
+  .paddindY-5 img{
+    width: 10%;
+  }
+  
+  .paddindY-5 p{
+    font-size: 16px;
+    color: white;
+    font-weight: 900;
+    margin-top: 10px;
+  }
+  
+  .paddindY-5 span{
+    font-size: 12px;
+    color: white;
+    font-weight: 900;
+    margin-top: 10px;
+    font-weight: 500;
+  } */
+
+  /* .paddindY-5{
+    display: none;
+  } */
+}
+
+
+
+.d-flex1 {
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  text-align: center; /* Alinea el texto al centro */
+}
+
+.section1 {
+    flex-basis: auto; /* Reestablece el ancho para ocupar el ancho completo */
+    margin-bottom: 20px; /* Espacio entre cada sección */
+}
+
+.icon1 {
+    margin-right: 10px; /* Elimina el margen entre el icono y el texto */
+    margin-bottom: 10px; /* Espacio entre el icono y el texto en móviles */
+    text-align: center; /* Centra el icono */
+}
+
+
