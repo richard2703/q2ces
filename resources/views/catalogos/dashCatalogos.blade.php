@@ -516,14 +516,13 @@
 
                                                 <div class="col-12 col-sm-6 col-md-3 text-center my-4">
                                                     <a href="{{ route('unidadesSat.index') }}" class="">
-                                                        <img src="/img/catalogos/Almacenes.svg" alt="Unidades Sat"
+                                                        <img src="/img/catalogos/CLAVE SAT-01.svg" alt="Unidades Sat"
                                                             title="Unidades Sat" width="30%"
                                                             class="botonIconoPrincipal">
                                                         <p class="mt-4 texticonos">Unidades SAT
                                                         </p>
                                                     </a>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>

@@ -173,13 +173,13 @@
                             </select>
                         </div>  --}}
 
-                        <div class=" col-12 col-sm-6 col-lg-8 my-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Clave de Servicio: <span>*</span></label></br>
                             <input type="number" class="inputCaja" name="claveServicio"
                                 value="{{ old('claveServicio') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Unidades: <span>*</span></label></br>
                             <select name="tiposUnidadesId" class="form-select" required
                                 aria-label="Default select example">
@@ -192,7 +192,7 @@
                             </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Unidades SAT: <span>*</span></label></br>
                             <select name="unidadesSatId" class="form-select" required
                                 aria-label="Default select example">
@@ -256,13 +256,13 @@
                             </select>
                         </div>  --}}
 
-                        <div class=" col-12 col-sm-6 col-lg-8 my-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Clave de Servicio: <span>*</span></label></br>
                             <input type="text" class="inputCaja" id="claveServicio" name="claveServicio"
                                 value="{{ old('claveServicio') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Unidades: <span>*</span></label></br>
                             <select id="tiposUnidadesId" name="tiposUnidadesId" class="form-select" required
                                 aria-label="Default select example">
@@ -275,7 +275,7 @@
                             </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Unidades SAT: <span>*</span></label></br>
                             <select id="unidadesSatId" name="unidadesSatId" class="form-select" required
                                 aria-label="Default select example">
