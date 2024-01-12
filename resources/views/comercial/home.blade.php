@@ -352,7 +352,7 @@
         <div id="liston-carousel" class="carousel  liston liston-carrusel" data-bs-ride="liston-carousel"
             style="background-image: url('img/comercial/banners/valores.png');">
             <div class="liston-carousel-inner col-12">
-                <div class="carousel-item active text-center">
+                <div class="carousel-item active ">
                     <img src="{{ asset('img/comercial/home/inovacion.svg') }}" />
                     <p>INOVACÍON <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet
                             velit ut enim malesuada porttitor.</span></p>
