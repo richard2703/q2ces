@@ -37,6 +37,11 @@
   color: var(--Tsecundario);
 }
 
+.contenido h4{
+  font-weight: bold;
+  color: var(--Tsecundario);
+}
+
 .contenido p{
   font-weight: bold;
   color: var(--Tsecundario);
@@ -368,27 +373,30 @@
 
 /*datos de contacto en backgroundImage - Quienes Somos*/
 
-.paddindY-5 {
-  /* border: #212529 3px solid; */
-  padding-top: 3rem!important;
-  padding-bottom: 3rem!important;
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  text-align: -webkit-center;
+.liston{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    text-align: -webkit-center;
+    padding-top: 3rem!important;
+    padding-bottom: 3rem!important;
 }
-.paddindY-5 img{
+
+.liston img{
   width: 50%;
 }
 
-.paddindY-5 p{
+.liston p{
   font-size: 16px;
   color: white;
   font-weight: 900;
   margin-top: 10px;
 }
 
-.paddindY-5 span{
+.liston span{
   font-size: 12px;
   color: white;
   font-weight: 900;
@@ -397,35 +405,26 @@
 }
 
 /* Media query para dispositivos móviles */
-@media (max-width: 720px) {
-
-  /* .paddindY-5 {
-    display: flex;
-
+@media (max-width: 991px) {
+  .liston img{
+    width: 20%;
   }
 
-  .paddindY-5 img{
-    width: 10%;
+  .liston span{
+  padding-left: 25px;
+  padding-right: 25px;
   }
-  
-  .paddindY-5 p{
-    font-size: 16px;
-    color: white;
-    font-weight: 900;
-    margin-top: 10px;
-  }
-  
-  .paddindY-5 span{
-    font-size: 12px;
-    color: white;
-    font-weight: 900;
-    margin-top: 10px;
-    font-weight: 500;
-  } */
+}
 
-  /* .paddindY-5{
-    display: none;
-  } */
+@media (max-width: 767px) {
+  .liston img{
+    width: 15%;
+  }
+
+  .liston span{
+  padding-left: 25px;
+  padding-right: 25px;
+  }
 }
 
 
@@ -449,7 +448,7 @@
 
 
 /*datos de contacto en backgroundImage - Quienes Somos*/
-.bg-image-contactos p{
+/* .bg-image-contactos p{
   font-size: 16px;
   color: white;
   font-weight: 900;
@@ -478,7 +477,7 @@
 .paddindY-5 {
   padding-top: 3rem!important;
   padding-bottom: 3rem!important;
-}
+} */
 
 /* Estilos generales */
 
@@ -486,23 +485,29 @@
 
 /* Media query para dispositivos móviles */
 @media (max-width: 767px) {
-  .d-flex {
-    flex-direction: column;
-    align-items: center; /* Centra horizontalmente */
-    text-align: center; /* Alinea el texto al centro */
-  }
+  /* .liston-carrusel{
+    display: "inline-block"
 
-  .section {
-      flex-basis: auto; /* Reestablece el ancho para ocupar el ancho completo */
-      margin-bottom: 20px; /* Espacio entre cada sección */
-  }
-
-  .icon {
-      margin-right: 10px; /* Elimina el margen entre el icono y el texto */
-      margin-bottom: 10px; /* Espacio entre el icono y el texto en móviles */
-      text-align: center; /* Centra el icono */
+  } */
+  .liston-linea{
+    display: none;
   }
 }
+@media (min-width: 767px) {
+  /* .liston-carrusel{
+    display: "inline-block"
+
+  } */
+  .liston-carrusel{
+    display: none;
+  }
+}
+
+/* Noticias */
+.noticias img{
+  height: 20px;
+}
+
 
 /* Estilo para la sección con imagen de fondo */
 .section-bg-image {
@@ -527,8 +532,8 @@
 
 /* Estilos para el contenido dentro de la sección */
 .container {
-  position: relative;
-  z-index: 1;
+  /* position: relative; */
+  /* z-index: 1; */
 }
 
 /* Estilos para el texto y botones */

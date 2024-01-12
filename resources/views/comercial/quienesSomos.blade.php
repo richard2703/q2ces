@@ -182,8 +182,7 @@
                     </div>
                 </div>
             </header>
-        </body>
-        <div class="my-3"></div>    
+        </body>  
     </div>
     <div class="contactoForm">
         <div class="container-fluid">
