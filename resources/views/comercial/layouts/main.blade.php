@@ -85,7 +85,7 @@
                 </li>
             </ul>
         </div>
-        <div class="d-flex encabezado">
+        <div class="d-flex encabezado" style="background-color: white !important;">
             <div class='logo col-2 '>
                 {{--  <li >  --}}
                 <a href="{{ url('/') }}" class="align-items-center">

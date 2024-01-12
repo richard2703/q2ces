@@ -1,0 +1,150 @@
+.bg-image {
+    background-image: url('../../img/comercial/layout/quienesSomos/BANNER SOBRE NOSOTROS_1.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.bg-image-contactos{
+    background-image: url('../../img/comercial/layout/quienesSomos/BANNER SOBRE NOSOTROS_1.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.contactoForm {
+    background: var(--verdeF);
+    background: linear-gradient(to right, var(--verdeF), white);
+}
+.inputContactenos {
+    background: var(--verdeF);
+    font-size: 18px !important;
+    color: #fff !important;
+    border: none;
+    border-radius: 0; /* Elimina el redondeado de las esquinas */
+    transition: background 0s; /* Desactiva la transición del fondo */
+    font-weight: bold;
+}
+.inputContactenos:focus {
+    background: var(--verdeF);
+    font-weight: bold;
+}
+.submitContactenos {
+    background: var(--verdeF);
+    font-size: 18px !important;
+    color: #fff !important;
+    padding: 0.5rem 3rem;
+    font-weight: bold;
+}
+.submitContactenos:hover {
+    background: var(--verdeB);
+    color: #fff;
+}
+.labelFormContactenos {
+    color: var(--fondo);
+    font-weight: bold;
+}
+.h1Contactenos{
+    color: var(--verdeF);
+    font-weight: bold;
+}
+.headerMaps{
+    text-shadow: 5px 5px 10px rgb(0, 0, 0);
+    color: #fff;
+    font-weight: bold;
+    font-size: 35px;
+    margin-bottom: 8px;
+}
+.backImageContacto{
+    background-size: 65% 100%;
+    background-position: right;
+    background-repeat: no-repeat;
+}
+.pContactenos{
+    color: var(--verdeF); font-weight: bold;
+}
+
+.headerButtonCotizacion {
+    margin-right: 5px !important;
+    margin-bottom: 25px;
+    font-size: 24px !important;
+    border-radius: 2em;
+    color: #fff; /* Color del texto */
+    background-color: var(--verdeF);
+    border: none;
+    padding: 0.2rem 3rem;
+  }
+
+.headerCotiza{
+    font-size: 30px;
+    color: var(--verdeF); font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.parrafoCotiza{
+    color: var(--verdeB);
+    text-align: justify;
+}
+
+.img-cotiza{
+    border-radius: 6em;
+}
+
+.img-container {
+    position: relative;
+    display: inline-block;
+}
+
+.circular-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--verdeB);
+    color: #fff; 
+    border: none;
+    border-radius: 50%; 
+    padding: 10px 20px; 
+    text-decoration: none;
+}
+
+.circular-button:hover {
+    background-color: var(--verdeF);
+    color: white;
+}
+
+
+@media (max-width: 800px) {
+    .h1Contactenos{
+        font-size: 18px;
+    }
+    .headerMaps{
+     font-size: 18px;
+    }
+    .contactoForm {
+        background: var(--verdeF);
+        background: linear-gradient(to bottom, var(--verdeF), white);
+    }
+    .backImageContacto{
+        background-size: 95% 100% !important;
+        background-repeat: no-repeat;
+    }
+    .pContactenos{
+     font-size: 11px;
+    }    
+    .section-bg-image {
+        background-image: none !important;
+    }
+}
+
+@media (min-width: 801px) and (max-width: 1270px) {
+    .h1Contactenos{
+        font-size: 20px;
+    }
+    .headerMaps{
+     font-size: 20px;
+    }
+    .pContactenos{
+        font-size: 13px;
+       } 
+}
+
