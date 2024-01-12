@@ -138,8 +138,6 @@
         @yield('content')
     </main>
 
-    <!-- End main -->
-    <div class="mb-5" id="spinner-container"></div>
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="separadorFooter">
