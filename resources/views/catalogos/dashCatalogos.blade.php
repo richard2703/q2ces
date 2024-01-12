@@ -1,8 +1,6 @@
 @extends('layouts.main', ['activePage' => 'equipos', 'titlePage' => __('Dashboard Catálogos')])
 @section('content')
     <div class="content">
-
-
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12 align-self-center">

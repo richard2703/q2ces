@@ -471,6 +471,7 @@
 
 .icon {
   margin-right: 10px;
+  width: 120px;
 }
 
 .paddindY-5 {
@@ -513,7 +514,8 @@
   position: relative;
   text-align: center;
   background-color: #f8f8f8; /* Color de fondo */
-  padding: 100px 0; /* Espaciado vertical */
+  padding: 45px 5px; /* Espaciado vertical */
+  background-size: 100% 100% !important;
 }
 
 /* Estilo para la imagen de fondo */
@@ -535,9 +537,9 @@
 }
 
 /* Estilos para el texto y botones */
-p {
-  /* font-size: 16px; */
-}
+/* p {
+  font-size: 16px;
+} */
 
 .btn-green {
   background-color: green;
@@ -546,8 +548,8 @@ p {
 
 .parrafoVisionEmpresa{
   color: black !important;
-  margin-top: 10px;
   font-size: 17px !important;
+  padding: 0px 100px;
 }
 
 .headerButton {
@@ -561,14 +563,14 @@ p {
 
 /* Pseudo-elemento para colorear el fondo */
 .headerButton::after {
-    content: "";
-    position: absolute;
-    top: 50%; /* Posiciona desde la mitad superior del botón */
-    left: 0;
-    width: 100%; /* Ancho completo del botón */
-    height: 100%; /* Alto completo del botón */
-    transform: translateY(-50%); /* Centra verticalmente el pseudo-elemento */
-    z-index: -1;
-    border-radius: 2em;
-    background-color: var(--verdeF);
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateY(-50%);
+  z-index: -1;
+  border-radius: 2em;
+  background-color: var(--verdeF);
 }
