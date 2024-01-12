@@ -351,11 +351,15 @@
 
         <div id="liston-carousel" class="carousel  liston liston-carrusel" data-bs-ride="liston-carousel"
             style="background-image: url('img/comercial/banners/valores.png');">
-            <div class="liston-carousel-inner">
-                <div class="carousel-item active">
+            <div class="liston-carousel-inner col-12">
+                <div class="carousel-item active text-center">
+                    <img src="{{ asset('img/comercial/home/inovacion.svg') }}" />
+                    <p>INOVACÍON <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet
+                            velit ut enim malesuada porttitor.</span></p>
+                </div>
+                <div class="carousel-item">
                     <img src="{{ asset('img/comercial/home/calidad.svg') }}" />
-                    <p>CALIDAD <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit
-                            amet
+                    <p>CALIDAD <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet
                             velit ut enim malesuada porttitor.</span></p>
                 </div>
                 <div class="carousel-item">
@@ -363,6 +367,11 @@
                     <p>EXPERIENCIA <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
                             sit
                             amet
+                            velit ut enim malesuada porttitor.</span></p>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('img/comercial/home/soporte.svg') }}" />
+                    <p>SOPORTE <br><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet
                             velit ut enim malesuada porttitor.</span></p>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#liston-carousel"
