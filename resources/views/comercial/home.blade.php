@@ -399,8 +399,97 @@
                     </button>
                 </div>
             </div>
-            <div class="col-12 my-3">
-                div
+            <div class="col-12 my-3 mx-5 d-flex">
+                <div class="card product-card cartaProducto mx-3" style="margin: 15px">
+                    <div class="card-body combustibleBorde">
+                        <div>
+                            <img class="ImgCard" src="{{ asset('img/general/img4.jpg') }}" alt="">
+                        </div>
+                        <div class="bordeTitulo  d-flex">
+                            <h3 class="text-center pe-2"> 10 de marzo del 2024: </h3>
+                        </div>
+                        <div class="bordeTitulo mb-3">
+                            <h2 class="text-center"> Diferencia entre plataforma telescopica y articulada </h2>
+                        </div>
+                        <div class="d-flex">
+                            <div class="col-12">
+                                <p class="text-center" style="font-size: 10px">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet velit ut enim
+                                    malesuada porttitor. Nam tincidunt a est vitae porttitor. Phasellus consequat augue vel
+                                    condimentum posuere
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <a href="#">
+                                <h4 style="font-size: 15px">Ver Mas <img
+                                        src="{{ asset('img/comercial/layout/flechasDerecha.svg') }}" style="width: 35px">
+                                </h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card product-card cartaProducto mx-3" style="margin: 15px">
+                    <div class="card-body combustibleBorde">
+                        <div>
+                            <img class="ImgCard" src="{{ asset('img/general/img4.jpg') }}" alt="">
+                        </div>
+                        <div class="bordeTitulo  d-flex">
+                            <h3 class="text-center pe-2"> 10 de marzo del 2024: </h3>
+                        </div>
+                        <div class="bordeTitulo mb-3">
+                            <h2 class="text-center"> Diferencia entre plataforma telescopica y articulada </h2>
+                        </div>
+                        <div class="d-flex">
+                            <div class="col-12">
+                                <p class="text-center" style="font-size: 10px">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet velit ut enim
+                                    malesuada porttitor. Nam tincidunt a est vitae porttitor. Phasellus consequat augue vel
+                                    condimentum posuere
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <a href="#">
+                                <h4 style="font-size: 15px">Ver Mas <img
+                                        src="{{ asset('img/comercial/layout/flechasDerecha.svg') }}" style="width: 35px">
+                                </h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card product-card cartaProducto mx-3" style="margin: 15px">
+                    <div class="card-body combustibleBorde">
+                        <div>
+                            <img class="ImgCard" src="{{ asset('img/general/img4.jpg') }}" alt="">
+                        </div>
+                        <div class="bordeTitulo  d-flex">
+                            <h3 class="text-center pe-2"> 10 de marzo del 2024: </h3>
+                        </div>
+                        <div class="bordeTitulo mb-3">
+                            <h2 class="text-center"> Diferencia entre plataforma telescopica y articulada </h2>
+                        </div>
+                        <div class="d-flex">
+                            <div class="col-12">
+                                <p class="text-center" style="font-size: 10px">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet velit ut enim
+                                    malesuada porttitor. Nam tincidunt a est vitae porttitor. Phasellus consequat augue vel
+                                    condimentum posuere
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex">
+                            <a href="#">
+                                <h4 style="font-size: 15px">Ver Mas <img
+                                        src="{{ asset('img/comercial/layout/flechasDerecha.svg') }}" style="width: 35px">
+                                </h4>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         {{--  <div class="col-12 col-md-6 ">
