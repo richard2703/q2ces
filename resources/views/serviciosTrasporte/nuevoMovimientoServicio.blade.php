@@ -61,7 +61,7 @@
                                             <div class=" col-12 col-sm-6 col-md-4 mb-3 ">
                                                 <label class="labelTitulo">Día: <span>*</span></label></br>
                                                 <input type="date" class="inputCaja" id="dia" name="fecha"
-                                                    required value="{{ old('dia') }}">
+                                                    min="{{ date('Y-m-d') }}" required value="{{ old('dia') }}">
 
                                             </div>
 

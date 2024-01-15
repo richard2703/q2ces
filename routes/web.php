@@ -122,6 +122,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'destroy'])->name('obras.delete');
     Route::put('/obras/{obras}', [App\Http\Controllers\obrasController::class, 'update'])->name('obras.update');
 
+    //*** notificaciones */
+    Route::get('/notificaciones', [App\Http\Controllers\notificacionesController::class, 'index'])->name('notificaciones.index');
+    Route::delete('/notificaciones/{notificacion}', [App\Http\Controllers\notificacionesController::class, 'destroy'])->name('notificaciones.delete');
+    Route::put('/notificaciones/{id}', [App\Http\Controllers\notificacionesController::class, 'update'])->name('notificaciones.update');
+
     // Crud Clientes
     Route::resource('clientes', App\Http\Controllers\clientesController::class);
 
