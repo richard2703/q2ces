@@ -11,4 +11,9 @@ class comercialController extends Controller
     {
         return view('comercial.quienesSomos');
     }
+
+    public function indexEquipos()
+    {
+        return view('comercial.equiposMovimientoTierras');
+    }
 }
