@@ -1972,6 +1972,26 @@ CREATE TABLE facturaProvedor(
     CONSTRAINT FK_facturaProvedor_provedorId foreign key (provedorId) references proveedor(id)
 );
 
+CREATE TABLE tiposUnidades(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(255) NULL,
+    codigo varchar(255) NOT NULL,
+    comentario text NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE unidadesSat(
+    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    nombre varchar(255) NULL,
+    codigo varchar(255) NOT NULL,
+    comentario text NULL,
+    created_at datetime NULL,
+    updated_at datetime NULL,
+    PRIMARY KEY (id)
+);
+
 /***************************************FIN Tablas Relacionadas*/
 
 /***************************************DATOS Tablas Relacionadas*/

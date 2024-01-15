@@ -83,7 +83,7 @@
 
                                                     <div class="col-12 col-md-6 col-lg-3 text-center my-4">
                                                         <a href="{{ route('catalogoEventosCalendarioTipos.index') }}" class="">
-                                                            <img src="/img/catalogos/tiposDeEquipo.svg" alt="Tipos Eventos en el calendario"
+                                                            <img src="/img/catalogos/CALENDARIO DE PROGRAMACIÓN DE EVENTOS-01.svg" alt="Tipos Eventos en el calendario"
                                                                 title="Tipos Eventos en el calendario" width="30%"
                                                                 class="botonIconoPrincipal">
                                                             <p class="mt-4 texticonos">Tipos de Eventos en el Calendario</p>
@@ -504,6 +504,25 @@
                                                     </a>
                                                 </div>
 
+                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    <a href="{{ route('tiposUnidades.index') }}" class="">
+                                                        <img src="/img/catalogos/TIPOS DE UNIDADES-01.svg" alt="Tipos de Unidades"
+                                                            title="Tipos de Unidades" width="30%"
+                                                            class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Tipos de Unidades
+                                                        </p>
+                                                    </a>
+                                                </div>
+
+                                                <div class="col-12 col-sm-6 col-md-3 text-center my-4">
+                                                    <a href="{{ route('unidadesSat.index') }}" class="">
+                                                        <img src="/img/catalogos/CLAVE SAT-01.svg" alt="Unidades Sat"
+                                                            title="Unidades Sat" width="30%"
+                                                            class="botonIconoPrincipal">
+                                                        <p class="mt-4 texticonos">Unidades SAT
+                                                        </p>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
