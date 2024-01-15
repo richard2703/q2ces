@@ -199,9 +199,8 @@
                                                 <div class="headerMaps" style="margin-left: 20px">CORPORATIVO</div>
                                             </div>
                                             <div class="map" id="contact">
-                                                <iframe src="https://www.google.com/maps/d/embed?mid=1wRkiC1DGHDy2aGxzUSkwMy9BrSs&hl=en_US&ehbc=2E312F" style="height: 350px; width: 95%; margin-left: 20px"></iframe>
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3733.3067313738783!2d-103.3815732!3d20.6884531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428ae3fb43c70c5%3A0x9f4276d55bfda207!2sC.%20Jos%C3%A9%20Mar%C3%ADa%20Heredia%202387%2C%20Lomas%20de%20Guevara%2C%2044657%20Guadalajara%2C%20Jal.!5e0!3m2!1sen!2sus!4v[versión]" style="height: 350px; width: 100%;" allowfullscreen="" loading="lazy"></iframe>
                                                 <br />
-                                                <small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a></small>
                                             </div>
                                         </div>
                                         <div class="col-6 pt-5">
@@ -210,9 +209,8 @@
                                                 <div class="headerMaps">OPERACIONES</div>
                                             </div>
                                             <div class="map" id="contact">
-                                                <iframe src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed" style="height: 350px; width: 100%;"></iframe>
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3735.050826287085!2d-103.4323717!3d20.7607274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428a5f319e51b57%3A0x65039db4c405de96!2sSan%20Juan%20de%20Los%20Lagos%201788%2C%20Hogares%20de%20Nuevo%20M%C3%A9xico%2C%2045160%20Nuevo%20M%C3%A9xico%2C%20Jal.!5e0!3m2!1sen!2sus!4v[versión]" style="height: 350px; width: 100%;" allowfullscreen="" loading="lazy"></iframe>
                                                 <br />
-                                                <small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a></small>
                                             </div>
                                         </div>
                                     </div>
@@ -228,34 +226,34 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control shadow-lg inputContactenos" id="name" type="text"  data-sb-validations="required" />
+                                                <input autocomplete="off" class="form-control shadow-lg inputContactenos" id="name" type="text"  data-sb-validations="required" />
                                                 <label class="labelFormContactenos" for="name">NOMBRE:</label>
-                                                <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                                                <div class="invalid-feedback" style="font-weight: bold" data-sb-feedback="name:required">Nombre Requerido.</div>
                                             </div>
                                         </div>
                                         
                                         <div class="col-6">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control shadow-lg inputContactenos" id="name" type="text"  data-sb-validations="required" />
-                                                <label class="labelFormContactenos" for="name">TELÉFONO:</label>
-                                                <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                                                <input autocomplete="off" class="form-control shadow-lg inputContactenos" id="telefono" type="text"  data-sb-validations="required" />
+                                                <label class="labelFormContactenos" for="telefono">TELÉFONO:</label>
+                                                <div class="invalid-feedback" style="font-weight: bold" data-sb-feedback="telefono:required">Teléfono Requerido.</div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Email Input -->
                                     <div class="form-floating mb-3">
-                                    <input class="form-control shadow-lg inputContactenos" id="emailAddress" type="email"  data-sb-validations="required,email" />
+                                    <input autocomplete="off" class="form-control shadow-lg inputContactenos" id="emailAddress" type="email"  data-sb-validations="required,email" />
                                     <label class="labelFormContactenos" for="emailAddress">CORREO ELECTRÓNICO:</label>
-                                    <div class="invalid-feedback" data-sb-feedback="emailAddress:required">Email Address is required.</div>
-                                    <div class="invalid-feedback" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div>
+                                    <div class="invalid-feedback" style="font-weight: bold" data-sb-feedback="emailAddress:required">Correo Electrónico Requerido.</div>
+                                    <div class="invalid-feedback" style="font-weight: bold" data-sb-feedback="emailAddress:email">Correo Electrónico Invalido.</div>
                                     </div>
 
                                     <!-- Message Input -->
                                     <div class="form-floating mb-3">
-                                    <textarea class="form-control shadow-lg inputContactenos" id="message" type="text"  style="height: 10rem;" data-sb-validations="required"></textarea>
+                                    <textarea class="form-control shadow-lg inputContactenos" id="message" type="text"  style="height: 10rem;"></textarea>
                                     <label class="labelFormContactenos" for="message" style="text-white">MENSAJE:</label>
-                                    <div class="invalid-feedback" data-sb-feedback="message:required">Message is required.</div>
+                                    <div class="invalid-feedback" style="font-weight: bold" data-sb-feedback="message:required">Message is required.</div>
                                     </div>
 
                                     <!-- Submit success message -->
@@ -286,5 +284,5 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>   
 @endsection
