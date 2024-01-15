@@ -103,17 +103,13 @@
                                 <a href="{{ url('/') }}">Inicio</a>
                             </li>
                             <li class="{{ $activePage == 'quienesSomos' ? 'activo' : '' }}"><a href="{{ route('quienesSomos.index') }}">¿Quiénes Somos?</a></li>
-                            <li>
-                                <a href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    Equipo
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li class="{{ $activePage == 'equipos' ? 'activo' : '' }}"><a href="{{ route('equipos.index') }}">Equipos</a></li>
+                                {{--  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Another action</a>
                                     <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </li>
+                                </div>  --}}
+                            {{--  </li>  --}}
                             <li><a href="">Cotizador</a></li>
                             <li><a href="">Trabaja con Nosotros</a></li>
                             <li><a href="">Blog</a></li>
@@ -156,7 +152,7 @@
                     <h3>Inicio</h3>
                 </a>
                 <a href="#">
-                    <h3>Equipo</h3>
+                    <h3>Equipos</h3>
                 </a>
                 <a href="#">
                     <h3>Cotizador</h3>

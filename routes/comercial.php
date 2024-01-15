@@ -23,6 +23,8 @@ Route::get('/', function () {
 
 Route::get('/quienesSomos', [App\Http\Controllers\comercial\comercialController::class, 'indexQuienesSomos'])->name('quienesSomos.index');
 
+Route::get('/equipos', [App\Http\Controllers\comercial\comercialController::class, 'indexEquipos'])->name('equipos.index');
+
 
 
 Route::group(['middleware' => 'auth'], function () {

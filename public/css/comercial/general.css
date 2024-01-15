@@ -364,11 +364,11 @@
 
 .botonesCard{
   text-align: center;
-  
   MARGIN: 5px;
   padding: 0px;
   height: 40px;
-  width: 200px;
+  width: 100%;
+  font-weight: bold;
 }
 
 /*datos de contacto en backgroundImage - Quienes Somos*/
@@ -448,36 +448,7 @@
 
 
 /*datos de contacto en backgroundImage - Quienes Somos*/
-/* .bg-image-contactos p{
-  font-size: 16px;
-  color: white;
-  font-weight: 900;
-  margin-top: 10px;
-}
-
-.d-flex {
-  display: flex;
-}
-
-.justify-content-between {
-  justify-content: space-between;
-}
-
-.section {
-  flex-basis: 30%;
-  display: flex;
-  align-items: center;
-}
-
-.icon {
-  margin-right: 10px;
-  width: 120px;
-}
-
-.paddindY-5 {
-  padding-top: 3rem!important;
-  padding-bottom: 3rem!important;
-} */
+/* 
 
 /* Estilos generales */
 
@@ -573,4 +544,23 @@
   z-index: -1;
   border-radius: 2em;
   background-color: var(--verdeF);
+}
+
+.button-container {
+  width: 370px;
+  height: 50px;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid #000;
+  border-radius: 0; 
+  transition: background-color 0.3s ease;
+  color: var(--verdeB);
+  background-color: #fff;
+  font-weight: bold;
+}
+
+.button-container.active {
+  background-color: var(--verdeF); /* Fondo verde cuando está activo */
+  color: #fff; /* Texto blanco cuando está activo */
 }
