@@ -173,33 +173,33 @@
                             </select>
                         </div>  --}}
 
-                        <div class=" col-12 col-sm-6 col-lg-8 my-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Clave de Servicio: <span>*</span></label></br>
                             <input type="number" class="inputCaja" name="claveServicio"
                                 value="{{ old('claveServicio') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Unidades: <span>*</span></label></br>
                             <select name="tiposUnidadesId" class="form-select" required
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>
                                 @foreach ($vctUnidades as $item)
                                     <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
+                                        {{ $item->codigo }} - {{ $item->nombre }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Unidades SAT: <span>*</span></label></br>
                             <select name="unidadesSatId" class="form-select" required
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>
                                 @foreach ($vctUnidadesSAT as $item)
                                     <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
+                                        {{ $item->codigo }} - {{ $item->nombre }}
                                     </option>
                                 @endforeach
                             </select>
@@ -227,7 +227,8 @@
             <div class="modal-content">
                 <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar Concepto</label></h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp <span id="tituloModal">Editar
+                            Concepto</label></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -256,33 +257,33 @@
                             </select>
                         </div>  --}}
 
-                        <div class=" col-12 col-sm-6 col-lg-8 my-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Clave de Servicio: <span>*</span></label></br>
                             <input type="text" class="inputCaja" id="claveServicio" name="claveServicio"
                                 value="{{ old('claveServicio') }}" required placeholder="Especifique...">
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Unidades: <span>*</span></label></br>
                             <select id="tiposUnidadesId" name="tiposUnidadesId" class="form-select" required
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>
                                 @foreach ($vctUnidades as $item)
                                     <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
+                                        {{ $item->codigo }} - {{ $item->nombre }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <div class=" col-12 col-sm-6 col-lg-8 mb-3 ">
+                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Unidades SAT: <span>*</span></label></br>
                             <select id="unidadesSatId" name="unidadesSatId" class="form-select" required
                                 aria-label="Default select example">
                                 <option value="">Seleccione</option>
                                 @foreach ($vctUnidadesSAT as $item)
                                     <option value="{{ $item->id }}">
-                                        {{ $item->nombre }}
+                                        {{ $item->codigo }} - {{ $item->nombre }}
                                     </option>
                                 @endforeach
                             </select>
