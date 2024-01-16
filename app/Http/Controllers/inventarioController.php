@@ -29,8 +29,6 @@ use App\Models\descargaDetalle;
 use App\Models\inventarioEstatus;
 use App\Models\obras;
 
-use function PHPUnit\Framework\isEmpty;
-
 class inventarioController extends Controller
 {
     public function dash()
@@ -1026,37 +1024,29 @@ class inventarioController extends Controller
         $carga = carga::select("*")->where('id', '=', $cargaId)->first();
         //*** maquinaria que actualizará el nivel de la cisterna */
         $maquinariaId = $carga->maquinariaId;
-        $descargaCargaTOTE = descarga::select("*")->where('descargaEnCargaDeToteId', '=', $carga->id)->first();
-        if (isEmpty($descargaCargaTOTE)) {
-            $descargaCargaTOTE->delete();
-        } else {
-            dd($descargaCargaTOTE);
-        }
+
         //*** eliminamos el registro */
         $carga->delete();
 
-        if ($carga->tipoCisternaId == null) {
+        if ($carga->tipoCisternaId != null) {
             $tipoCisternaId = $carga->tipoCisternaId;
             $cisternas = cisternas::select("*")->where('id', '=', $tipoCisternaId)->first();
             $cisternas->contenido = $cisternas->contenido - $carga->litros;
             $ultimaCarga = carga::where('maquinariaId', $carga['maquinariaId'])
-                ->whereNull('tipoCisternaId') // Agrega esta condición
-                ->latest()
-                ->first();
-            // dd($ultimaCarga, 'jol');
-            $cisternas->ultimaCarga = $ultimaCarga ? $ultimaCarga->litros : 0;
-            $cisternas->ultimoPrecio = $ultimaCarga ? $ultimaCarga->precio : 0;
-            $cisternas->update();
-        } else {
-            $cisternas = cisternas::where("id", 1)->first();
-            $ultimaCarga = carga::whereNotNull('tipoCisternaId')->whereNotNull("maquinariaId")
+                ->whereNotNull('tipoCisternaId') // Agrega esta condición
                 ->latest()
                 ->first();
             // dd($ultimaCarga);
-            $cisternas->contenido = $cisternas->contenido - $carga->litros;
             $cisternas->ultimaCarga = $ultimaCarga ? $ultimaCarga->litros : 0;
-            $cisternas->ultimoPrecio = $ultimaCarga ? $ultimaCarga->precio : 0;
             $cisternas->update();
+        } else {
+            // $ultimaCarga = carga::where('maquinariaId', $carga['maquinariaId'])
+            //     ->whereNull('tipoCisternaId') // Agrega esta condición
+            //     ->latest()
+            //     ->first();
+            // // dd($ultimaCarga);
+            // $cisternas->ultimaCarga = $ultimaCarga ? $ultimaCarga->litros : 0;
+            // $cisternas->update();
         }
 
         //*** actualizamos el nivel de la cisterna */
