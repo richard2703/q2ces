@@ -535,7 +535,7 @@
                             </form>
                             
                         GRAFICO CARGAS  --}}
-                        {{--  <div class="row">
+                        <div class="row">
                             <div class="col-12">
 
                                 <div class="card card-chart">
@@ -574,7 +574,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>  --}}
+                        </div>
 
                         <!--Espacio para index carga y descarga-->
                         <div class="row">

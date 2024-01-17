@@ -626,15 +626,15 @@ class CombustibleToteController extends Controller
         $decLitros = $carga->litros;
 
         $carga->litros = $request['cargaLitros'];
-        $carga->maquinariaId = $request['maquinariaId'];
+        $carga->maquinariaId = $request['cargaMaquinaria'];
         $carga->operadorId = $request['cargaOperador'];
         $carga->precio = $request['cargaPrecio'];
         $carga->comentario = $request['comentario'];
         $carga->horaLlegadaCarga = $request['cargaHora'];
         $carga->created_at = ($request['cargaFecha'] . " " . $request['cargaHora']);
         //*** Actualizamos la carga */
-        $ultimaCarga = carga::whereNotNull('tipoCisternaId')->whereNotNull("maquinariaId")->latest()->first();
-        // dd($carga, $request);
+        $ultimaCarga = carga::latest()->first();
+        //dd($ultimaCarga->created_at, $carga->created_at);
         $carga->update();
 
         //*** obtenemos el total de cargas y descargas para obtener el nivel de la cisterna */
@@ -656,7 +656,7 @@ class CombustibleToteController extends Controller
         } else {
             $litrosFinales = $decLitros - $carga->litros;
             $cisternaTipo->contenido = ($cisternaTipo->contenido - ($litrosFinales));
-            // dd($ultimaCarga->created_at, $carga->created_at);
+
             if ($ultimaCarga->created_at <= $carga->created_at) {
                 $cisternaTipo->ultimaCarga = $carga->litros;
                 $cisternaTipo->ultimoPrecio = $carga->precio;
@@ -667,7 +667,6 @@ class CombustibleToteController extends Controller
 
         //buscamos el equipo para actulizar el nivel de la cisterna
         $cisterna = maquinaria::where("id", $carga->maquinariaId)->first();
-        //dd($request, $carga, $carga->maquinariaId, $cisterna);
         $cisterna->cisternaNivel = $litrosActualizados;
         $cisterna->update();
 
