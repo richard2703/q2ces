@@ -2,8 +2,6 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
@@ -43,8 +41,9 @@
                                     </div>
 
 
-                                    <table class="table table-responsive">
-                                        <thead class="labelTitulo">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead class="labelTitulo">
                                             <tr>
                                                 <th class="labelTitulo">Id</th>
                                                 <th class="labelTitulo">Nombre</th>
@@ -53,8 +52,8 @@
                                                 <th class="labelTitulo">Auto</th>
                                                 <th class="labelTitulo text-right">Acciones</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                            </thead>
+                                            <tbody>
                                             @forelse ($records as $item)
                                                 <tr>
                                                     <td>{{ $item->id }}</td>
@@ -123,19 +122,18 @@
                                                 </tr>
                                             @endforelse
 
-                                        </tbody>
-                                    </table>
-                                    <div class="card-footer mr-auto d-flex justify-content-center">
-                                        {{ $records->links() }}
-                                    </div>
+                                            </tbody>
+                                        </table>
+                                    
+                                </div>
+                                <div class="card-footer mr-auto d-flex justify-content-center">
+                                    {{ $records->links() }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
     <!-- Modal Nueva Tarea-->
     <div class="modal fade" id="nuevoItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

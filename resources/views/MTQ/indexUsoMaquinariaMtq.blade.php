@@ -1,6 +1,6 @@
 @extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('MTQ')])
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/calendarMtq.css') }}">
+    {{--  <link rel="stylesheet" type="text/css" href="{{ asset('css/calendarMtq.css') }}">  --}}
 
     <div class="content">
         <div class="container-fluid">
