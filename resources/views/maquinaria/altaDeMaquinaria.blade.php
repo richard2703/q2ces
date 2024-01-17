@@ -83,12 +83,19 @@
                                                     <div class="col-12 col-md-8">
 
                                                         <div class="row alin">
-                                                            <div class=" col-12 col-sm-8 mb-3 ">
+                                                            <div class=" col-12 col-sm-12 mb-3 ">
                                                                 <label class="labelTitulo">Equipo:
                                                                     <span>*</span></label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
                                                                     placeholder="Especifique..." required name="nombre"
                                                                     value="{{ old('nombre') }}">
+                                                            </div>
+                                                            <div class=" col-12 col-sm-8 mb-3 ">
+                                                                <label class="labelTitulo">Nombre Comercial:
+                                                                    <span>*</span></label></br>
+                                                                <input type="text" class="inputCaja" id="nombre"
+                                                                    placeholder="Especifique..." required name="alias"
+                                                                    value="{{ old('alias') }}">
                                                             </div>
 
                                                             <div class=" col-12 col-sm-6 col-lg-4  mb-3 ">
@@ -220,7 +227,7 @@
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Numero Económico:</label></br>
                                                                 <input type="text" class="inputCaja"
-                                                                    id="identificador" name="identificador"
+                                                                    id="identificador" name="identificador" maxlength="8" minlength="4"
                                                                     value="{{ old('identificador') }}"
                                                                     placeholder="ej: MT-00">
                                                             </div>
