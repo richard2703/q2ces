@@ -283,10 +283,6 @@ INSERT INTO permissions (name,guard_name,created_at,updated_at) VALUES
 	 ('personalEspecial_edit','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
 	 ('personalEspecial_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
 
-INSERT INTO permissions (name, guard_name, created_at, updated_at) VALUES
-	 ('ajustesCisterna_create','web','2022-07-25 19:54:16','2022-07-25 19:54:16'),
-	 ('ajustesCisterna_destroy','web','2022-07-25 19:54:16','2022-07-25 19:54:16');
-
 INSERT INTO
     `model_has_roles`
 VALUES
