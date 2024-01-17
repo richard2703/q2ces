@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Inventario')])
+@extends('layouts.main', ['activePage' => 'asistencia', 'titlePage' => __('Asistencia Corte Semanal')])
 <?php
 $objCalendar = new Calendario();
 
@@ -63,16 +63,16 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                             </div>
                         </div>
                     </div>
-                    
+
                     <div id="content-center" class="content-center" style="display: none">
-                        <img src="{{ asset('/img/maquinariaPrint/Q de fondo.svg') }}" width="45%" alt="">    
+                        <img src="{{ asset('/img/maquinariaPrint/Q de fondo.svg') }}" width="45%" alt="">
                     </div>
                     <div id="print-content" class="print-content d-flex align-items-center">
                         <div class="table-responsive" style="font-size: 11px">
                             <div id="print-header" class="print-header">
                                 <div class="row mb-2">
                                     <div class="col-1 text-start">
-                                        <img src="{{ asset('/img/maquinariaPrint/Logo q2cem_1.svg') }}" alt="" width="75px;" class="mt-1">    
+                                        <img src="{{ asset('/img/maquinariaPrint/Logo q2cem_1.svg') }}" alt="" width="75px;" class="mt-1">
                                     </div>
                                     <div class="col-10 text-center d-flex align-items-center justify-content-center">
                                         <img src="{{ asset('/img/maquinariaPrint/Nómina Asiatencia.svg') }}" alt="" width="315px;" class="mt-2">
@@ -81,7 +81,7 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                         </div>
                                     </div>
                                     <div class="col-1 text-end" style="margin-left: -5px">
-                                        <img src="{{ asset('/img/maquinariaPrint/Logo q2ces_2.svg') }}" alt="" width="75px;" class="mt-1">    
+                                        <img src="{{ asset('/img/maquinariaPrint/Logo q2ces_2.svg') }}" alt="" width="75px;" class="mt-1">
                                     </div>
                                 </div>
                             </div>
@@ -93,35 +93,35 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                         <?php
                                         for ($i=0; $i < 7 ; $i++) {
                                         ?>
-                                        <th class="labelTitulo text-center" style="height: 35px; width: 70px;"> 
+                                        <th class="labelTitulo text-center" style="height: 35px; width: 70px;">
                                             <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">{{ $objCalendar->getNameDay($vctDiasSemana[$i]->format('N')) }}
                                             .{{ $vctDiasSemana[$i]->format('d') }}</div></th>
                                         </th>
                                         <?php
                                         }
                                         ?>
-                                            
-                                        <th class="labelTitulo text-center" style="height: 35px;"> 
+
+                                        <th class="labelTitulo text-center" style="height: 35px;">
                                             <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Días </div></th>
-                                        <th class="labelTitulo text-center" style="height: 35px;"> 
+                                        <th class="labelTitulo text-center" style="height: 35px;">
                                             <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 95px;">Salario Díario </div></th>
-                                        <th class="labelTitulo text-center" style="height: 35px;"> 
+                                        <th class="labelTitulo text-center" style="height: 35px;">
                                                 <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Horas Extra </div></th>
-                                        <th class="labelTitulo text-center" style=" height: 35px;"> 
+                                        <th class="labelTitulo text-center" style=" height: 35px;">
                                             <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 90px;">Total Horas Extra </div></th>
                                         <th class="labelTitulo text-center" style="height: 35px; width: 150px;">
                                             <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Pago Semanal </div></th>
                                     </thead>
                                 @endif
-                                
+
                                 <tbody>
                                     @php
                                         $totalitems = count($vctAsistencias) - 1;
                                     @endphp
-                                
+
                                     @forelse ($vctAsistencias as $key => $item)
                                     @if ($key == $totalitems)
-                                    
+
                                     <style>
                                         /* Estilos para la última página al imprimir */
                                         @media print {
@@ -131,51 +131,51 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                         }
 
                                     </style>
-                                    
+
                                     @endif
-                                    
+
                                     @if ($key == 13 || $key == 26 || $key == 39 || $key == 52 || $key == 65 || $key == 78 || $key == 91 || $key == 104 || $key == 117 || $key == 130 || $key == 143 || $key == 156 || $key == 169 || $key == 182 || $key == 195 || $key == 208 || $key == 221 || $key == 234)
                                         </tbody>
                                     </table>
                                     <div class="page mt-1" style="margin-left: 115mm; font-weight: 500 !important; border-radius: 2em; background-color: #f7c90d; color: var(--select); height: 20px;" ></div>
                                         <br><br><br><br>
                                         <br><br><br>
-                                        
+
                                     @endif
                                     @if ($key == 13 || $key == 26 || $key == 39 || $key == 52 || $key == 65 || $key == 78 || $key == 91 || $key == 104 || $key == 117 || $key == 130 || $key == 143 || $key == 156 || $key == 169 || $key == 182 || $key == 195 || $key == 208 || $key == 221 || $key == 234)
                                     <table class="mt-4">
-                                        
+
                                         <thead class="labelTitulo">
                                             <th class="labelTitulo text-center" style="height: 35px; padding-left: 5px !important; padding-right: 5px !important;">
                                                 <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 125px;">Nombre </div></th>
                                             <?php
                                             for ($i=0; $i < 7 ; $i++) {
                                             ?>
-                                            <th class="labelTitulo text-center" style="height: 35px; width: 70px;"> 
+                                            <th class="labelTitulo text-center" style="height: 35px; width: 70px;">
                                                 <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">{{ $objCalendar->getNameDay($vctDiasSemana[$i]->format('N')) }}
                                                    .{{ $vctDiasSemana[$i]->format('d') }}</div></th>
                                             </th>
                                             <?php
                                             }
                                             ?>
-                                                
-                                            <th class="labelTitulo text-center" style="height: 35px;"> 
+
+                                            <th class="labelTitulo text-center" style="height: 35px;">
                                                 <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Días </div></th>
-                                            <th class="labelTitulo text-center" style="height: 35px;"> 
+                                            <th class="labelTitulo text-center" style="height: 35px;">
                                                 <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 95px;">Salario Díario </div></th>
-                                            <th class="labelTitulo text-center" style="height: 35px;"> 
+                                            <th class="labelTitulo text-center" style="height: 35px;">
                                                     <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 95px;">Horas Extra </div></th>
-                                            <th class="labelTitulo text-center" style=" height: 35px;"> 
+                                            <th class="labelTitulo text-center" style=" height: 35px;">
                                                 <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px; width: 90px;">Total Horas Extra </div></th>
                                             <th class="labelTitulo text-center" style="height: 35px; width: 150px;">
                                                 <div class="d-flex justify-content-center align-items-center" style="margin-right: 5px !important;font-size:14px !important; border-radius: 2em; background-color: var(--select); color: #fff; height: 35px;">Pago Semanal </div></th>
-                                            </thead>       
-                                        <tbody>        
+                                            </thead>
+                                        <tbody>
                                         @endif
                                         <?php
                                             $intTotalGeneralSueldo = 0;
-                                            $intTotalGeneralHorasExtras = 0; 
-                                        ?> 
+                                            $intTotalGeneralHorasExtras = 0;
+                                        ?>
                                         <?php
                                             $intTotalHorasExtras = 0;
                                             $intTotalCostoHorasExtras = 0;
@@ -319,13 +319,13 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                                         {{--  {{ str_pad($intHorasDia, 2, '0', STR_PAD_LEFT) . ':' . str_pad($intMinutosDia, 2, '0', STR_PAD_LEFT) }}  --}}
                                                     </strong>
                                                 </div>
-                                                    
+
                                                 @else
                                                     <div style="border-radius: 1em; border-color: black; margin-right: 5px !important;
                                                     border-width: 1px;
                                                     border-style: solid; height: 35px; margin-top: 3px" class="d-flex justify-content-center align-items-center"> 0 </div>
                                                 @endif
-                                                
+
                                             </td>
                                             <?php
                                                 }else{
@@ -334,7 +334,7 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                             <td> <div style="margin-right: 5px !important;border-radius: 1em; border-color: black;
                                                 border-width: 1px;
                                                 border-style: solid; height: 35px; margin-top: 3px; padding-left: 10px; padding-right: 10px" class="d-flex justify-content-center align-items-center"> --- </div></td>
-                                            
+
                                             <?php
                                                     }
                                                 } // Fin del bloque de los dias de la semana
@@ -349,7 +349,7 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                                     border-width: 1px;
                                                     border-style: solid; height: 35px; margin-top: 3px" class="d-flex justify-content-center align-items-center"> 0 </div>
                                                 @endif
-                                                
+
                                             </td>
                                             <td class="text-right">
                                                 @if ($item->sueldo)
@@ -418,7 +418,7 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                             De
                                             Poder <br> Realizar Las acciones De Esta Semana.</h3>
                                     </tr>
-                                    
+
                                         {{--  @forelse ($listaAsistencia as $item)
                                             <tr>
                                                 <td style="color: {{ $item->estatusColor }};">
@@ -436,9 +436,9 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                                 <td>---</td>
                                                 <td>---</td>
                                                 <td>---</td>
-                                                
+
                                             </tr> --}}
-                                                
+
                                         {{--  @empty
                                             <tr>
                                                 <td colspan="2">Sin Registros.<br><br> <b>Es Necesario
@@ -447,7 +447,7 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                                         Poder Realizar Las acciones De Esta Semana.</b></td>
                                             </tr>
                                         @endforelse  --}}
-                                        
+
                                     @endforelse
 
                                     {{--  <tr>
@@ -457,7 +457,7 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                         <td class="text-right">$
                                             {{ number_format($intTotalGeneralSueldo, 2) }} </td>
                                     </tr>  --}}
-                                                
+
                                     @php
                                         $numeroTotal = $totalitems;
                                         $numeroACaber = 14;
@@ -471,10 +471,10 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                         if ($faltante == -1)
                                             $faltante = 14;
                                     @endphp
-                                    
+
                                 </tbody>
                             </table>
-                            
+
                         </div>
                         @if ($vctAsistencias != null)
                             @for ($i = 0; $i <$faltante; $i++)
@@ -485,13 +485,13 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
                                 </tr>
                             @endfor
                         @endif
-                        
+
                         @if (isset($key) &&  $key == $totalitems)
                         {{--  <div>{{$var}}, Total:{{$numeroTotal}}Faltantes: {{$faltante}}</div>  --}}
                             <div class="page mt-1" id="ultimoNumPage" style="margin-right: 35px !important; font-weight: 500 !important; font-size: 11px !important; border-radius: 2em; background-color: #f7c90d; color: var(--select); height: 20px; "></div>
                         @endif
                     </div>
-                    
+
                     <br>
                     <div id="print-footer" class="print-footer">
                         <img src="{{ asset('/img/maquinariaPrint/Pie de página_1.svg') }}">
@@ -545,7 +545,7 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
         counter-reset: page-counter 0 total-pages var(--total-pages);
         background-color: white;
       }
-      
+
       .page {
 
         min-height: 10px;
@@ -568,7 +568,7 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
         page-break-after: always;
     }
 </style>
-    
+
 <style>
     @media print {
         body * {
@@ -586,9 +586,9 @@ $blnBloquearitem = $dtTrabajar <= $dtToday && $asistencias->isEmpty() == true ? 
         #print-content, #print-content {
             margin-left: -6mm;
             margin-right: -10mm;
-            
+
         }
-      
+
         #print-footer {
             position: fixed;
             bottom: 10mm;

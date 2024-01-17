@@ -264,7 +264,7 @@
 
             @can('checkList_index')
                 <li class="nav-item ">
-                    <a class="nav-link {{ $activePage == 'bitacoras' ? '' : 'collapsed' }}"
+                    <a class="nav-link {{ $activePage == 'checkList' ? '' : 'collapsed' }}"
                         data-bs-target="#bitacora-nav" data-bs-toggle="collapse" href="#">
                         {{--  <i class="bi bi-receipt"></i>  --}}
                         <span class="material-icons">
@@ -273,11 +273,11 @@
 
                         <span>Check Lists</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    <ul id="bitacora-nav" class="nav-content collapse {{ $activePage == 'bitacoras' ? 'show' : '' }}"
+                    <ul id="bitacora-nav" class="nav-content collapse {{ $activePage == 'checkList' ? 'show' : '' }}"
                         data-bs-parent="#sidebar-nav">
 
                         @can('checkList_assign_bitacoras')
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <li class="nav-item{{ $activePage == 'checkList' ? ' active' : '' }}">
                                 <a href="{{ route('checkList.programacion') }}" class="">
                                     <i class="bi bi-circle"></i><span>Asignación de Trabajo</span>
                                 </a>
@@ -285,7 +285,7 @@
                         @endcan
 
                         @can('checkList_mis_pendientes')
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <li class="nav-item{{ $activePage == 'checkList' ? ' active' : '' }}">
                                 <a href="{{ route('checkList.pendientes') }}" class="">
                                     <i class="bi bi-circle"></i><span>Mis Pendientes</span>
                                 </a>
@@ -293,7 +293,7 @@
                         @endcan
 
                         @can('checkList_show')
-                            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                            <li class="nav-item{{ $activePage == 'checkList' ? ' active' : '' }}">
                                 <a href="{{ route('checkList.index') }}" class="">
                                     <i class="bi bi-circle"></i><span>Ver CheckList</span>
                                 </a>

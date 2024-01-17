@@ -80,13 +80,13 @@
                                                             @if ($item->userId != null)
                                                             <button class="btnSinFondo" type="submit" onclick="alertaGuardar()">
                                                                 <i class="fas fa-user-plus" style="color: #8caf48; font-size: x-large;"></i>
-                                                            </button>    
+                                                            </button>
                                                             @else
                                                             <button class="btnSinFondo" type="submit" onclick="alertaGuardar()">
                                                                 <i class="fas fa-user-plus" style="color: red; font-size: x-large;"></i>
                                                             </button>
                                                             @endif
-                                                            
+
                                                         </form>
                                                         @endcan
                                                         @can('residente_mtq_edit')
@@ -112,7 +112,7 @@
                                                                 </svg>
                                                             </button>
                                                         </form>
-                                                        
+
                                                         @endcan
                                                     </td>
                                                 </tr>
@@ -124,7 +124,7 @@
 
                                             </tbody>
                                         </table>
-                                    
+
                                 </div>
                                 <div class="card-footer mr-auto d-flex justify-content-center">
                                     {{ $records->links() }}
@@ -359,7 +359,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var buttons = document.querySelectorAll('.sweet-alert-trigger');
-    
+
             buttons.forEach(function(button) {
                 button.addEventListener('click', function() {
                     Swal.fire({
@@ -393,5 +393,5 @@
             mostrarAlertaExitoCorta();
         }
     </script>
-    
+
 @endsection

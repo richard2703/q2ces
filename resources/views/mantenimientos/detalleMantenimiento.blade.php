@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'mantenimiento', 'titlePage' => __('Nuevo Mantenimiento')])
+@extends('layouts.main', ['activePage' => ( $blnEsMtq == true ? 'mtq' : 'mantenimiento'), 'titlePage' => __('Nuevo Mantenimiento')])
 @section('content')
     <div class="content">
         @if ($errors->any())

@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Mantenimientos')])
+@extends('layouts.main', ['activePage' => ( $blnEsMtq == true ? 'mtq' : 'mantenimiento'), 'titlePage' => __('Mantenimientos')])
 @section('content')
 @section('content')
 <div class="content">

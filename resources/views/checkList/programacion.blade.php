@@ -36,7 +36,7 @@
                             @endif
                             <div class="row">
                                 <div class="d-flex p-3 divBorder">
-                                    <div class="col-12 text-end">
+                                    <div class="col-12 text-start">
                                         <a href="{{ route('maquinaria.index') }}">
                                             <button class="btn regresar">
                                                 <span class="material-icons">

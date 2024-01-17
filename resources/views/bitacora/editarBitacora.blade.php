@@ -11,13 +11,28 @@
                                     <h4 class="card-title">Editar Bitácoras</h4>
                                 </div>
                                 <div class="card-body ">
+                                    <div class="row">
+                                        <div class="d-flex p-3 divBorder">
+                                            <div class="col-12 text-start">
+                                                <a href="{{ url('/bitacoras') }}">
+                                                    <button class="btn regresar">
+                                                        <span class="material-icons">
+                                                            reply
+                                                        </span>
+                                                        Regresar
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
                                     <div class="col-md-12">
                                         <form class="row alertaGuardar"
                                             action="{{ route('bitacoras.update', $bitacora->id) }}" method="post"
                                             enctype="multipart/form-data">
                                             @csrf
                                             @method('put')
-                                            <div class="col-12 my-4">
+                                            <div class="col-12 my-6">
                                                 <div class="row">
                                                     <div class="card">
                                                         <div class="row">
@@ -34,9 +49,11 @@
 
 
                                                             <div class=" col-2 col-sm-6  col-lg-3 my-6 ">
-                                                                <label class="labelTitulo">Activa : <span></span></label></br>
-                                                                <select class="form-select" aria-label="Default select example"
-                                                                    id="activa" name="activa">
+                                                                <label class="labelTitulo">Activa :
+                                                                    <span></span></label></br>
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" id="activa"
+                                                                    name="activa">
                                                                     <option value="0"
                                                                         {{ $bitacora->activa == 0 ? ' selected' : '' }}>No
                                                                     </option>
@@ -64,14 +81,18 @@
                                                             </div>
 
                                                             <div class=" col-2 col-sm-6  col-lg-3 my-6 ">
-                                                                <label class="labelTitulo">Reprogramación : <span></span></label></br>
-                                                                <select class="form-select" aria-label="Default select example"
-                                                                    id="renovacion" name="renovacion">
+                                                                <label class="labelTitulo">Reprogramación :
+                                                                    <span></span></label></br>
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example" id="renovacion"
+                                                                    name="renovacion">
                                                                     <option value="0"
-                                                                        {{ $bitacora->renovacion == 0 ? ' selected' : '' }}>No
+                                                                        {{ $bitacora->renovacion == 0 ? ' selected' : '' }}>
+                                                                        No
                                                                     </option>
                                                                     <option value="1"
-                                                                        {{ $bitacora->renovacion == 1 ? ' selected' : '' }}>Sí
+                                                                        {{ $bitacora->renovacion == 1 ? ' selected' : '' }}>
+                                                                        Sí
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -94,23 +115,6 @@
                                                                     placeholder="Especifique la versión de la bitácora, Ej. 1"
                                                                     name="version" value="{{ $bitacora->version }}">
                                                             </div>
-
-
-                                                            <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
-                                                                <label for="exampleFormControlTextarea1"
-                                                                    class="labelTitulo">Descripción
-                                                                    de la Bitácora: <span>*</span></label>
-                                                                <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required id="comentario"
-                                                                    name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">  {{ $bitacora->comentario }} </textarea>
-                                                            </div>
-
-                                                            <div class="col-12 text-center mt-2 pt-2">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal"><a
-                                                                        href="{{ url('/bitacoras') }}">Regresar</a></button>
-                                                                <button type="submit"
-                                                                    class="btn botonGral">Guardar</button>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -121,7 +125,7 @@
                                                 <div class="row">
                                                     <div class="card">
                                                         <!-- <div class="card-header bacTituloPrincipal">
-                                                                                                                                                                                                                                                                                                                                                                                        </div>-->
+                                                                                                                                                                                                                                                                                                                                                                                                    </div>-->
                                                         <div class="card-body mb-3">
                                                             <div class="nav nav-tabs justify-content-evenly" id="myTab"
                                                                 role="tablist">
@@ -182,7 +186,8 @@
                                                                                     </div>
 
                                                                                     <div class=" col-12  my-3 ">
-                                                                                        <ul class="" id="newRowGrupos">
+                                                                                        <ul class=""
+                                                                                            id="newRowGrupos">
 
                                                                                             @forelse ($grupos as $item)
                                                                                                 <li class="listaMaterialMantenimiento my-3 border-bottom"
@@ -388,6 +393,21 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                    </div>
+
+
+                                    <div class=" col-12 col-sm-6  col-lg-12 my-6 ">
+                                        <label for="exampleFormControlTextarea1" class="labelTitulo">Descripción
+                                            de la Bitácora: <span>*</span></label>
+                                        <textarea class="form-select" id="exampleFormControlTextarea1" rows="3" maxlength="1000" required
+                                            id="comentario" name="comentario" placeholder="Escribe aquí tus comentarios sobre la bitácora.">  {{ $bitacora->comentario }} </textarea>
+                                    </div>
+
+                                    <div class="col-12 text-center mt-2 pt-2">
+                                        <a href="{{ url('/bitacoras') }}">
+                                            <button type="button" class="btn btn-danger">Cancelar</button>
+                                        </a>
+                                        <button type="submit" class="btn botonGral">Guardar</button>
                                     </div>
                                     </form>
                                 </div>
