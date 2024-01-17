@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'mantenimiento', 'titlePage' => __('Bitácora de Mantenimientos')])
+@extends('layouts.main', ['activePage' => ( $blnEsMtq == true ? 'mtq' : 'mantenimiento'), 'titlePage' => __('Bitácora de Mantenimientos')])
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -147,12 +147,12 @@
                                                         <input type="hidden" name="responsableEquipo"
                                                             value={{ $item->id }}>
 
-                                                        @if ($item->estadoId == 3)
+                                                        {{--  @if ($item->estadoId == 3)  --}}
                                                             <button class="btnSinFondo" type="submit">
                                                                 <i class="fas fa-print"
                                                                     style="color: #8caf48; font-size: x-large;"></i>
                                                             </button>
-                                                        @endif
+                                                        {{--  @endif  --}}
                                                     @endcan
                                                 </form>
 
@@ -170,12 +170,12 @@
                                                         <input type="hidden" name="responsableEquipo"
                                                             value={{ $item->id }}>
 
-                                                        @if ($item->estadoId == 3)
+                                                        {{--  @if ($item->estadoId == 3)  --}}
                                                             <button class="btnSinFondo" type="submit">
                                                                 <i class="fas fa-print"
                                                                     style="color: black; font-size: x-large;"></i>
                                                             </button>
-                                                        @endif
+                                                        {{--  @endif  --}}
                                                     @endcan
                                                 </form>
 

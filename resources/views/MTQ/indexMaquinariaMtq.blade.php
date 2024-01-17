@@ -1,6 +1,5 @@
 @extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('MTQ')])
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/calendarMtq.css') }}">
     <div class="content">
         @if ($errors->any())
             <!-- PARA LA CARGA DE LOS ERRORES DE LOS DATOS-->

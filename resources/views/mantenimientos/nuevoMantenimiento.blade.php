@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'mantenimiento', 'titlePage' => __('Nuevo Mantenimiento')])
+@extends('layouts.main', ['activePage' => ( $blnEsMtq == true ? 'mtq' : 'mantenimiento'), 'titlePage' => __('Nuevo Mantenimiento')])
 @section('content')
     <div class="content">
         @if ($errors->any())
@@ -22,7 +22,7 @@
                         </div>
 
                         <div class="col-12 col-md-2 mt-4" style="margin-left:20px">
-                            <a href="{{ route('mantenimientos.index') }}">
+                            <a href="{{ $blnEsMtq == 'mtq' ? route('mantenimientos.indexMtq') : route('mantenimientos.index') }}">
                                 <button class="btn regresar">
                                     <span class="material-icons">
                                         reply
@@ -31,7 +31,10 @@
                                 </button>
                             </a>
                         </div>
+
                         <div class="d-flex p-3 divBorder w-100" style="margin-top:-10px"></div>
+
+                    <div class="card-body">
                         <form class="alertaGuardar" action="{{ route('mantenimientos.store') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
@@ -111,12 +114,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 text-center">
-                                <button type="submit" class="btn botonGral mb-3">Guardar</button>
+                            <div class="col-12 text-center mt-1 pt-1">
+                                <a href="{{ url('/mantenimientos') }}">
+                                    <button type="button" class="btn btn-danger">Cancelar</button>
+                                </a>
+                                <button type="submit" class="btn botonGral">Guardar</button>
                             </div>
 
                         </form>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

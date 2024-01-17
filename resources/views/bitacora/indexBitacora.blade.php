@@ -24,7 +24,7 @@
                                     @endif
 
                                     <div class="row">
-                                        <div class="d-flex p-3 divBorder">
+                                        <div class="d-flex p-3">
                                             <div class="col-6 text-left">
                                                 <a href="{{ route('catalogos.index', ['seccion' => 'mantenimiento']) }}">
                                                     <button class="btn regresar">
@@ -38,14 +38,15 @@
 
                                             @can('bitacora_create')
                                                 <div class="col-6 text-end">
-                                                    <div class="row">
-                                                        <a href="{{ url('/bitacoras/bitacora/nuevo') }}">
-                                                            <!--Agregar ruta-->
-                                                            <button type="button" class="btn botonGral">Nuevo Registro</button>
-                                                        </a>
-                                                    </div>
+                                                    <a href="{{ url('/bitacoras/bitacora/nuevo') }}">
+                                                        <!--Agregar ruta-->
+                                                        <button type="button" class="btn botonGral">Nuevo Registro</button>
+                                                    </a>
                                                 </div>
                                             @endcan
+                                        </div>
+                                        <div class="divBorder">
+                                            <p>Catálogo General de Bitácoras, que es una plantilla que agrupa Grupos de Tareas Especifícos para Evaluar y Registrar la Información del estado de un Equipo y/o Maquinaría.</p>
                                         </div>
                                     </div>
 
@@ -69,10 +70,12 @@
                                                                 title="Ver la información de la Bitácora."
                                                                 style="color: blue">{{ str_pad($item->id, 3, '0', STR_PAD_LEFT) }}</a>
                                                         </td>
-                                                        <td>{{ $item->nombre }} <br>{{ $item->codigo }} V{{ $item->version }}  </td>
+                                                        <td>{{ $item->nombre }} <br>{{ $item->codigo }}
+                                                            V{{ $item->version }} </td>
                                                         <td>{{ $item->frecuencia }}</td>
                                                         <td>{{ $item->comentario }}</td>
-                                                        <td>Equipos: {{ $item->totalEquipos }}<br>Grupos de Tareas: {{ $item->totalGrupos }}</td>
+                                                        <td>Equipos: {{ $item->totalEquipos }}<br>Grupos de Tareas:
+                                                            {{ $item->totalGrupos }}</td>
 
                                                         <td class="td-actions text-right">
 
@@ -106,11 +109,11 @@
                                                             @can('bitacora_destroy')
                                                                 <form action="{{ route('bitacoras.destroy', $item->id) }}"
                                                                     method="POST" style="display: inline-block;"
-                                                                    onsubmit="return confirm('Seguro?')">
+                                                                    onsubmit="return confirm('¿Seguro que Deseas Borrar la Bitácora?')">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button class="btnSinFondo" type="submit" rel="tooltip"
-                                                                    title="Eliminar la información de la Bitácora.">
+                                                                        title="Eliminar la información de la Bitácora.">
                                                                         <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                             height="28" fill="currentColor" title="Eliminar"
                                                                             class="bi bi-x-circle" viewBox="0 0 16 16">

@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'inventario', 'titlePage' => __('Detalle {{ ucfirst($inventario->tipo) }}')])
+@extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('Detalle {{ ucfirst($inventario->tipo) }}')])
 @section('content')
 
     <div class="content">

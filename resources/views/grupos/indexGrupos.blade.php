@@ -35,7 +35,7 @@
                                     @endif
 
                                     <div class="row">
-                                        <div class="d-flex p-3 divBorder">
+                                        <div class="d-flex p-3">
                                             <div class="col-6 text-left">
                                                 <a href="{{ route('catalogos.index', ['seccion' => 'mantenimiento']) }}">
                                                     <button class="btn regresar">
@@ -48,14 +48,15 @@
                                             </div>
                                             @can('grupo_create')
                                                 <div class="col-6 text-end">
-                                                    <div class="row">
                                                         <a href="{{ url('/bitacoras/grupos/nuevo') }}">
                                                             <!--Agregar ruta-->
                                                             <button type="button" class="btn botonGral">Nuevo Grupo</button>
                                                         </a>
-                                                    </div>
                                                 </div>
                                             @endcan
+                                        </div>
+                                        <div class="divBorder">
+                                            <p>Catálogo General de Grupos de Tareas, que son una o más Tareas Asociadas o Agrupadas para Evaluar un Bloque específico de Información en un CheckList del sistema (Ej. Sistema Motriz o Sistema Hidráulico).</p>
                                         </div>
                                     </div>
 
@@ -99,7 +100,7 @@
                                                             @can('grupo_destroy')
                                                             <form action="{{ route('grupo.destroy', $item->id) }}"  method="POST"
                                                                     style="display: inline-block;"
-                                                                    onsubmit="return confirm('Seguro?')">
+                                                                    onsubmit="return confirm('¿Seguro que Deseas Borrar el Grupo de Tareas?')">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button class="btnSinFondo" type="submit" rel="tooltip"

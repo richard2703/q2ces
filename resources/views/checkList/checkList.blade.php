@@ -33,7 +33,7 @@
                                                     @can('bitacora_show')
                                                         <a href="{{ route('bitacoras.index') }}">
                                                             <!--Agregar ruta-->
-                                                            <button type="button"
+                                                            <button type="button"  style="margin-right: 5px;"
                                                                 class="btn botonGral float-end">Bitácoras</button>
                                                         </a>
                                                     @endcan
@@ -42,12 +42,12 @@
                                                     @can('checkList_create')
                                                         <a href="{{ route('checkList.planeacion') }}">
                                                             <!--Agregar ruta-->
-                                                            <button type="button" class="btn botonGral float-end">Planeación
+                                                            <button type="button" class="btn botonGral float-end"  style="margin-right: 5px;">Planeación
                                                                 Checklist</button>
                                                         </a>
                                                         <a href="#" class="" data-bs-toggle="modal"
                                                             data-bs-target="#nuevoCheckList" {{-- onclick="cargaItem('{{ $item->id }}','{{ $item->nombre }}','{{ $item->comentario }}')" --}}>
-                                                            <button type="button" class="btn botonGral float-end">Añadir Nuevo
+                                                            <button type="button" class="btn botonGral float-end"  style="margin-right: 5px;">Añadir Nuevo
                                                                 Checklist</button>
                                                         </a>
                                                     @endcan
@@ -81,7 +81,8 @@
 
                                                         <td>{{ $item->bitacora }}</td>
                                                         <td>{{ $item->usuario }} </td>
-                                                        <td class=@switch($item->estatus)
+                                                        <td
+                                                            class=@switch($item->estatus)
                                                                 @case(1)
                                                                     'yellow'
                                                                 @break
@@ -120,8 +121,8 @@
                                                         <td class="td-actions text-center">
 
                                                             @can('checkList_show')
-                                                                <a href="{{ route('checkList.show', $item->id) }}" title="Ver el detalle del Checklist"
-                                                                    class="">
+                                                                <a href="{{ route('checkList.show', $item->id) }}"
+                                                                    title="Ver el detalle del Checklist" class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28"
                                                                         height="28" fill="currentColor"
                                                                         class="bi bi-card-text accionesIconos"
@@ -134,8 +135,8 @@
                                                             @endcan
 
                                                             @can('checkList_create')
-                                                                <a href="{{ route('checkListRegistros.show', $item->id) }}" title="Edición del Checklist"
-                                                                    class="">
+                                                                <a href="{{ route('checkListRegistros.show', $item->id) }}"
+                                                                    title="Edición del Checklist" class="">
                                                                     <svg xmlns="http://www.w3.org/2000/svg " width="28"
                                                                         height="28" fill="currentColor" title="Editar"
                                                                         class="bi bi-pencil accionesIconos" viewBox="0 0 16 16">
@@ -146,160 +147,161 @@
                                                             @endcan
 
                                                             @if ($item->estatus != 1)
-                                                                <a href="{{ route('checkList.printTicketUsuario', $item->id) }}" title="Imprimir Ticket de Checklist"
-                                                                    <i class="fas fa-print "
+                                                                <a href="{{ route('checkList.printTicketUsuario', $item->id) }}"
+                                                                    title="Imprimir Ticket de Checklist" <i
+                                                                    class="fas fa-print "
                                                                     style="color: #8caf48;font-size: x-large;"></i>
                                                                 </a>
                                                             @endif
 
                                                             @can('checkList_destroy')
-                                                            <form action="{{ route('checkList.destroy', $item->id) }}" method="POST"
-                                                                style="display: inline-block;"
-                                                                onsubmit="return confirm('¿Estas Seguro que Deseas Borrar el CheckList y Toda su Información Relacionada?')">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button class="btnSinFondo" type="submit" rel="tooltip">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="28"
-                                                                        height="28" fill="currentColor" title="Eliminar"
-                                                                        class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                                        <path
-                                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                                                    </svg>
-                                                                </button>
-                                                            </form>
+                                                                <form action="{{ route('checkList.destroy', $item->id) }}"
+                                                                    method="POST" style="display: inline-block;"
+                                                                    onsubmit="return confirm('¿Estas Seguro que Deseas Borrar el CheckList y Toda su Información Relacionada?')">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="btnSinFondo" type="submit" rel="tooltip">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="28"
+                                                                            height="28" fill="currentColor" title="Eliminar"
+                                                                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                            <path
+                                                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                                            <path
+                                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                </form>
                                                             @endcan
                                                         </td>
                                                     </tr>
 
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="6">Sin registros.</td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
-                                        <div class="card-footer mr-auto">
-                                            {{ $records->links() }}
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan="6">Sin registros.</td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
+                                            </table>
+                                            <div class="card-footer mr-auto">
+                                                {{ $records->links() }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Modal Editar Tarea-->
-    <div class="modal fade" id="nuevoCheckList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bacTituloPrincipal">
+        <!-- Modal Editar Tarea-->
+        <div class="modal fade" id="nuevoCheckList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bacTituloPrincipal">
 
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo CheckList</label>
-                    </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row d-flex" action="{{ route('checkList.ejecutar') }}" method="get">
-                        @csrf
-                        <div class=" col-12 mb-3 ">
-                            <label class="labelTitulo">Bitácora:
-                                <span>*</span></label></br>
-                            <select id="bitacoraId" name="bitacoraId" class="form-select" required
-                                onchange="cargar('bitacoraId','maquinariaId')" aria-label="Default select example">
-                                <option value="">Seleccione</option>
-                                {{-- @foreach ($vctBitacoras as $item)
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">&nbsp Nuevo CheckList</label>
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row d-flex" action="{{ route('checkList.ejecutar') }}" method="get">
+                            @csrf
+                            <div class=" col-12 mb-3 ">
+                                <label class="labelTitulo">Bitácora:
+                                    <span>*</span></label></br>
+                                <select id="bitacoraId" name="bitacoraId" class="form-select" required
+                                    onchange="cargar('bitacoraId','maquinariaId')" aria-label="Default select example">
+                                    <option value="">Seleccione</option>
+                                    {{-- @foreach ($vctBitacoras as $item)
                                     <option value="{{ $item->id }}">
                                         {{ $objValida->ucwords_accent($item->nombre) }}
                                     </option>
                                 @endforeach --}}
-                                @foreach ($vctBitacoras as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $objValida->ucwords_accent($item->nombre . ' [' . $item->frecuencia . ']') }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                                    @foreach ($vctBitacoras as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $objValida->ucwords_accent($item->nombre . ' [' . $item->frecuencia . ']') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                        <div class=" col-12 mb-3 ">
-                            <label class="labelTitulo">Maquinaría:
-                                <span>*</span></label></br>
-                            <select id="maquinariaId" name="maquinariaId" class="form-select" required
-                                aria-label="Default select example">
-                                <option value="">Seleccione</option>
-                                {{-- @foreach ($vctEquipos as $item)
+                            <div class=" col-12 mb-3 ">
+                                <label class="labelTitulo">Maquinaría:
+                                    <span>*</span></label></br>
+                                <select id="maquinariaId" name="maquinariaId" class="form-select" required
+                                    aria-label="Default select example">
+                                    <option value="">Seleccione</option>
+                                    {{-- @foreach ($vctEquipos as $item)
                                     <option value="{{ $item->id }}">
                                         {{ strtoupper($item->identificador) . ' - ' . $objValida->ucwords_accent($item->nombre) }}
                                     </option>
                                 @endforeach --}}
-                            </select>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn botonGral" id="btnTareaGuardar">Ejecutar</button>
-                        </div>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn botonGral" id="btnTareaGuardar">Ejecutar</button>
+                            </div>
 
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        function cargar(ctrlBitacora, ctrlMaquinaria) {
+        <script>
+            function cargar(ctrlBitacora, ctrlMaquinaria) {
 
-            const listaSeleccion = document.getElementById(ctrlBitacora);
-            const ListaSeleccionar = document.getElementById(ctrlMaquinaria);
-            var url = '{{ route('equiposPorBitacora.get', ':bitacoraId') }}';
-            url = url.replace(':bitacoraId', listaSeleccion.value);
+                const listaSeleccion = document.getElementById(ctrlBitacora);
+                const ListaSeleccionar = document.getElementById(ctrlMaquinaria);
+                var url = '{{ route('equiposPorBitacora.get', ':bitacoraId') }}';
+                url = url.replace(':bitacoraId', listaSeleccion.value);
 
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    // Actualiza las opciones en el select "item"
-                    console.log(data);
-                    ListaSeleccionar.innerHTML = '';
-                    data.forEach(item => {
-                        console.log(item);
-                        var option = document.createElement('option');
-                        option.value = item.maquinariaId;
-                        option.textContent = item.maquinaria;
-                        ListaSeleccionar.appendChild(option);
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Actualiza las opciones en el select "item"
+                        console.log(data);
+                        ListaSeleccionar.innerHTML = '';
+                        data.forEach(item => {
+                            console.log(item);
+                            var option = document.createElement('option');
+                            option.value = item.maquinariaId;
+                            option.textContent = item.maquinaria;
+                            ListaSeleccionar.appendChild(option);
+                        });
+
                     });
 
-                });
+            };
+        </script>
 
-        };
-    </script>
+        <script>
+            function Guardado() {
+                // alert('test');
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
 
-    <script>
-        function Guardado() {
-            // alert('test');
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Guardado con exito'
+                })
+            }
+            var slug = '{{ Session::get('message') }}';
+            if (slug == 1) {
+                Guardado();
 
-            Toast.fire({
-                icon: 'success',
-                title: 'Guardado con exito'
-            })
-        }
-        var slug = '{{ Session::get('message') }}';
-        if (slug == 1) {
-            Guardado();
-
-        }
-    </script>
-@endsection
+            }
+        </script>
+    @endsection

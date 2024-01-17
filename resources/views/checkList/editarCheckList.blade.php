@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'mantenimiento', 'titlePage' => __('Editar CheckList')])
+@extends('layouts.main', ['activePage' => 'checkList', 'titlePage' => __('Editar CheckList')])
 @section('content')
     <div class="content">
         @if ($errors->any())

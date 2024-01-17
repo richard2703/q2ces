@@ -34,7 +34,7 @@
                                     @endif
 
                                     <div class="row">
-                                        <div class="d-flex p-3 divBorder">
+                                        <div class="d-flex p-3">
 
                                             <div class="col-4 text-left">
                                                 <a href="{{ route('catalogos.index', ['seccion' => 'mantenimiento']) }}">
@@ -68,15 +68,17 @@
 
                                                 @can('tarea_create')
                                                     <div class="col-12 text-end">
-                                                        <div class="row">
-                                                            <a href="{{ url('/bitacoras/tareas/nueva') }}">
-                                                                <button type="button" class="btn botonGral">Nueva
-                                                                    Tarea</button>
-                                                            </a>
-                                                        </div>
+                                                        <a href="{{ url('/bitacoras/tareas/nueva') }}">
+                                                            <button type="button" class="btn botonGral">Nueva
+                                                                Tarea</button>
+                                                        </a>
                                                     </div>
                                                 @endcan
                                             </div>
+                                        </div>
+                                        <div class="divBorder">
+                                            <p>Catálogo General de Tareas, las cuales son las acciones que son mostradas y
+                                                evaluadas en los CheckList del sistema.</p>
                                         </div>
                                     </div>
 
@@ -105,7 +107,7 @@
                                                         <td><a href="#"
                                                                 title="{{ $item->comentario }}">{{ $item->nombre }}</a>
                                                         </td>
-                                                        <td>{{ $item->grupo ? $item->grupo : '---'  }} </td>
+                                                        <td>{{ $item->grupo ? $item->grupo : '---' }} </td>
                                                         <td>{{ $item->categoria }} </td>
                                                         <td>{{ $item->ubicacion }}</td>
                                                         <td>{{ $item->tipo }}</td>

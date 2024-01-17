@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Alta de Accesorios')])
+@extends('layouts.main', ['activePage' => 'mtq', 'titlePage' => __('Alta de Accesorios')])
 @section('content')
     <div class="content">
         <?php
@@ -33,7 +33,7 @@
                                             </span>
                                             Regresar
                                         </button>
-                                    </a>    
+                                    </a>
                                     </div>
                                     <div class="d-flex p-3 divBorder" style="margin-top:-15px">
                                     </div>
@@ -41,7 +41,7 @@
                             <form action="{{ route('residentes.store') }}"
                                 method="post"class="row alertaGuardar" enctype="multipart/form-data">
                                 @csrf
-                                
+
                                 <div class="row mt-3" style="padding-left: 40px">
                                     <div class=" col-12 col-sm-6 mb-3 pr-3">
                                         <label class="labelTitulo">Nombre:<span>*</span></label></br>
@@ -53,25 +53,25 @@
                                         <input type="text" class="inputCaja" id="empresa" name="empresa" required
                                             value="{{ old('empresa') }}" required placeholder="Especifique...">
                                     </div>  --}}
-            
+
                                     <div class=" col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">E-mail</label></br>
                                         <input type="email" class="inputCaja" required placeholder="ej. elcorreo@delresponsable.com"
                                             min="6" name="email" value="{{ old('email') }}">
                                     </div>
-            
+
                                     <div class=" col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Teléfono:</label></br>
                                         <input type="tel" placeholder="ej. 00-0000-0000" class="inputCaja"
                                             name="telefono"value="{{ old('telefono') }}">
                                     </div>
-            
+
                                     {{--  <div class=" col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Puesto:<span>*</span></label></br>
                                         <input type="text" class="inputCaja" id="puesto" name="puesto" required
                                             value="{{ old('puesto') }}" required placeholder="Especifique...">
                                     </div>  --}}
-            
+
                                     <div class=" col-12 col-sm-6 mb-3 ">
                                         <label class="labelTitulo">Obra: <span>*</span></label></br>
                                         <select name="obraId" class="form-select" aria-label="Default select example">
@@ -83,7 +83,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-            
+
                                     @can('residente_mtq_assign_vehiculo')
                                         {{--  <div class=" col-12 col-sm-6 mb-3 ">
                                             <label class="labelTitulo">Auto: <span></span></label></br>
@@ -139,7 +139,7 @@
                                         </div>
                                     </div>
                                 </div>
-                       
+
                                     <div class="col-12 text-center mb-3 mt-3">
                                         <button type="submit" class="btn botonGral"
                                             onclick="alertaGuardar()">Guardar</button>
@@ -162,7 +162,7 @@
             jQuery('span.'+idname).next().find('span').html(filename);
         });
     </script>
-    
+
     <script src="{{ asset('js/cardArchivos.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -172,7 +172,7 @@
         function crearItems() {
             $('.opcion:first').clone().find("input").val("").end().appendTo('#elementos');
         }
-    
+
         // Borrar registro
         $(document).on('click', '#removeRow', function() {
             if ($('.opcion').length > 1) {

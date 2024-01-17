@@ -470,14 +470,12 @@
                         @endcan
 
                         <div class="row">
-
                             @foreach ($cisterna as $almacenCisterna)
                                 <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
                                     <div class="card" style="margin: 15px">
                                             <div class="card-body combustibleBorde">
                                                 <div class="bordeTitulo mb-3">
-                                                    <h2 class="combustibleTitulo fw-semibold  my-3 text-center"> {{ $almacenCisterna->nombre }}
-                                                    </h2>
+                                                    <h2 class="combustibleTitulo fw-semibold  my-3 text-center"> {{ $almacenCisterna->nombre }}</h2>
                                                 </div>
                                                 <div class="row ">
                                                     <div class="col-12 mb-1">
@@ -521,10 +519,12 @@
                                 </button>
                             </div>
                             @csrf
-                            <div class="col-6 text-center mb-3 ">
-                                <button type="button" class="btn botonGral" data-bs-toggle="modal" data-bs-target="#myModal">
-                                    Realizar Ajuste en Reserva <i class="fas fa-plus-circle"></i>
-                                </button>                                
+                            <div class="col-6 text-center mb-3">
+                                @can('ajustesCisterna_create')
+                                    <button type="button" class="btn botonGral" data-bs-toggle="modal" data-bs-target="#myModal">
+                                        Realizar Ajuste en Reserva <i class="fas fa-plus-circle"></i>
+                                    </button>    
+                                @endcan                            
                             </div>
                         </div>
                         
@@ -629,7 +629,7 @@
                                                                         @csrf
                                                                         @method('DELETE')
 
-                                                                        @can('combustible_destroy')
+                                                                        @can('ajustesCisterna_destroy')
                                                                             <button class=" btnSinFondo"
                                                                                 type="submit"
                                                                                 rel="tooltip">
@@ -757,7 +757,7 @@
                                                                                             <a href="#" class=""
                                                                                                 data-bs-toggle="modal"
                                                                                                 data-bs-target="#cargaCombustible"
-                                                                                                onclick="loadCarga('{{ $carga->id }}','{{ $carga->maquinariaid }}','{{ $carga->operadorid }}'
+                                                                                                onclick="loadCarga('{{ $carga->id }}','{{ $carga->maquinariaId }}','{{ $carga->operadorid }}'
                                                                                         ,'{{ $carga->litros }}','{{ $carga->precio }}'
                                                                                         ,'{{ \Carbon\Carbon::parse($carga->fecha)->format('Y-m-d') }}','{{ $carga->horaLlegadaCarga }}','{{ $carga->comentario }}')">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg "
@@ -1144,7 +1144,7 @@
                         <input type="hidden" name="cargaId" id="cargaId" value="">
                         <div class="col-6 my-3">
                             <label for="inputEmail4" class="labelTitulo">Equipo:</label>
-                            <select id="cargaMaquinaria" name="cargaMaquinaria" class="form-select border-green">
+                            <select id="cargaMaquinaria" name="maquinariaId" class="form-select border-green">
                                 @foreach ($maquinaria as $maquina)
                                     <option value="{{ $maquina->id }}">
                                         {{ $maquina->nombre . ' / ' . $maquina->modelo . ($maquina->placas != '' ? ' [' . $maquina->placas . ']' : '') }}
@@ -1177,14 +1177,14 @@
 
                         <div class="col-6 my-3">
                             <label for="inputEmail4" class="labelTitulo">Fecha:</label>
-                            <input type="date" class="inputCaja" id="cargaFecha" name="cargaFecha"
-                                value="">
+                            <input type="date" class="inputCaja" name="cargaFecha" value="{{ now()->format('Y-m-d') }}">
                         </div>
-
+                        
                         <div class="col-6 my-3">
                             <label for="inputEmail4" class="labelTitulo">Hora Carga:</label>
-                            <input type="time" class="inputCaja" id="cargaHora" name="cargaHora" value="">
+                            <input type="time" class="inputCaja" name="cargaHora" value="{{ now()->format('H:i') }}">
                         </div>
+                        
 
                         <div class="col-12 my-3">
                             <label class="labelTitulo">Observaciones:</label></br>
@@ -1741,7 +1741,13 @@
             const txtId = document.getElementById('cargaId');
             txtId.value = id;
 
-            const lstEquipo = document.getElementById('cargaMaquinaria').value = maquinariaId;
+            const lstEquipo = document.getElementById('cargaMaquinaria');
+            for (let i = 0; i < lstEquipo.options.length; i++) {
+                if (lstEquipo.options[i].value == maquinariaId) {
+                    // lstEquipo.options[i].selected = true;
+                    lstEquipo.selectedIndex = i;
+                }
+            }
 
             const lstOperador = document.getElementById('cargaOperador').value = operadorId;
 
@@ -1754,8 +1760,8 @@
             const txtComentario = document.getElementById('observacionesCargaEdit');
             txtComentario.value = comentario;
 
-            const dteFecha = document.getElementById('cargaFecha').value = fecha;
-            const dteHora = document.getElementById('cargaHora').value = hora;
+            //const dteFecha = document.getElementById('cargaFecha').value = fecha;
+            //const dteHora = document.getElementById('cargaHora').value = hora;
         }
     </script>
 

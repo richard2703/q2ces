@@ -1,4 +1,4 @@
-@extends('layouts.main', ['activePage' => 'maquinaria', 'titlePage' => __('Alta de Documentos')])
+@extends('layouts.main', ['activePage' => ( $mantenimiento->compania == true ? 'mtq' : 'mantenimiento'), 'titlePage' => __('Alta de Documentos')])
 @section('content')
     <div class="content">
         <?php
