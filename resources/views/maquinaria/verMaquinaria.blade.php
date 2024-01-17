@@ -108,11 +108,18 @@
                                                         id="arrayFotosPersistente" value="">
                                                     <div class="col-12 col-lg-8">
                                                         <div class="row alin">
-                                                            <div class=" col-12 col-sm-8  mb-3 ">
+                                                            <div class=" col-12 col-sm-12  mb-3 ">
                                                                 <label class="labelTitulo">Equipo:</label></br>
                                                                 <input type="text" class="inputCaja" id="nombre"
                                                                     placeholder="Especifique..." required name="nombre"
                                                                     value="{{ $maquinaria->nombre }}" disabled>
+                                                            </div>
+
+                                                            <div class=" col-12 col-sm-8  mb-3 ">
+                                                                <label class="labelTitulo">Nombre Comercial:</label></br>
+                                                                <input type="text" class="inputCaja" id="nombre"
+                                                                    placeholder="Especifique..." required name="alias"
+                                                                    value="{{ $maquinaria->alias }}" disabled>
                                                             </div>
 
                                                             {{-- <div class=" col-12 col-sm-6 col-lg-4 my-3 ">

@@ -173,11 +173,6 @@
                             </select>
                         </div>  --}}
 
-                        <div class=" col-12 col-lg-4 mb-3 ">
-                            <label class="labelTitulo">Clave de Servicio: <span>*</span></label></br>
-                            <input type="number" class="inputCaja" name="claveServicio"
-                                value="{{ old('claveServicio') }}" required placeholder="Especifique...">
-                        </div>
 
                         <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Unidades: <span>*</span></label></br>
@@ -203,6 +198,12 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <div class=" col-12 col-lg-4 mb-3 ">
+                            <label class="labelTitulo">Clave de Servicio: <span>*</span></label></br>
+                            <input type="number" class="inputCaja" name="claveServicio"
+                                value="{{ old('claveServicio') }}" required placeholder="Especifique...">
                         </div>
 
                         <div class=" col-12  mb-3 ">
@@ -258,12 +259,6 @@
                         </div>  --}}
 
                         <div class=" col-12 col-lg-4 mb-3 ">
-                            <label class="labelTitulo">Clave de Servicio: <span>*</span></label></br>
-                            <input type="text" class="inputCaja" id="claveServicio" name="claveServicio"
-                                value="{{ old('claveServicio') }}" required placeholder="Especifique...">
-                        </div>
-
-                        <div class=" col-12 col-lg-4 mb-3 ">
                             <label class="labelTitulo">Unidades: <span>*</span></label></br>
                             <select id="tiposUnidadesId" name="tiposUnidadesId" class="form-select" required
                                 aria-label="Default select example">
@@ -274,6 +269,12 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <div class=" col-12 col-lg-4 mb-3 ">
+                            <label class="labelTitulo">Clave de Servicio: <span>*</span></label></br>
+                            <input type="text" class="inputCaja" id="claveServicio" name="claveServicio"
+                                value="{{ old('claveServicio') }}" required placeholder="Especifique...">
                         </div>
 
                         <div class=" col-12 col-lg-4 mb-3 ">
@@ -363,14 +364,16 @@
     <script>
         function cargaItem(id, nombre, tipo, codigo, comentarios, claveServicio, unidadesSatId, tiposUnidadesId) {
 
+            console.log(id, nombre, tipo, codigo, comentarios, claveServicio, unidadesSatId, tiposUnidadesId);
+
             const txtId = document.getElementById('controlId');
             txtId.value = id;
 
             const txtNombre = document.getElementById('controlNombre');
             txtNombre.value = nombre;
 
-            const txtTipo = document.getElementById('controlTipo');
-            txtTipo.value = tipo;
+            // const txtTipo = document.getElementById('controlTipo');
+            // txtTipo.value = tipo;
 
             const txtComentarios = document.getElementById('controlComentarios');
             txtComentarios.value = comentarios;

@@ -119,11 +119,18 @@
                                 </div>
                                 <div class="col-12 col-md-8 px-2">
                                     <div class="row alin">
-                                        <div class=" col-12 col-sm-8 mb-3 ">
+                                        <div class=" col-12 col-sm-12 mb-3 ">
                                             <label class="labelTitulo">Equipo:</label></br>
                                             <input type="text" class="inputCaja" id="nombre"
                                                 placeholder="Especifique..." required name="nombre"
                                                 value="{{ $maquinaria->nombre }}">
+                                        </div>
+
+                                        <div class=" col-12 col-sm-8 mb-3 ">
+                                            <label class="labelTitulo">Nombre comercial:</label></br>
+                                            <input type="text" class="inputCaja" id="nombre"
+                                                placeholder="Especifique un alias comercial..." required name="alias"
+                                                value="{{ $maquinaria->alias }}">
                                         </div>
 
 
@@ -228,7 +235,7 @@
                                             <label class="labelTitulo">Numero Económico:</label></br>
                                             <input type="text" class="inputCaja" id="identificador"
                                                 name="identificador" value="{{ $maquinaria->identificador }}"
-                                                placeholder="ej: MT-00">
+                                                maxlength="8" minlength="4" placeholder="ej: MT-00">
                                         </div>
 
                                         {{-- <div class=" col-12 col-sm-12 mb-3 ">
@@ -393,12 +400,12 @@
                                                             </div>
 
                                                             <!--<div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
-                                                                                                                                                                    <label class="labelTitulo">Combustible:</label></br>
-                                                                                                                                                                    <input type="text" class="inputCaja" id="combustible"
-                                                                                                                                                                        name="combustible"
-                                                                                                                                                                        placeholder="Diesel / Gasolina / Especificar"
-                                                                                                                                                                        value="{{ $maquinaria->combustible }}">
-                                                                                                                                                                </div>-->
+                                                                                                                                                                        <label class="labelTitulo">Combustible:</label></br>
+                                                                                                                                                                        <input type="text" class="inputCaja" id="combustible"
+                                                                                                                                                                            name="combustible"
+                                                                                                                                                                            placeholder="Diesel / Gasolina / Especificar"
+                                                                                                                                                                            value="{{ $maquinaria->combustible }}">
+                                                                                                                                                                    </div>-->
 
                                                             <div class=" col-12 col-sm-6 col-lg-4 mb-3 ">
                                                                 <label class="labelTitulo">Aceite Motor:</label></br>
@@ -446,7 +453,8 @@
                                                             <div class="col-12 col-sm-6  mb-3">
                                                                 <div class="row align-items-end">
                                                                     <label class="labelTitulo">Medición de Uso</label></br>
-                                                                    <div class="col-6 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
+                                                                    <div
+                                                                        class="col-6 col-md-6 col-lg-4 col-xl-7 inputNumberKilometraje">
 
                                                                         <input type="number" class="inputCaja"
                                                                             id="kilometraje" name="kilometraje"
@@ -534,8 +542,8 @@
                                                                         class="col-12 col-sm-4 col-lg-2 my-3 text-center pt-3">
                                                                         <!--<i class="fas fa-clipboard-check"></i>-->
                                                                         <!--<span class="material-icons" style="font-size:40px; color: gray">
-                                                                                                                                                            content_paste_search
-                                                                                                                                                        </span>-->
+                                                                                                                                                                content_paste_search
+                                                                                                                                                            </span>-->
                                                                         @if ($refaccion->relacionInventarioId != null)
                                                                             <span class="material-icons"
                                                                                 style="font-size:40px; color: green">
@@ -658,8 +666,11 @@
                                                                                 name='archivo[{{ $count }}][idDoc]'
                                                                                 value='{{ $item->idDoc }}'>
 
-                                                                            <input type="hidden" id='modificacion{{ $item->id }}' name='archivo[{{ $count }}][modificacionDocs]' value='0'>
-                                                                            
+                                                                            <input type="hidden"
+                                                                                id='modificacion{{ $item->id }}'
+                                                                                name='archivo[{{ $count }}][modificacionDocs]'
+                                                                                value='0'>
+
 
                                                                             <input type="hidden"
                                                                                 id='{{ $item->nombre }}'
@@ -766,7 +777,10 @@
                                                                                 name='archivo[{{ $count }}][idDoc]'
                                                                                 value='{{ $item->idDoc }}'>
 
-                                                                                <input type="hidden" id='modificacion{{ $item->id }}' name='archivo[{{ $count }}][modificacionDocs]' value='0'>
+                                                                            <input type="hidden"
+                                                                                id='modificacion{{ $item->id }}'
+                                                                                name='archivo[{{ $count }}][modificacionDocs]'
+                                                                                value='0'>
 
                                                                             <input type="hidden"
                                                                                 id='{{ $item->nombre }}'
