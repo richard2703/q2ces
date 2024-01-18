@@ -79,31 +79,21 @@
 # Elementos Unicos
 --------------------------------------------------------------*/
 /* Cinta de Marcas - HOME */
-@-webkit-keyframes scroll {
-  0% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-  }
-  100% {
-    -webkit-transform: translateX(calc(-250px * 7));
-            transform: translateX(calc(-250px * 7));
-  }
-}
 
 @keyframes scroll {
   0% {
     -webkit-transform: translateX(0);
-            transform: translateX(0);
-  }
-  100% {
-    -webkit-transform: translateX(calc(-250px * 7));
-            transform: translateX(calc(-250px * 7));
-  }
+    transform: translateX(0);
+}
+100% {
+    -webkit-transform: translateX(calc(-200px * 12));
+    transform: translateX(calc(-200px * 12));
+}
 }
 .slider {
   background: var(--verdeB);
   /*box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .125);*/
-  height: 100px;
+  height: 120px;
   margin: auto;
   overflow: hidden;
   position: relative;
@@ -129,14 +119,9 @@
   top: 0;
 }
 .slider .slide-track {
-  -webkit-animation: scroll 40s linear infinite;
-          animation: scroll 40s linear infinite;
+  animation: scroll 60s linear infinite;
   display: flex;
-  width: calc(250px * 14);
-}
-.slider .slide {
-  height: 50px;
-  width: 250px;
+  width: calc(200px * 24);
 }
 
 /* .slide img{
@@ -378,7 +363,8 @@
     flex-wrap: wrap;
     justify-content: space-between;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    width: 100%;
+    /* min-height: 500px; */
     background-position: center;
     text-align: -webkit-center;
     padding-top: 3rem!important;
@@ -386,7 +372,7 @@
 }
 
 .liston img{
-  width: 50%;
+  width: 30%;
 }
 
 .liston p{

@@ -42,87 +42,95 @@
 
 <body>
     <!-- ======= Header ======= -->
-    <header id="header" class="">
-        <div class="datos">
+    <header id="header" class="" >
+        <div class="datos flex-grow-1" >
             <ul class="lista-datos">
-                <li class="">
+                <li class="d-flex justify-content-center">
                     <div>
                         <img src="{{ asset('img/comercial/layout/whats.svg') }}" height="35px" alt="">
                     </div>
                     (55) 33-1215-7273
                 </li>
-                <li>
+                <li class="d-flex justify-content-center">
                     <div>
                         <img src="{{ asset('img/comercial/layout/telefono.svg') }}" height="20px" alt=""
                             style="">
                     </div>
                     Cóntactanos
                 </li>
-                <li class="">
-                    <div>
-                        <img src="{{ asset('img/comercial/layout/maps.svg') }}" height="20px" alt="">
+                <li class="d-flex justify-content-center">
+                    <img src="{{ asset('img/comercial/layout/maps.svg') }}" height="20px" alt="">
+                    <div class="text-start"> 
+                        Corporativo: <br>
+                        José María Heredia #2387
                     </div>
-                    Corporativo: <br>
-                    José María Heredia #2387
+                    
+                    
                 </li>
-                <li class="">
-                    <div>
-                        <img src="{{ asset('img/comercial/layout/maps.svg') }}" height="20px" alt="">
+                <li class="d-flex justify-content-center">
+                    <img src="{{ asset('img/comercial/layout/maps.svg') }}" height="20px" alt="">
+                    <div class="text-start">
+                        Operaciones: <br>
+                        San Juan de Los Lagos #1824
                     </div>
-                    Operaciones: <br>
-                    San Juan de Los Lagos #1824
                 </li>
-                <li class="">
+                <li class="d-flex justify-content-center">
                     <div>
                         <img src="{{ asset('img/comercial/layout/relogBlanco.svg') }}" height="20px" alt="">
                     </div>
                     Lunes - Sábado 8:00-18:00
                 </li>
-                <li class="">
+                <li class="d-flex justify-content-end">
                     <a href="{{ url('home', session('id')) }}" class=" align-items-center">
                         <img src="{{ asset('img/comercial/layout/Q2CEM.svg') }}" height="35px" alt="Q2Ces">
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="d-flex encabezado" style="background-color: white !important;">
-            <div class='logo col-2 '>
-                {{--  <li >  --}}
-                <a href="{{ url('/') }}" class="align-items-center">
-                    <img src="{{ asset('img/comercial/layout/Q2CES.svg') }}" alt="Q2Ces">
-                </a>
-                {{--  </li>  --}}
-
-            </div>
-            <div class="col-10 divnav">
-                <nav>
-                    <ul class='nav-bar d-flex'>
-                        <input type='checkbox' id='check' />
-                        <span class="menu">
-                            <li class="{{ $activePage == 'inicio' ? 'activo' : '' }}">
-                                <a href="{{ url('/') }}">Inicio</a>
-                            </li>
-                            <li class="{{ $activePage == 'quienesSomos' ? 'activo' : '' }}"><a href="{{ route('quienesSomos.index') }}">¿Quiénes Somos?</a></li>
-                            <li class="{{ $activePage == 'equipos' ? 'activo' : '' }}"><a href="{{ route('equipos.index') }}">Equipos</a></li>
-                                {{--  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>  --}}
-                            {{--  </li>  --}}
-                            <li><a href="">Cotizador</a></li>
-                            <li><a href="">Trabaja con Nosotros</a></li>
-                            <li><a href="">Blog</a></li>
-                            <li><a href="">Contáctanos</a></li>
-                            <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
-                        </span>
-                        <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+        
 
     </header>
+    <div class="d-flex encabezado" style="background-color: white !important;">
+        <div class='logo col-2'>
+            {{--  <li >  --}}
+            <a href="{{ url('/') }}" class="align-items-center">
+                <img src="{{ asset('img/comercial/layout/Q2CES.svg') }}" alt="Q2Ces">
+            </a>
+            {{--  </li>  --}}
+
+        </div>
+        <div class="col-10 divnav">
+            <nav>
+                <ul class='nav-bar d-flex'>
+                    <input type='checkbox' id='check' />
+                    <span class="menu">
+                        <li class="{{ $activePage == 'inicio' ? 'activo' : '' }}">
+                            <a href="{{ url('/') }}">Inicio</a>
+                        </li>
+                        <li class="{{ $activePage == 'quienesSomos' ? 'activo' : '' }}"><a href="{{ route('quienesSomos.index') }}">¿Quiénes Somos?</a></li>
+                        <li class="{{ $activePage == 'equipos' ? 'activo' : '' }}"><a href="{{ route('equipos.index') }}">Equipos</a></li>
+                            {{--  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>  --}}
+                        {{--  </li>  --}}
+                        <li><a href="">Cotizador</a></li>
+                        <li><a href="">Trabaja con Nosotros</a></li>
+                        <li><a href="">Blog</a></li>
+                        <li><a href="">Contáctanos</a></li>
+                        <li class="d-flex justify-content-end">
+                            <a href="{{ url('home', session('id')) }}" class=" align-items-center">
+                                <img src="{{ asset('img/comercial/layout/LUPA.svg') }}" height="40px" alt="Q2Ces">
+                            </a>
+                        </li>
+                        <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
+                    </span>
+                    <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
+                </ul>
+            </nav>
+        </div>
+    </div>
     <!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
@@ -258,3 +266,24 @@
 </body>
 
 </html>
+
+<style>
+    #header {
+        display: flex;
+        flex-wrap: wrap; /* Permite que los elementos se envuelvan en una nueva línea si no hay espacio suficiente */
+        justify-content: space-between; /* Distribuirá el espacio disponible entre los elementos */
+    }
+
+    #header .lista-datos {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-grow: 1; /* Hace que el <ul> ocupe todo el espacio disponible */
+    }
+
+    #header .lista-datos li {
+        flex-grow: 1; /* Hace que cada <li> ocupe todo el espacio disponible dentro del <ul> */
+        text-align: center; /* Centra el contenido dentro de cada <li> */
+    }
+
+</style>

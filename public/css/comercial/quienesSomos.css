@@ -1,12 +1,14 @@
 .bg-image {
     background-image: url('../../img/comercial/layout/quienesSomos/BANNER SOBRE NOSOTROS_1.png');
-    background-size: 100% 100%;
+    width: 100%;
+    /* min-height: 500px; */
     background-position: center;
     background-repeat: no-repeat;
 }
 .bg-image-contactos{
     background-image: url('../../img/comercial/layout/quienesSomos/BANNER SOBRE NOSOTROS_1.png');
-    background-size: 100% 100%;
+    width: 100%;
+    /* min-height: 500px; */
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -157,7 +159,8 @@
         background: linear-gradient(to bottom, var(--verdeF), white);
     }
     .backImageContacto{
-        background-size: 95% 100% !important;
+        width: 100%;
+        min-height: 500px;
         background-repeat: no-repeat;
     }
     .pContactenos{
