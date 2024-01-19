@@ -80,18 +80,42 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">CFDI: </label></br>
-                                            <input type="text" class="inputCaja" id="cfdi" name="cfdi"
-                                                placeholder="Especifique..." value="{{ old('cfdi') }}">
+                                            <select id="usoCfdiId" name="usoCfdiId"
+                                                class="form-select form-select-lg mb-3 inputCaja"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctUsosCfdi as $item)
+                                                    <option value="{{ $item->id }}" >
+                                                        {{ $item->usoCfdi }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Medoto de Pago: </label></br>
-                                            <input type="text" class="inputCaja" id="metodo" name="metodo"
-                                                placeholder="Especifique..." value="{{ old('metodo') }}">
+                                            <label class="labelTitulo">Método de Pago: </label></br>
+                                            <select id="metodoPagoId" name="metodoPagoId"
+                                                class="form-select form-select-lg mb-3 inputCaja"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctMetodosPago as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->metodoPago }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Forma de Pago: </label></br>
-                                            <input type="text" class="inputCaja" id="forma" name="forma"
-                                                placeholder="Especifique..." value="{{ old('forma') }}">
+                                            <select id="formaPagoId" name="formaPagoId"
+                                                class="form-select form-select-lg mb-3 inputCaja"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctFormasPago as $item)
+                                                    <option value="{{ $item->id }}" >
+                                                        {{ $item->formaPago }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Calle: <span>*</span></label></br>

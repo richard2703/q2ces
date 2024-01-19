@@ -36,7 +36,8 @@ class maquinariaMtqController extends Controller
             ->leftJoin('marca', 'marca.id', 'maquinaria.marcaId')
             ->leftJoin('residenteAutos', 'residenteAutos.autoId', 'maquinaria.id')
             ->leftJoin('residente', 'residente.id', 'residenteAutos.residenteId')
-            ->select('maquinaria.*', 'marca.nombre as nombreMarca',  'residenteAutos.autoId as residenteId', 'residente.nombre as residente')
+            ->select('maquinaria.*', 'marca.nombre as nombreMarca',  'residenteAutos.autoId as residenteId', DB::raw("GROUP_CONCAT(residente.nombre SEPARATOR ', ') as residente"))
+            ->groupby( 'maquinaria.id' )
             ->orderBy('identificador', 'asc')
             ->paginate(15);
 
