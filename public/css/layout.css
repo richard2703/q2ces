@@ -1258,3 +1258,15 @@ table{
   color: var(--iconos);
   font-size: x-large;
 }
+
+#header .datos {
+  flex: 1 !important; /* La propiedad flex distribuirá el espacio disponible entre los elementos hijos */
+}
+
+#header .lista-datos {
+  display: flex !important;
+  justify-content: space-around !important; /* Distribuirá el espacio disponible alrededor de los elementos hijos */
+  align-items: center !important; /* Centrará los elementos verticalmente */
+  list-style: none !important;
+  padding: 0 !important;
+}
