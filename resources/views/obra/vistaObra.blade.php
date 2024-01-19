@@ -167,15 +167,10 @@
                                         <div class="row opcionB" id="opcB">
                                             <div class="col-12">
                                                 <div class="">
-                                                    <h2 class="tituloEncabezado ">Maquinaria asignada</h2>
+                                                    <div class="col-12 divBorder">
+                                                        <h2 class="tituloEncabezado ">Maquinaria asignada</h2>
+                                                    </div>
                                                 </div>
-                                                {{--  <div class=" divBorder pb-3" style="text-align: right;">
-                                                    @if ($obras->id > 2)
-                                                        <button type="button" id="removeRow" class="btnRojo"></button>
-                                                    @endif
-                                                    <button type="button" class="btnVerde" onclick="crearItemsB()">
-                                                    </button>
-                                                </div>  --}}
 
                                                 <div class="row">
 
@@ -317,163 +312,87 @@
                                     @endforelse
                                 </div>
                             @endcan
-
                             <!-- Servicios -->
                             @can('obra_assign_maquinaria')
                                 <div class="row card-body" id="elementosB">
 
-                                    @forelse ($vctMaquinariaAsignada as $maquinaria)
-                                        <div class="row opcionB" id="opcB">
-                                            <div class="col-12">
-                                                <div class="">
-                                                    <h2 class="tituloEncabezado ">Maquinaria asignada</h2>
-                                                </div>
-                                                {{--  <div class=" divBorder pb-3" style="text-align: right;">
-                                                    @if ($obras->id > 2)
-                                                        <button type="button" id="removeRow" class="btnRojo"></button>
-                                                    @endif
-                                                    <button type="button" class="btnVerde" onclick="crearItemsB()">
-                                                    </button>
-                                                </div>  --}}
-
-                                                <div class="row">
-
-                                                    <input type="hidden" name="idObraMaqPer[]"
-                                                        value="{{ $maquinaria->id }}">
-
-                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Equipo: <span>*</span></label></br>
-                                                        <select id="maquinariaId" name="maquinariaId[]" class="form-select"
-                                                            aria-label="Default select example" disabled>
-                                                            <option value="">Seleccione</option>
-                                                            @foreach ($vctMaquinaria as $maquina)
-                                                                <option value="{{ $maquina->id }}"
-                                                                    {{ $maquina->id == $maquinaria->maquinariaId ? ' selected' : '' }}>
-                                                                    {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
+                                    @forelse ($vctObraServicio as $servicio)
+                                        <div class="d-flex p-3">
+                                            <div class="col-12" id="elementos">
+                                                <div class="d-flex">
+                                                    <div class="col-12 divBorder">
+                                                        <h2 class="tituloEncabezado ">Servicios de obra</h2>
                                                     </div>
 
-                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Operador: <span>*</span></label></br>
-                                                        <select id="personalId" name="personalId[]" class="form-select"
-                                                            aria-label="Default select example" disabled>
+                                                </div>
+                                                <div class="row opcion divBorderItems" id="opc">
+                                                    {{--  <input type="hidden" name="idRefaccion[]" value="">  --}}
+                                                    <div class=" col-12 col-sm-6  my-3 ">
+                                                        <label class="labelTitulo">Servicio:</label></br>
+                                                        <input type="hidden" name="Idser[]" value="{{ $item->id }}">
+                                                        <select id="tipoRefaccion" name='servicioId[]' class="form-select"
+                                                            disabled>
                                                             <option value="">Seleccione</option>
-                                                            @foreach ($vctPersonal as $item)
-                                                                {{-- <option value="0">Sin Cambios</option>
-                                                            <option value="">Denegar Equipo</option> --}}
+                                                            @foreach ($vctConceptos as $item)
                                                                 <option value="{{ $item->id }}"
-                                                                    {{ $item->id == $maquinaria->personalId ? ' selected' : '' }}>
-                                                                    {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
+                                                                    {{ $item->id == $servicio->conceptoId ? ' selected' : '' }}>
+                                                                    {{ $item->codigo }} - {{ $item->nombre }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Combustible:</label></br>
-                                                        <select class="form-select" aria-label="Default select example"
-                                                            id="combustible" name="combustible[]" disabled>
-                                                            <option value="0"
-                                                                {{ $maquinaria->combustible == 0 ? 'selected' : '' }}>No
-                                                            </option>
-                                                            <option value="1"
-                                                                {{ $maquinaria->combustible == 1 ? 'selected' : '' }}>Sí
-                                                            </option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Fecha de Inicio:</label></br>
-                                                        <input type="date" class="inputCaja" id="inicio"
-                                                            name="inicio[]"
-                                                            value="{{ \Carbon\Carbon::parse($maquinaria->inicio)->format('Y-m-d') }}"
-                                                            disabled>
-                                                    </div>
-
-                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Fecha de Término:</label></br>
-                                                        <input type="date" class="inputCaja" id="fin"
-                                                            name="fin[]"
-                                                            value="{{ \Carbon\Carbon::parse($maquinaria->fin)->format('Y-m-d') }}"
-                                                            disabled>
+                                                    <div class=" col-12 col-sm-5  my-3 ">
+                                                        <label class="labelTitulo">Precio por servicio:</label></br>
+                                                        <input type="number" class="inputCaja" name='precio[]' disabled
+                                                            id="numeroParte" maxlength="100000" step="0.01"
+                                                            min="0.00" max="99999" placeholder="$ 2,000.00"
+                                                            value="{{ $servicio->precio }}">
                                                     </div>
 
                                                 </div>
+
                                             </div>
                                         </div>
-
                                     @empty
-                                        <div class="row opcionB" id="opcB">
-                                            <div class="col-12 ">
-                                                <div class="">
-                                                    <h2 class="tituloEncabezado ">Maquinaria Asignada</h2>
-                                                </div>
-                                                {{--  <div class="divBorder pb-3" style="text-align: right;">
-                                                    @if ($obras->id > 2)
-                                                        <button type="button" id="removeRow" class="btnRojo"></button>
-                                                    @endif
-                                                    <button type="button" class="btnVerde" onclick="crearItemsB()">
-                                                    </button>
-                                                </div>  --}}
-
-                                                <div class="row">
-
-                                                    <input type="hidden" name="idObraMaqPer[]" value="">
-
-                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Equipo: <span>*</span></label></br>
-                                                        <select id="maquinariaId" name="maquinariaId[]" class="form-select"
-                                                            aria-label="Default select example" disabled>
-                                                            <option value="">Seleccione</option>
-                                                            @foreach ($vctMaquinaria as $maquina)
-                                                                <option value="{{ $maquina->id }}">
-                                                                    {{ strtoupper($maquina->identificador) . ' - ' . $objValida->ucwords_accent($maquina->nombre) }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
+                                        <div class="d-flex p-3">
+                                            <div class="col-12" id="elementos">
+                                                <div class="d-flex">
+                                                    <div class="col-6 divBorder">
+                                                        <h2 class="tituloEncabezado ">Servicios de obra</h2>
                                                     </div>
 
-                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Operador: <span>*</span></label></br>
-                                                        <select id="personalId" name="personalId[]" class="form-select"
-                                                            aria-label="Default select example" disabled>
+                                                    <div class="col-6 divBorder pb-3 text-end">
+                                                        <button type="button" class="btnVerde" onclick="crearItems()">
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="row opcion divBorderItems" id="opc">
+                                                    {{--  <input type="hidden" name="idRefaccion[]" value="">  --}}
+                                                    <div class=" col-12 col-sm-6  my-3 ">
+                                                        <label class="labelTitulo">Servicio:</label></br>
+                                                        <input type="hidden" name="Idser[]" value="">
+                                                        <select id="tipoRefaccion" name='servicioId[]' class="form-select"
+                                                            disabled>
                                                             <option value="">Seleccione</option>
-                                                            {{-- <option value="0">Sin Cambios</option>
-                                                        <option value="">Denegar Equipo</option> --}}
-                                                            @foreach ($vctPersonal as $item)
+                                                            @foreach ($servicios as $item)
                                                                 <option value="{{ $item->id }}">
-                                                                    {{ $objValida->ucwords_accent($item->personal . ' [' . $item->puesto . ']') }}
+                                                                    {{ $item->codigo }} - {{ $item->nombre }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Combustible:</label></br>
-                                                        <select class="form-select" aria-label="Default select example"
-                                                            id="combustible" name="combustible[]" disabled>
-                                                            <option value="0">No
-                                                            </option>
-                                                            <option value="1">Sí
-                                                            </option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Fecha de Inicio:</label></br>
-                                                        <input type="date" class="inputCaja" id="inicio"
-                                                            name="inicio[]" value="" disabled>
-                                                    </div>
-
-                                                    <div class="col-12 col-sm-6 col-lg-4 my-3 ">
-                                                        <label class="labelTitulo">Fecha de Término:</label></br>
-                                                        <input type="date" class="inputCaja" id="fin"
-                                                            name="fin[]" value="" disabled>
+                                                    <div class=" col-12 col-sm-5  my-3 ">
+                                                        <label class="labelTitulo">Precio por servicio:</label></br>
+                                                        <input type="number" class="inputCaja" name='precio[]' disabled
+                                                            id="numeroParte" maxlength="100000" step="0.01"
+                                                            min="0.00" max="99999" placeholder="$ 2,000.00"
+                                                            value="">
                                                     </div>
 
                                                 </div>
+
                                             </div>
                                         </div>
                                     @endforelse

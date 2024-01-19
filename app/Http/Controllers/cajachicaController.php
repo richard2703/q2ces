@@ -131,7 +131,7 @@ class cajaChicaController extends Controller
             ->where('personal.estatusId', 1)
             ->orderBy('personal.nombres', 'asc')->get();
         // dd($personal);
-        $obras = obras::orderBy('nombre', 'asc')->get();
+        $obras = obras::getListaObras(true);
         $maquinaria = maquinaria::where('compania', '!=', 'mtq')->orWhere('compania', null)->orderBy('identificador', 'asc')->get();
         $vctComprobantes = comprobante::select()->orderBy('nombre', 'asc')->get();
         $vctClientes = clientes::select()->orderBy('nombre', 'asc')->get();

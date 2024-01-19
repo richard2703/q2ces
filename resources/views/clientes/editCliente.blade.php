@@ -80,18 +80,48 @@
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">CFDI: </label></br>
-                                            <input type="text" class="inputCaja" id="cfdi" name="cfdi"
-                                                placeholder="Especifique..." value="{{ $cliente->cfdi }}">
+                                            <select id="usoCfdiId" name="usoCfdiId"
+                                                {{ $cliente->estadoId < 3 ? '' : 'disabled="false"' }}
+                                                class="form-select form-select-lg mb-3 inputCaja"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctUsosCfdi as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $cliente->usoCfdiId == $item->id ? ' selected' : '' }}>
+                                                        {{ $item->usoCfdi }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
-                                            <label class="labelTitulo">Medoto de Pago: </label></br>
-                                            <input type="text" class="inputCaja" id="metodo" name="metodo"
-                                                placeholder="Especifique..." value="{{ $cliente->metodo }}">
+                                            <label class="labelTitulo">Método de Pago: </label></br>
+                                            <select id="metodoPagoId" name="metodoPagoId"
+                                                {{ $cliente->estadoId < 3 ? '' : 'disabled="false"' }}
+                                                class="form-select form-select-lg mb-3 inputCaja"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctMetodosPago as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $cliente->metodoPagoId == $item->id ? ' selected' : '' }}>
+                                                        {{ $item->metodoPago }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Forma de Pago: </label></br>
-                                            <input type="text" class="inputCaja" id="forma" name="forma"
-                                                placeholder="Especifique..." value="{{ $cliente->forma }}">
+                                            <select id="formaPagoId" name="formaPagoId"
+                                                {{ $cliente->estadoId < 3 ? '' : 'disabled="false"' }}
+                                                class="form-select form-select-lg mb-3 inputCaja"
+                                                aria-label="Default select example">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($vctFormasPago as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        {{ $cliente->formaPagoId == $item->id ? ' selected' : '' }}>
+                                                        {{ $item->formaPago }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class=" col-12 col-sm-6  col-lg-4 my-3 ">
                                             <label class="labelTitulo">Calle: <span>*</span></label></br>

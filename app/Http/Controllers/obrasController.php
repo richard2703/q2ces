@@ -228,10 +228,12 @@ class obrasController extends Controller
 
         $vctMaquinariaAsignada = obraMaqPer::select('*')->where('obraId', '=', $obras->id)->get();
         $vctResidenteAsignado = residente::select('*')->where('obraId', '=', $obras->id)->get();
+        $vctObraServicio = obrasServicios::select('*')->where('obraId', '=', $obras->id)->get();
         $Clientes = clientes::orderBy('clientes.nombre', 'asc')->get();
+        $vctConceptos = conceptos::orderBy('conceptos.nombre', 'asc')->get();
 
 
-        return view('obra.vistaObra', compact('obras', 'vctPersonal', 'vctMaquinaria', 'vctResidenteAsignado', 'vctMaquinariaAsignada', 'Clientes'));
+        return view('obra.vistaObra', compact('obras', 'vctPersonal', 'vctMaquinaria', 'vctResidenteAsignado', 'vctMaquinariaAsignada','vctObraServicio', 'Clientes','vctConceptos'));
     }
 
     /**
