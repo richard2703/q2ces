@@ -5,13 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class clientes extends Model
-{
+class clientes extends Model {
     use HasFactory;
-    protected $table = "clientes";
+    protected $table = 'clientes';
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre', 'razonSocial', 'rfc', 'calle', 'exterior', 'interior', 'colonia', 'estado', 'ciudad', 'cp', 'logo', 'estatus', 'cfdi', 'metodo', 'forma'
+        'nombre',
+        'razonSocial',
+        'rfc',
+        'calle',
+        'exterior',
+        'interior',
+        'colonia',
+        'estado',
+        'ciudad',
+        'cp',
+        'logo',
+        'estatus',
+        'usoCfdiId',
+        'metodoPagoId',
+        'formaPagoId'
     ];
 }

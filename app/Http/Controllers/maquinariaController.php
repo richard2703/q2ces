@@ -68,9 +68,11 @@ class maquinariaController extends Controller
             ->orderBy('maquinaria.identificador', 'asc')
             ->paginate(15);
 
+            //*** solo obras activas */
         $vctObras = obras::select('obras.*', 'clientes.nombre as cliente')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
             ->where('obras.id', '<>', 2)
+            ->where('obras.estatus', '=', 1)
             ->orderBy('obras.nombre', 'asc')->get();
         //*** Todas excepto la de MTQ control */
 
@@ -128,9 +130,11 @@ class maquinariaController extends Controller
             ->orderBy('maquinaria.identificador', 'asc')
             ->paginate(15);
 
+            //*** solo obras activas */
         $vctObras = obras::select('obras.*', 'clientes.nombre as cliente')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
             ->where('obras.id', '<>', 2)
+            ->where('obras.estatus', '=', 1)
             ->orderBy('obras.nombre', 'asc')->get();
         //*** Todas excepto la de MTQ control */
 
@@ -174,8 +178,11 @@ class maquinariaController extends Controller
         abort_if(Gate::denies('maquinaria_create'), 403);
         $doc = docs::where('tipoId', '2')->orderBy('nombre', 'asc')->get();
 
+            //*** solo obras activas */
         $obras = obras::select('obras.*', 'clientes.nombre as cliente')
-            ->join('clientes', 'clientes.id', 'obras.clienteId')->where('obras.clienteId', '=', 1)->get();
+            ->join('clientes', 'clientes.id', 'obras.clienteId')
+            ->where('obras.estatus', '=', 1)
+            ->where('obras.clienteId', '=', 1)->get();
         //*** asignamos al centro de control de Q2ces */
 
         $marcas = marca::select('marca.*')->orderBy('marca.nombre', 'asc')->get();

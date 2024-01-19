@@ -59,7 +59,7 @@
                                                         <td class="text-center">{{ $obra->ciudad }}</td>
                                                         <td class="text-center">{{ $obra->residente }}</td>
                                                         <td class="text-center">{{ $obra->telefono }}</td>
-                                                        <td class="text-center">{{ $obra->estatus }}</td>
+                                                        <td class="text-center">{{ ($obra->estatus == 1 ? 'Activa':'Inactiva') }}</td>
 
                                                         <td class="td-actions text-center">
                                                             @can('obra_show')

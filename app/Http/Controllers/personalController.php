@@ -556,9 +556,10 @@ class personalController extends Controller
             ->where('maquinaria.estatusId', '=', 1)
             ->paginate(15);
 
-        //*** listado de obras */
+        //*** listado de obras activas */
         $vctObras = obras::select('obras.*', 'clientes.nombre as cliente')
             ->join('clientes', 'clientes.id', 'obras.clienteId')
+            ->where('obras.estatus', '=', 1)
             ->where('obras.id', '<>', 2)->get();
         //*** asignaciones */
         $vctAsignacion = obraMaqPer::select(
