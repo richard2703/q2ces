@@ -158,7 +158,6 @@
   display: flex;
 }
 .menu li {
-  padding-left: 10px;
   font-size: 12px;
 }
 .menu li a {
@@ -232,7 +231,6 @@
       margin-top: 40px;
     }
     .menu li a {
-      padding: 10px;
       color: var(--Tprincipal);
     }
     .open-menu , .close-menu {

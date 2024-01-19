@@ -90,45 +90,50 @@
         
 
     </header>
-    <div class="d-flex encabezado" style="background-color: white !important;">
-        <div class='logo col-2'>
+    <div id="header2" class="" style="background-color: white !important;">
+        <div class='logo col-1'>
             {{--  <li >  --}}
-            <a href="{{ url('/') }}" class="align-items-center">
-                <img src="{{ asset('img/comercial/layout/Q2CES.svg') }}" alt="Q2Ces">
-            </a>
+                <div class=" border-end border-dark">
+                    <a href="{{ url('/') }}" class="align-items-center">
+                        <img src="{{ asset('img/comercial/layout/Q2CES.svg') }}" alt="Q2Ces" width="127px" height="85px">
+                        
+                    </a>
+                </div>
             {{--  </li>  --}}
-
         </div>
         <div class="col-10 divnav">
             <nav>
-                <ul class='nav-bar d-flex'>
+                <ul class='nav-bar d-flex lista-datos'>
                     <input type='checkbox' id='check' />
-                    <span class="menu">
-                        <li class="{{ $activePage == 'inicio' ? 'activo' : '' }}">
+                    <span class="menu" style="width: 100%">
+                        <li class="d-flex justify-content-center {{ $activePage == 'inicio' ? 'activo' : '' }}">
                             <a href="{{ url('/') }}">Inicio</a>
                         </li>
-                        <li class="{{ $activePage == 'quienesSomos' ? 'activo' : '' }}"><a href="{{ route('quienesSomos.index') }}">¿Quiénes Somos?</a></li>
-                        <li class="{{ $activePage == 'equipos' ? 'activo' : '' }}"><a href="{{ route('equipos.index') }}">Equipos</a></li>
+                        <li class="d-flex justify-content-center {{ $activePage == 'quienesSomos' ? 'activo' : '' }}"><a href="{{ route('quienesSomos.index') }}">¿Quiénes Somos?</a></li>
+                        <li class="d-flex justify-content-center {{ $activePage == 'equipos' ? 'activo' : '' }}"><a href="{{ route('equipos.index') }}">Equipos</a></li>
                             {{--  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="#">Action</a>
                                 <a class="dropdown-item" href="#">Another action</a>
                                 <a class="dropdown-item" href="#">Something else here</a>
                             </div>  --}}
                         {{--  </li>  --}}
-                        <li><a href="">Cotizador</a></li>
-                        <li><a href="">Trabaja con Nosotros</a></li>
-                        <li><a href="">Blog</a></li>
-                        <li><a href="">Contáctanos</a></li>
-                        <li class="d-flex justify-content-end">
-                            <a href="{{ url('home', session('id')) }}" class=" align-items-center">
-                                <img src="{{ asset('img/comercial/layout/LUPA.svg') }}" height="40px" alt="Q2Ces">
-                            </a>
-                        </li>
+                        <li class="d-flex justify-content-center"><a href="">Cotizador</a></li>
+                        <li class="d-flex justify-content-center"><a href="">Trabaja con Nosotros</a></li>
+                        <li class="d-flex justify-content-center"><a href="">Blog</a></li>
+                        <li class="d-flex justify-content-center"><a href="">Contáctanos</a></li>
                         <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
                     </span>
                     <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
-                </ul>
+                
             </nav>
+        </div>
+        <div class='logo col-1 border-start border-dark'>
+            {{--  <li >  --}}
+            <a href="{{ url('/') }}" class="align-items-center">
+                <img src="{{ asset('img/comercial/layout/LUPA.svg') }}" style="padding: 25px" alt="Q2Ces">
+                
+            </a>
+            {{--  </li>  --}}
         </div>
     </div>
     <!-- End Header -->
@@ -276,7 +281,7 @@
 
     #header .lista-datos {
         list-style: none;
-        padding: 0;
+        padding: 5px;
         display: flex;
         flex-grow: 1; /* Hace que el <ul> ocupe todo el espacio disponible */
     }
@@ -285,5 +290,65 @@
         flex-grow: 1; /* Hace que cada <li> ocupe todo el espacio disponible dentro del <ul> */
         text-align: center; /* Centra el contenido dentro de cada <li> */
     }
+
+</style>
+
+<style>
+   #header2 {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    /* Ajusta según sea necesario */
+    margin-right: 20px; /* Espacio entre el logo y la barra de navegación */
+}
+
+.divnav {
+    flex: 1;
+}
+
+.nav-bar {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Asegura que el ul abarque todo el ancho disponible */
+}
+
+.nav-bar li {
+    flex: 1;
+    text-align: center;
+    padding: 0px;
+}
+
+.nav-bar a {
+    text-decoration: none;
+    color: black; /* Ajusta según tus necesidades */
+}
+
+/* Ajustes para pantallas pequeñas (puedes ajustar el tamaño según tus necesidades) */
+@media screen and (max-width: 768px) {
+    .logo {
+        margin-right: 0; /* Elimina el margen entre el logo y la barra de navegación en pantallas pequeñas */
+    }
+
+    .nav-bar {
+        flex-direction: column;
+        align-items: stretch;
+        display: none;
+    }
+
+    .menu {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #check:checked + .menu .nav-bar {
+        display: flex;
+    }
+}
+
 
 </style>

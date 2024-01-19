@@ -460,6 +460,16 @@
   }
 }
 
+@media (max-width: 1400px) {
+  .fixed-form-container {
+    position: absolute;
+    bottom: 34%;
+    left: 60%;
+    width: 430px;
+    z-index: 1000; /* Ajusta según sea necesario para que esté por encima de otros elementos */
+  }
+}
+
 /* Noticias */
 .noticias img{
   height: 20px;

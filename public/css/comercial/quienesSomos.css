@@ -109,6 +109,10 @@
     text-decoration: none;
 }
 
+.circular-button i {
+    font-size: 24px; /* Ajusta el tamaño del icono según sea necesario */
+}
+
 .circular-button:hover {
     background-color: var(--verdeF);
     color: white;
